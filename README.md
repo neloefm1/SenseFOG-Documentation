@@ -39,9 +39,6 @@ Additionally, we recorded EEG/EMG data (Brain products, MES Electronics, Gilchin
 Lastly, gait kinematics were recorded using three lightweight inertial kinematic sensors (Opal, APDM Inc., Portland, OR USA) attached to both left and right ankles and lumbar spine (L5). All kinematic data were exported in hierarchical data format (HDF) and saved in a .h5 file. 
 All experimental sessions were videotapeed for later offline-analysis. 
 
-### Initial setup
-A summary of what setup was performed when a subject arrived.
-
 ### Task organization
 Patient first underwent baseline clinical assessment after overnight withdrawal of all dopaminergic medication (>12 hours). 
 Recording sessions were the following: 
