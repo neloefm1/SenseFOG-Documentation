@@ -52,12 +52,12 @@ All recordings took place in Med OFF and Stim OFF.
 
 ### Task details
 Based on the provided videofiles and kinematic data, we have created start and end time points for the following events:
-- Walking (straight walking, no freezing of gait detected)
-- Turning (start and and end time points)
-- Self-Selected Stops
-- Freezing of Gait [Walking]
-- Freezing of Gait [Turning]
-- Freezing of Gait [Walk Initiation]
+- [ ] Walking (straight walking, no freezing of gait detected)
+- [ ] Turning (start and and end time points)
+- [ ] Self-Selected Stops
+- [ ] Freezing of Gait [Walking]
+- [ ] Freezing of Gait [Turning]
+- [ ] Freezing of Gait [Walk Initiation]
 
 For walking, we included time series both while walking straight ahead as mono task and walking with interference (dual-task).
 We rejected all time segments including turning, FoG, or stops. Further, we excluded a three-second time segment from the transition periods 
