@@ -18,7 +18,7 @@ LFP.rawfile               = jsondecode(fileread(JSON_file));
 if contains(LFP.rawfile.BrainSenseTimeDomain(1).Channel, "RIGHT") == 1; 
     LFP.raw_lfp_right     = LFP.rawfile.BrainSenseTimeDomain(1).TimeDomainData
     LFP.raw_lfp_left      = LFP.rawfile.BrainSenseTimeDomain(2).TimeDomainData
-elseif contains(LFP.rawfile.BrainSenseTimeDomain(1).Channel, "Left") == 1;
+elseif contains(LFP.rawfile.BrainSenseTimeDomain(1).Channel, "LEFT") == 1;
     LFP.raw_lfp_left      = LFP.rawfile.BrainSenseTimeDomain(1).TimeDomainData
     LFP.raw_lfp_right     = LFP.rawfile.BrainSenseTimeDomain(2).TimeDomainData
 end
@@ -34,6 +34,6 @@ LFP.interp_LFP_left = resample(LFP.raw_lfp_left,1000, LFP.fs_lfp)';
 save([path JSON_filename '_raw.mat'], 'LFP', '-mat') 
 
 %Clean-UP
-clear JSON_filename
+clear JSON_filename JSON_file 
 
 %% *********************** END OF SCRIPT ************************************************************************************************************************
