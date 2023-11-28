@@ -4,7 +4,9 @@
 - [ ] Data user agreement
 
 ## Contact Person: 
-For additional queries, contact: Philipp Klocke; philipp.klocke@uni-tuebingen.de 
+For additional queries, contact: 
+      Philipp Klocke;  philipp.klocke@uni-tuebingen.de
+      Moritz Loeffler; moritz.loeffler@uni-tuebingen.de
 
 ## Overview
 
