@@ -31,7 +31,7 @@ Exclusion Criteria:
 - [ ]	Competing orthopaedic or neurological conditions rendering patients unable to walk unaided
 - [ ]	Marked cognitive impairment (Montreal Cognitive assessment [MoCA]) < 17 points
 - [ ]	Patients with current moderate to severe depression (Beck Depression Inventory [BDI]) ≥ 24 points
-- [ ]Patients with current psychotic symptoms and/or suicidality
+- [ ] Patients with current psychotic symptoms and/or suicidality
 
 ### Apparatus
 To record local field potentials (LFP), sensing abilities of the Medtronic Percept were used. Data was recorded and saved in a .json file.
