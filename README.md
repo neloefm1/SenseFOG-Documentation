@@ -15,13 +15,12 @@ For additional queries, contact: Philipp Klocke; philipp.klocke@uni-tuebingen.de
 
 ## Overview
 
-- [ ] Project name: SenseFOG (study start date: XX - 31.12.2024)
-- [ ] Year(s) that the project ran
-- [ ] Brief overview of the tasks in the experiment
+- [ ] Project name: SenseFOG (study start date: 16.09.2020)
+- [ ] Years of subject and data recruitment: 2020-2023
+- [ ] Overall study goal:
+      We set out to study the neuronal and neuromuscular basis of freezing of gait (FoG) events in Parkinson's disease (PD) patients while walking by taking advantage
+      of subthalamic sensing technology and ambulatory EMG recordings. To differentiate these from events of voluntary stopping, we also recoding stopping events in PD patients.  
 - [ ] Description of the contents of the dataset
-- [ ] Independent variables
-- [ ] Dependent variables
-- [ ] Control variables
 - [ ] Quality assessment of the data
 
 ## Methods
@@ -90,6 +89,8 @@ To study the transition phases from walking to FoG (termed Pre-FoG) or voluntary
 ### Computation of Gait Cycle
 During offline analysis, gait cycles were identified using the accelerometer signal in the anterior-posterior plane (x-axis) and the gyroscope signal in the medial-lateral direction (y-axis) with angular velocity expressed in the sagittal plane. We characterized each gait cycle by identifying the midswing, defined by the gyroscope’s peak-angular velocity exceeding a threshold of 50°/s. Using a time window of 500 ms before and after each midswing, the preceding toe-offs and the succeeding heel strikes were identified. Toe off was marked as the minimum acceleration in the anterior-posterior plane and heel strike as the minimum angular velocity in the sagittal plane before maximum anterior-posterior acceleration, respectively. A 100% full stride encompassed the timespan between two consecutive heel strikes of the same leg. Gait cycles exceeding a duration of > 2.5 s were discarded. Temporal and spatial gait parameters from these regular gait cycles (referred to as “walking” in the following”) were computed for each subject and gait condition.
 
+### Assessment of disease laterality
+We obtained further clinical characteristics by recording motor symptoms (MDS-UPDRS part III in medication off / stimulation off and medication on / stimulation on) including evaluation of the MDS-UPDRS III hemibody scores to determine disease-lateralization (calculated as sum of the rigidity (item 3.3), akinesia (items 3.4-3.8), and tremor (items 3.15-3.17) scores for one side, ranging from 0 to 44). The hemibody ranking highest on the MDS-UPDRS sum score was chosen as disease dominant side and the contralateral STN chosen as disease dominant STN.
 
 ### Additional data acquired
 A brief indication of data other than the
@@ -102,18 +103,12 @@ This is especially relevant if the data are not included in a `phenotype` folder
 https://bids-specification.readthedocs.io/en/stable/03-modality-agnostic-files.html#phenotypic-and-assessment-data
 
 ### Experimental location
-This should include any additional information regarding the
-the geographical location and facility that cannot be included
-in the relevant json files.
+Recordings took place on the premises of the University Hospital Medical Center Tübingen, Department of Neurology.
+The walking took place in a 15 x 2.5 m hallway. Two chairs narrowing the corridor were positioned (1 m width) to help provoke FoG events under laboratory conditions.
 
-### Missing data
-Mention something if some participants are missing some aspects of the data.
-This can take the form of a processing log and/or abnormalities about the dataset.
+### Ethics
+The study was approved by the Ethics Committee of Tübingen University (166/2020BO1), and all patients provided written informed consent.
 
-Some examples:
-- A brain lesion or defect only present in one participant
-- Some experimental conditions missing on a given run for a participant because
-  of some technical issue.
-- Any noticeable feature of the data for certain participants
-- Differences (even slight) in protocol for certain participants.
+
+### Other
 
