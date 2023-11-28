@@ -1,17 +1,10 @@
-# SenseFOG
-
-# README
+# SenseFOG README
 
 ## Details related to access to the data
 - [ ] Data user agreement
 
-If the dataset requires a data user agreement, link to the relevant information.
-
 ## Contact Person: 
 For additional queries, contact: Philipp Klocke; philipp.klocke@uni-tuebingen.de 
-
-
-- [ ] Practical information to access the data
 
 ## Overview
 
@@ -20,11 +13,9 @@ For additional queries, contact: Philipp Klocke; philipp.klocke@uni-tuebingen.de
 - [ ] Overall study goal:
       We set out to study the neuronal and neuromuscular basis of freezing of gait (FoG) events in Parkinson's disease (PD) patients while walking by taking advantage
       of subthalamic sensing technology and ambulatory EMG recordings. To differentiate these from events of voluntary stopping, we also recoding stopping events in PD patients.  
-- [ ] Description of the contents of the dataset
-- [ ] Quality assessment of the data
+
 
 ## Methods
-
 ### Subjects
 12 patients with idiopathi Parkinson's disease who had previously undergone bilateral STN-DBS surgery and 
 were implanted with the Medtronic Percept impulse generator were studied.
@@ -41,7 +32,6 @@ Exclusion Criteria:
 - [ ]	Marked cognitive impairment (Montreal Cognitive assessment [MoCA]) < 17 points
 - [ ]	Patients with current moderate to severe depression (Beck Depression Inventory [BDI]) ≥ 24 points
 - [ ]Patients with current psychotic symptoms and/or suicidality
-
 
 ### Apparatus
 To record local field potentials (LFP), sensing abilities of the Medtronic Percept were used. Data was recorded and saved in a .json file.
