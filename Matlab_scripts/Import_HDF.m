@@ -11,9 +11,9 @@
 close all
 
 IMU_data                             = struct;
-[h5_file,path]                       = uigetfile('*.h5');                                         % Open file window and extract the desired h5. file
-IMU.filename                         = strrep(h5_file,'.h5','');                                  % Creates the filename by cutting off the suffix (.h5)
-cd(path)  
+[h5_file,filepath]                   = uigetfile('*.h5');                                         % Open file window and extract the desired h5. file
+IMU_data.filename                    = strrep(h5_file,'.h5','');                                  % Creates the filename by cutting off the suffix (.h5)
+cd(filepath)  
 
 IMU_data.info                        = h5info(h5_file);
 IMU_data.file                        = h5_file; 
@@ -36,17 +36,17 @@ for m = 1:length(IMU_data.measurement);
    path                             = [IMU_data.name{m,1} '/Calibrated/' grp];
    IMU_data.Accelerometer(m).Sensor = h5read(IMU_data.file,path)';
 
-    %Saving Gyroscope Data:
-    IMU_data.name{m,1}              = IMU_data.info.Groups(m).Name;
-    grp                             = IMU_data.measurement{2,1};
-    path                            = [IMU_data.name{m,1} '/Calibrated/' grp];
-    IMU_data.Gyroscope(m).Sensor    = h5read(IMU_data.file,path)';
+   %Saving Gyroscope Data:
+   IMU_data.name{m,1}              = IMU_data.info.Groups(m).Name;
+   grp                             = IMU_data.measurement{2,1};
+   path                            = [IMU_data.name{m,1} '/Calibrated/' grp];
+   IMU_data.Gyroscope(m).Sensor    = h5read(IMU_data.file,path)';
 
-    %Saving Magnetometer Data:
-    grp                             = IMU_data.measurement{3,1};
-    IMU_data.name{m,1}              = IMU_data.info.Groups(m).Name;
-    path                            = [IMU_data.name{m,1} '/Calibrated/' grp];
-    IMU_data.Magnetometer(m).Sensor = h5read(IMU_data.file,path)';
+   %Saving Magnetometer Data:
+   grp                             = IMU_data.measurement{3,1};
+   IMU_data.name{m,1}              = IMU_data.info.Groups(m).Name;
+   path                            = [IMU_data.name{m,1} '/Calibrated/' grp];
+   IMU_data.Magnetometer(m).Sensor = h5read(IMU_data.file,path)';
 end
     
 %Resample IMU data up to EEG sampling rate
@@ -61,10 +61,9 @@ IMU_data.imutime = (1/1000):(1/1000):(length(IMU_data.interp_accelerometer(1).Se
 IMU_data.eegtime = (1/1000):(1/1000):(length(IMU_data.interp_accelerometer(1).Sensor)/1000);
 
 %Save DATA
-save([path IMU.filename '_raw.mat'], 'IMU_data', '-mat')       
+save([filepath IMU_data.filename '_raw.mat'], 'IMU_data', '-mat')       
 
 %Clean-UP
-clear i m 
+clear i m h5_file grp path
 
-
-
+%% *********************** END OF SCRIPT ************************************************************************************************************************
