@@ -13,3 +13,15 @@
 %according to the artefact and overlapping traces cut out. The data will be stored in a pre-specified
 %filepath.
 %===================================================================%
+
+%Load EEG and LFP data and IMU data
+subjectdata.generalpath                 = uigetdir;                                                         % Example: SenseFOG-main/sub-XX/ses-standing
+cd(subjectdata.generalpath)
+filename                                = extractAfter(subjectdata.generalpath,"-main/");                   % Create the specified filename
+filename                                = extractBefore(filename,"/ses-");                                  % Create the specified taskname
+taskname                                = extractAfter(subjectdata.generalpath,"/ses-");                    % Create the specified taskname
+taskname                                = append("ses-", taskname);                                         % Create the specified taskname
+
+fullname = append(subjectdata.generalpath, "/ieeg/",filename, "-", taskname, "_raw.mat"); load(fullname)    % LOAD JSON [LFP] FILE
+fullname = append(subjectdata.generalpath, "/eeg/",filename, "-", taskname, "_raw.mat"); load(fullname)     % LOAD BVA [EEG] FILE
+fullname = append(subjectdata.generalpath, "/motion/",filename, "-", taskname, "_raw.mat"); load(fullname)  % LOAD HDF [IMU] FILE
