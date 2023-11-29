@@ -14,3 +14,8 @@ The following table represents the order used for preprocessing the data:
 ## 2.0 Data Analysis
 - [ ]  2.1 "Baseline_Power.m"      -- Compute baseline power from standing
 - [ ]  2.2 "Baseline_Coherence.m"  -- Compute baseline coherence from standing
+
+
+## TEMPORARY NEED FIXING
+- need to address the need for fieldtrip toolbox, direct users where to get it, current version?
+- fir future, need to take off right and left LFP from data analyiss, also IMU cutoff...
