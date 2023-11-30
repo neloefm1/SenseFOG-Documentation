@@ -16,13 +16,13 @@
 
 %Load EEG and LFP data and IMU data by specifying subject and SESSION of interest
 subjectdata.generalpath                 = uigetdir;                                                         % Example: SenseFOG-main/sub-XX/ses-standing
-subjectdata.fs_eeg                      = 1000;                                                             % EEG sampling rate is 1000 Hz per default
 cd(subjectdata.generalpath)
 filename                                = extractAfter(subjectdata.generalpath,"-main/");                   % Create the specified filename
 filename                                = extractBefore(filename,"/ses-");                                  % Create the specified taskname
 taskname                                = extractAfter(subjectdata.generalpath,"/ses-");                    % Create the specified taskname
 taskname                                = append("ses-", taskname);                                         % Create the specified taskname
 subjectdata.filepath                    = extractBefore(subjectdata.generalpath, "/ses");                   % Create the specified filepath
+subjectdata.fs_eeg                      = 1000;                                                             % EEG sampling rate is 1000 Hz per default
 
 fullname = append(subjectdata.generalpath, "/ieeg/",filename, "-", taskname, "_raw.mat"); load(fullname)    % LOAD JSON [LFP] FILE
 fullname = append(subjectdata.generalpath, "/eeg/",filename, "-", taskname, "_raw.mat"); load(fullname)     % LOAD BVA [EEG] FILE
