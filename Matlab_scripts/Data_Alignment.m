@@ -21,13 +21,15 @@ filename                                = extractAfter(subjectdata.generalpath,"
 filename                                = extractBefore(filename,"/ses-");                                  % Create the specified taskname
 taskname                                = extractAfter(subjectdata.generalpath,"/ses-");                    % Create the specified taskname
 taskname                                = append("ses-", taskname);                                         % Create the specified taskname
-subjectdata.filepath                    = extractBefore(subjectdata.generalpath, "/ses");                   % Create the specified filepath
-subjectdata.fs_eeg                      = 1000;                                                             % EEG sampling rate is 1000 Hz per default
-
+filepath                                = extractBefore(subjectdata.generalpath, "/ses");                   % Create the specified filepath
 fullname = append(subjectdata.generalpath, "/ieeg/",filename, "-", taskname, "_raw.mat"); load(fullname)    % LOAD JSON [LFP] FILE
 fullname = append(subjectdata.generalpath, "/eeg/",filename, "-", taskname, "_raw.mat"); load(fullname)     % LOAD BVA [EEG] FILE
 fullname = append(subjectdata.generalpath, "/motion/",filename, "-", taskname, "_raw.mat"); load(fullname)  % LOAD HDF [IMU] FILE
-fullname = append(subjectdata.filepath, "/",filename, "_datafile.mat"); load(fullname);
+fullname = append(filepath, "/",filename, "_datafile.mat"); load(fullname);
+
+subjectdata.filepath                    = filepath;                                                         % Create the specified filepath
+subjectdata.fs_eeg                      = 1000;                                                             % EEG sampling rate is 1000 Hz per default
+
 
 %=====LFP DATA =========================================================================
 %Specify time range for display using min and max values
