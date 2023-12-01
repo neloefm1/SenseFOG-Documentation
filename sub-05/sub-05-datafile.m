@@ -152,7 +152,7 @@ subjectdata.events_filt.WalkWS(12).task = 'Walk';
 subjectdata.events_filt.WalkWS(12).start = 101.8600;
 subjectdata.events_filt.WalkWS(12).end = 106.2850;
 
+% ===== Save DATA ====================================================================================================
+save([path filesep subjectdata.subject_dir '_datafile.mat'], 'subjectdata', '-mat')
 
-
-
-
+% *********************** END OF SCRIPT *******************************************************************************************************************
