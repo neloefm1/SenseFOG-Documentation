@@ -2,7 +2,7 @@
 % +------------------------------------------------------+
 % |  Subject: SUB-19                                     |
 % |                                                      |
-% | Author: Philipp Klocke,Moritz Löffler                | 
+% | Author: Philipp Klocke,Moritz Loeffler               | 
 % +------------------------------------------------------+
 
 % This script will serve as the main directory matlab file for sub-19
