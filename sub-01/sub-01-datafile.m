@@ -15,7 +15,7 @@ subjectdata.subject_dir     = 'sub-01';
 path                        = append(subjectdata.generalpath, '/', subjectdata.filedir);
 cd(path)
 
-%% SIT - Manual Input for EEG and LFP Datasets 
+% SIT - Manual Input for EEG and LFP Datasets 
 subjectdata.signalpoint.Sit                         = [];
 subjectdata.signalpoint.Sit.EEG_signal              = 18684;                                                                % Sample where DBS Stimulation stops showing a clear downward spike, used for later alignsignals_new.m
 subjectdata.signalpoint.Sit.LFP_signal              = 18738;                                                                % Sample where DBS Stimulation stops showing a clear upward spike, used for later alignsignals_new.m
@@ -26,7 +26,7 @@ else subjectdata.signalpoint.Sit.EEG_signal > subjectdata.signalpoint.Sit.LFP_si
 end 
 
 
-%% STAND - Manual Input for EEG and LFP Datasets 
+% STAND - Manual Input for EEG and LFP Datasets 
 subjectdata.signalpoint.Stand                        = [];
 subjectdata.signalpoint.Stand.EEG_signal             = 17004;                                                                % Sample where DBS Stimulation stops showing a clear downward spike, used for later alignsignals_new.m
 subjectdata.signalpoint.Stand.LFP_signal             = 22069;                                                                % Sample where DBS Stimulation stops showing a clear upward spike, used for later alignsignals_new.m
@@ -37,7 +37,7 @@ else subjectdata.signalpoint.Stand.EEG_signal > subjectdata.signalpoint.Stand.LF
 end 
 
 
-%% WALK - Manual Input for EEG and LFP Datasets
+% WALK - Manual Input for EEG and LFP Datasets
 subjectdata.signalpoint.Walk                        = [];
 subjectdata.signalpoint.Walk.EEG_signal             = 4758;                                                                    % Sample where DBS Stimulation stops showing a clear downward spike, used for later alignsignals_new.m
 subjectdata.signalpoint.Walk.LFP_signal             = 31056;                                                                   % Sample where DBS Stimulation stops showing a clear upward spike, used for later alignsignals_new.m
@@ -48,7 +48,7 @@ else subjectdata.signalpoint.Walk.EEG_signal > subjectdata.signalpoint.Walk.LFP_
 end
 
 
-%% WALK WITH STOPS - Manual Input for EEG and LFP Datasets
+% WALK WITH STOPS - Manual Input for EEG and LFP Datasets
 subjectdata.signalpoint.WalkWS                      = [];
 subjectdata.signalpoint.WalkWS.EEG_signal           = 11919;                                                                    % Sample where DBS Stimulation stops showing a clear downward spike, used for later alignsignals_new.m
 subjectdata.signalpoint.WalkWS.LFP_signal           = 31813;                                                                    % Sample where DBS Stimulation stops showing a clear upward spike, used for later alignsignals_new.m
