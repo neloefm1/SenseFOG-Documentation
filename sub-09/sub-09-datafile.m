@@ -325,3 +325,8 @@ subjectdata.events_filt.WalkWS(28).end = 162.383000000000;
 subjectdata.events_filt.WalkWS(30).start = 163.906;
 subjectdata.events_filt.WalkWS(30).task= 'Selected_stop'; 
 subjectdata.events_filt.WalkWS(30).end = 166.211;
+
+% ===== Save DATA ====================================================================================================
+save([path filesep subjectdata.subject_dir '_datafile.mat'], 'subjectdata', '-mat')
+
+% *********************** END OF SCRIPT *******************************************************************************************************************
