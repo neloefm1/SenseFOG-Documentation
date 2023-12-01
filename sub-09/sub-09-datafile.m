@@ -5,7 +5,7 @@
 % | Author: Philipp Klocke,Moritz Löffler                | 
 % +------------------------------------------------------+
 
-% This script will serve as the main directory matlab file for sub-01
+% This script will serve as the main directory matlab file for sub-09
 
 % Chose the pathway for the SenseFOG-main folder after downloading
 subjectdata.generalpath     = uigetdir;                                                                                         % Target file should be the SenseFOG-main file after download
