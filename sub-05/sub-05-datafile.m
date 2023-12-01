@@ -9,7 +9,7 @@
 
 % Chose the pathway for the SenseFOG-main folder after downloading
 subjectdata.generalpath     = uigetdir;                                                                                         % Target file should be the SenseFOG-main file after download
-subjectdata.filedir         = 'sub-01';
+subjectdata.filedir         = 'sub-05';
 subjectdata.subjectnr       = '05';
 subjectdata.subject_dir     = 'sub-05';
 path                        = append(subjectdata.generalpath, '/', subjectdata.filedir);
