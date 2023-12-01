@@ -735,8 +735,7 @@ subjectdata.events_filt.WalkINT(26).task = 'Walk';
 subjectdata.events_filt.WalkINT(26).start = 298.639000000000; 
 subjectdata.events_filt.WalkINT(26).end = 302.474000000000;
 
+% ===== Save DATA ====================================================================================================
+save([path filesep subjectdata.subject_dir '_datafile.mat'], 'subjectdata', '-mat')
 
-
-
-
-
+% *********************** END OF SCRIPT *******************************************************************************************************************
