@@ -8,7 +8,7 @@ Klocke, Philipp; Loeffler, Moritz; Weiss, Daniel (2023),
 “Pathological subthalamic activation and synchronization reflect antagonistic muscle activation failure and freezing of gait in Parkinson’s disease”, 
 Mendeley Data, V1, doi: 10.17632/c9ckcvjxc7.1
 
->>COPY URL to MENDELEY DATA REPOSITORY HERE<<
+- [ ] https://data.mendeley.com/datasets/c9ckcvjxc7/1      
 
 ## Technical Prerequisites to access the data
 For analysis, Matlab version 2022a was used. 
