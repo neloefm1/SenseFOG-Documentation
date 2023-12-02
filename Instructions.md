@@ -1,9 +1,19 @@
 # Instructions
 
+## Public Data Repositorx
+To access and download data, click on the following link that will guide you to the Mendeley Data Repository. 
+The file is called SenseFOG-main.
+
+Klocke, Philipp; Loeffler, Moritz; Weiss, Daniel (2023), 
+“Pathological subthalamic activation and synchronization reflect antagonistic muscle activation failure and freezing of gait in Parkinson’s disease”, 
+Mendeley Data, V1, doi: 10.17632/c9ckcvjxc7.1
+
+>> COPY URL to MENDELEY DATA REPOSITORY HERE <<
+
 The following table represents the order used for preprocessing the data:
 
 ## 1.0 Preprocessing
-- [ ]  1.1 "sub-XX-datafile"           --  Import subject file
+- [ ]  1.1 "sub-XX-datafile"           --  Run the Subject-Files > sub-XX-datafile.m for each subjects
 - [ ]  1.2 "Import_BVA.m"              --  Import raw EEG/EMG files
 - [ ]  1.3 "Import_JSON.m"             --  Import JSON (LFP) files
 - [ ]  1.4 "Import_HDF.m"              --  Import inertial motion unit (IMU) files
@@ -20,3 +30,5 @@ The following table represents the order used for preprocessing the data:
 ## TEMPORARY NEED FIXING
 - need to address the need for fieldtrip toolbox, direct users where to get it, current version?
 - for future, need to take off right and left LFP from data analyiss, also IMU cutoff...
+- Check PD17 Sitting
+- Check WalkINT2 in scripts
