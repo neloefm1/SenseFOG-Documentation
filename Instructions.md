@@ -2,7 +2,7 @@
 
 ## Access to Data - Public Data Repository
 To access and download data, click on the following link that will guide you to the Mendeley Data Repository. 
-The file is called SenseFOG-main.
+The file is called "SenseFOG-main".
 
 Klocke, Philipp; Loeffler, Moritz; Weiss, Daniel (2023), 
 “Pathological subthalamic activation and synchronization reflect antagonistic muscle activation failure and freezing of gait in Parkinson’s disease”, 
