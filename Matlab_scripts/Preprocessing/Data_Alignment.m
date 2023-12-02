@@ -117,8 +117,8 @@ figure(3)
 if     taskname == 'ses-standing';  task = 'Stand';
 elseif taskname == 'ses-sitting';   task = 'Sit'; 
 elseif taskname == 'ses-walk';      task = 'Walk';
-elseif taskname == 'ses_walkws';    task = 'WalkWS';
-elseif taskname == 'ses_walkint';   task = 'WalkINT';
+elseif taskname == 'ses-walkws';    task = 'WalkWS';
+elseif taskname == 'ses-walkint';   task = 'WalkINT';
 end
 
 %Align files by cutting off non-overlapping traces
