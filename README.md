@@ -22,8 +22,8 @@ For additional queries, contact:
 ### Where to access the raw data
 To access, download and analyze data, please visit the public data repository on Mendeley Data where the data has been stored:
 “Pathological subthalamic activation and synchronization reflect antagonistic muscle activation failure and freezing of gait in Parkinson’s disease”, Mendeley Data, V1, doi: 10.17632/c9ckcvjxc7.1
-https://data.mendeley.com/datasets/c9ckcvjxc7/1
-                                   
+
+- [ ] https://data.mendeley.com/datasets/c9ckcvjxc7/1                     
 
 ### Subjects
 12 patients with idiopathi Parkinson's disease who had previously undergone bilateral STN-DBS surgery and 
