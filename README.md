@@ -14,7 +14,7 @@ For additional queries, contact:
 - [ ] Years of subject and data recruitment: 2020-2023
 - [ ] Overall study goal:
       We set out to study the neuronal and neuromuscular basis of freezing of gait (FoG) events in Parkinson's disease (PD) patients while walking by taking advantage
-      of subthalamic sensing technology and ambulatory EMG recordings. To differentiate these from events of voluntary stopping, we also recoding stopping events in PD patients.  
+      of subthalamic sensing technology and ambulatory EMG recordings. To differentiate these from events of voluntary stopping, we also recorded stopping events in PD patients.  
 
 
 ## Data Repository
