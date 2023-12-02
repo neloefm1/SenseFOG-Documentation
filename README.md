@@ -104,6 +104,14 @@ https://bids-specification.readthedocs.io/en/stable/03-modality-agnostic-files.h
 Recordings took place on the premises of the University Hospital Medical Center Tübingen, Department of Neurology.
 The walking took place in a 15 x 2.5 m hallway. Two chairs narrowing the corridor were positioned (1 m width) to help provoke FoG events under laboratory conditions.
 
+## Technical Prerequisites to access the data
+For analysis, Matlab version 2022a was used. 
+The following toolboxes were also acquired and will be needed to run the preprocessing and analysis scripts:
+- [ ] Fieldtrip (version 1.0.1.0)
+- [ ] Matlab Wavelet Toolbox (version 6.1)
+- [ ] Matlab Signal Processing Toolbox (version 9.0)
+
+
 ### Ethics
 The study was approved by the Ethics Committee of Tübingen University (166/2020BO1), and all patients provided written informed consent.
 
