@@ -10,7 +10,7 @@ For additional queries, contact:
 
 ## Overview
 
-- [ ] Project name: SenseFOG (study start date: 16.09.2020)
+- [ ] Project name: SenseFOG
 - [ ] Years of subject and data recruitment: 2020-2023
 - [ ] Overall study goal:
       We set out to study the neuronal and neuromuscular basis of freezing of gait (FoG) events in Parkinson's disease (PD) patients while walking by taking advantage
