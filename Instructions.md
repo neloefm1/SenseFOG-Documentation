@@ -10,6 +10,14 @@ Mendeley Data, V1, doi: 10.17632/c9ckcvjxc7.1
 
 >>COPY URL to MENDELEY DATA REPOSITORY HERE<<
 
+## Technical Prerequisites to access the data
+For analysis, Matlab version 2022a was used. 
+The following toolboxes were also acquired and will be needed to run the preprocessing and analysis scripts:
+- [ ] Fieldtrip (version 1.0.1.0)
+- [ ] Matlab Wavelet Toolbox (version 6.1)
+- [ ] Matlab Signal Processing Toolbox (version 9.0)
+
+
 
 The following table represents the order used for preprocessing the data:
 
