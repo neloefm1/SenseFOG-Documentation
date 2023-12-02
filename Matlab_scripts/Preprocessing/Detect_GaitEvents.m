@@ -67,7 +67,7 @@ for t = 1:length(site)
 end
 
 %Clean-UP
-clear Accelerometer Gyroscope i ms_locs ms_pks site t 
+clear Accelerometer Gyroscope i ms_locs ms_pks t 
 
 %% CONTROL GAIT PARAMETERS ========================
 %Indicate Chosen Foot (t = 1 Right Foot; t = 2 Left Foot)
