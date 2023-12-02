@@ -40,9 +40,9 @@ cd(subjectdata.generalpath)
 if     taskname == 'ses-standing';  name = 'Stand';
 elseif taskname == 'ses-sitting';   name = 'Sit'; 
 elseif taskname == 'ses-walk';      name = 'Walk';
-elseif taskname == 'ses_walkws';    name = 'WalkWS';
-elseif taskname == 'ses_walkint';   name = 'WalkINT';
-elseif taskname == 'ses_walkint2';  name = 'WalkINT_new';
+elseif taskname == 'ses-walkws';    name = 'WalkWS';
+elseif taskname == 'ses-walkint';   name = 'WalkINT';
+elseif taskname == 'ses-walkint2';  name = 'WalkINT_new';
 end
 
 
