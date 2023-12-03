@@ -48,7 +48,7 @@ end
 %forward and backward) before applying continuous Morlet wavelet transformation
 [b,a] = butter(6,1/(1000/2),'high');
 
-task = {'Walk'; 'WalkWS'; 'WalkINT'; 'WalkINT_new'};
+task = {'WalkWS'};
 for k = 1:length(names)
     for m = 1:length(task)
           if isfield(Subjects.(names{k}), task(m)) == 0; continue; end
@@ -62,7 +62,7 @@ clear a b k m task Files
 
 %Apply Morlet Wavelet Transformation ===================================================================================
 %BE AWARE THIS WILL CONSUME A LOT OF SPACE AND TIME (full dataset of 12 subjects may take up to 20 minutes)
-task    = {'Walk'; 'WalkWS'; 'WalkINT'; 'WalkINT_new'};
+task = {'WalkWS'};
 fs      = 1000; %Sampling Frequency
 for k = 1:length(names)
     for m = 1:length(task)
@@ -82,3 +82,149 @@ for k = 1:length(names)
     end
 end
 clear MFF R_cwtstruct L_cwtstruct k m task
+
+%Choose Self-Selected Stop Time Points and Segment Data=================================================================
+task        = {'WalkWS'};
+field       = {'Self_Selected_Stop'};
+imu         = {'Gyroscope_RF'; 'Gyroscope_LF'};
+input       = {'L_wt' 'R_wt'; 'L_frequency_domain' 'R_frequency_domain'; 'baseline_pwr_L' 'baseline_pwr_R'; 'L_wt_org' 'R_wt_org'; 'baseline_L_org' 'baseline_R_org'};
+SSS     = struct; 
+
+for k = 1:length(names)
+    for m = 1:length(task)
+        if  isfield(Subjects.(names{k}), task(m)) == 0; continue; end
+            if isfield(Subjects.(names{k}).(task{m}), field) == 0; continue; end
+            datafile = Subjects.(names{k}).(task{m}).(field{1});
+            for i = 1:length(datafile)
+                if datafile(i).duration < 1.0; continue; end                                                        % Exclude Stop Durations that last shorter than 1000 ms
+                pretrialtime    = 0;                                                                                % Baseline before onset of stopping
+                epochduration   = 1000;                                                                             % Use an Epoch of 1000 ms
+                start           = single(1000*Subjects.(names{k}).(task{m}).(field{1})(i).start) - pretrialtime;    % Transition time of ca. 1 seconds
+                full_stop       = single(1000*Subjects.(names{k}).(task{m}).(field{1})(i).stop);                    % Entire Duration of Stopping Episode
+                stop            = start + pretrialtime + epochduration;                                             % 1 seconds into the stop
+                time_vector     = -pretrialtime:1:epochduration;
+                
+                 for t = 1:width(input)
+                    
+                    %=== Store IMU Signals ======================================================================
+                    IMU =   rad2deg(Subjects.(names{k}).(task{m}).(imu{t})([start:stop],2)); %saggital plane
+                    Subjects.(names{k}).(task{m}).(field{1})(i).(imu{t}) = IMU';
+  
+
+                    %%=== Extracting Frequency Domain + NORMALIZE =============================================== 
+                    %*** EXCLUDE LOW FREQUENCY NOISE ***
+                    %Excluding low frequencies (up to 10 Hz) and other frequencies with possible technical artifact contamination related to the sensing equipment (33–37 Hz, 48–52 Hz, 90+ Hz)
+                    store       = Subjects.(names{k}).(task{m}).(input{1,t})(:,[(start+pretrialtime):full_stop]);   % Make sure the baseline is not included to compute PSD
+                    
+                    FD          = mean(store,2);
+                    sum_FD      = sum(FD([10:33, 37:48, 52:90],:));
+                    Subjects.(names{k}).(task{m}).(field{1})(i).(input{2,t}) = (FD ./ sum_FD)';
+                    
+                                    
+                    %%=== Extracting Time Domain + NORMALIZE ====================================================
+                    %TAKE MWT and NORMALIZE BY MEAN OF BASELINE (power - average baseline power)/average baseline power x 100
+                    store       = Subjects.(names{k}).(task{m}).(input{1,t})(:,[start:stop]);
+                    Subjects.(names{k}).(task{m}).(field{1})(i).(input{4,t}) = store;                               % Save non-normalized dataset as _org
+                    
+
+                    %NORMALIZING TIME DOMAIN
+                    %Percental Normalization by Baseline [pref. Standing] - [(activity - baseline) / baseline] * 100
+                    Option = "Percental_Normalization";
+
+                    %Standing Baseline
+                    if t == 1; baseline = Subjects.(names{k}).Baseline_Power.baseline_pwr_L;
+                    elseif t == 2; baseline = Subjects.(names{k}).Baseline_Power.baseline_pwr_R; end
+                    Subjects.(names{k}).(task{m}).(field{1})(i).(input{1,t}) = ((store - baseline) ./ baseline) *100;  
+                end
+                               
+                if isfield(SSS, (names{k})) == 0; SSS.(names{k}).Left_STN = []; SSS.(names{k}).Right_STN = [];end
+                if isempty(SSS.(names{k}).Right_STN) == 1; l = 0; end  
+               
+                SSS.(names{k}).Right_STN(i+l).name                    = names{k};
+                SSS.(names{k}).Left_STN(i+l).name                     = names{k};
+                SSS.(names{k}).Right_STN(i+l).duration                = datafile(i).duration;
+                SSS.(names{k}).Left_STN(i+l).duration                 = datafile(i).duration;
+                SSS.(names{k}).Left_STN(i+l).frequency_domain         = Subjects.(names{k}).(task{m}).(field{1})(i).L_frequency_domain;
+                SSS.(names{k}).Right_STN(i+l).frequency_domain        = Subjects.(names{k}).(task{m}).(field{1})(i).R_frequency_domain;
+                SSS.(names{k}).Left_STN(i+l).wt                       = Subjects.(names{k}).(task{m}).(field{1})(i).L_wt;
+                SSS.(names{k}).Right_STN(i+l).wt                      = Subjects.(names{k}).(task{m}).(field{1})(i).R_wt;
+                SSS.(names{k}).Left_STN(i+l).wt_org                   = Subjects.(names{k}).(task{m}).(field{1})(i).L_wt_org;
+                SSS.(names{k}).Right_STN(i+l).wt_org                  = Subjects.(names{k}).(task{m}).(field{1})(i).R_wt_org;
+                
+                SSS.(names{k}).Right_STN(i+l).foot                    = datafile(i).Foot;
+                SSS.(names{k}).Left_STN(i+l).foot                     = datafile(i).Foot;
+                SSS.(names{k}).Left_STN(i+l).IMU                      = Subjects.(names{k}).(task{m}).(field{1})(i).Gyroscope_RF;
+                SSS.(names{k}).Right_STN(i+l).IMU                     = Subjects.(names{k}).(task{m}).(field{1})(i).Gyroscope_LF;
+
+                %BASELINE STAND
+                SSS.(names{k}).Left_STN(i+l).baseline                 = Subjects.(names{k}).Baseline_Power.baseline_pwr_L ./  sum(Subjects.(names{k}).Baseline_Power.baseline_pwr_L([10:33, 37:48, 52:90],:))'; %Normalize here
+                SSS.(names{k}).Right_STN(i+l).baseline                = Subjects.(names{k}).Baseline_Power.baseline_pwr_R ./  sum(Subjects.(names{k}).Baseline_Power.baseline_pwr_R([10:33, 37:48, 52:90],:))'; %Normalize here                                
+                SSS.(names{k}).Right_STN(i+l).baseline_org            = Subjects.(names{k}).Baseline_Power.baseline_pwr_R;
+                SSS.(names{k}).Left_STN(i+l).baseline_org             = Subjects.(names{k}).Baseline_Power.baseline_pwr_L;
+                l                                                         = length(SSS.(names{k}).Right_STN);
+            end
+    end
+end
+
+
+fieldnum = fieldnames(SSS);
+for k = 1:length(fieldnum)
+    idx = find(cellfun(@isempty,{SSS.(fieldnum{k}).Left_STN.wt}));                                              %Clear Files that have no content
+    SSS.(fieldnum{k}).Left_STN(idx) = []; SSS.(fieldnum{k}).Right_STN(idx) = [];  clear idx l       
+end
+
+%CLEAN-UP
+clear ans baseline datafile epochduration FD field fieldnum full_stop fs i imu IMU input k l m pretrialtime start stop sum_FD t task 
+
+
+FILES.f         = Subjects.(names{1}).WalkWS.f;
+FILES.Option    = Option;
+FILES.time      = time_vector;
+FILES.names     = names; 
+
+FILES.SSS = []; %Create empty struct for all Self-Selected Stop
+for k = 1:length(names)
+    if isfield(SSS, (names{k})) == 0; continue; end
+    if isfield(FILES.SSS, 'wt_r') == 0; FILES.SSS.wt_r = []; FILES.SSS.wt_l = []; end
+        datafile_r          = SSS.(names{k}).Right_STN;
+        datafile_l          = SSS.(names{k}).Left_STN;
+        FILES.SSS.wt_r  = [FILES.SSS.wt_r, datafile_r]; %Concatenate all Stop Events 
+        FILES.SSS.wt_l  = [FILES.SSS.wt_l, datafile_l]; %Concatenate all Stop Events 
+end
+
+idx = find(cellfun(@isempty,{FILES.SSS.wt_r.wt}));
+FILES.SSS.wt_r(idx)     = []; FILES.SSS.wt_l(idx) = [];
+FILES.SSS.Option        = FILES.Option; 
+
+
+%Choose the disease dominant STN regardless of the leg in stance phase
+for i = 1:length(FILES.SSS.wt_l)
+    var = FILES.SSS.wt_l(i).name;
+    idx = strcmp(var, stn_dominance(:,1)); %find index of the current subject in stn_dominance 
+    if stn_dominance(idx,2) == "Right"
+        Stopping_Files(i) = FILES.SSS.wt_r(i);
+    elseif stn_dominance(idx,2) == "Left"
+        Stopping_Files(i) = FILES.SSS.wt_l(i); 
+   end
+end
+
+
+Stopping_Files = [];
+fields = fieldnames(SSS.(names{1}).Right_STN);
+for i = 1:length(fields); Stopping_Files.(fields{i}) = struct; end   
+
+for k = 1:length(names)
+    if isfield(SSS, (names{k})) == 0; continue; end
+    %Check for STN Dominance
+        if      Subjects.(names{k}.Baseline_Power.STN_dominance == "Left"; 
+            Stopping_Files = cat(2,Stopping_Files,SSS.(names{k}).Left_STN);
+
+        elseif  Subjects.(names{k}.Baseline_Power.STN_dominance == "Right";
+            Stopping_Files = cat(2,Stopping_Files,SSS.(names{k}).Right_STN);
+        end
+end
+
+
+%SAVE DATA
+%save([subjectdata.generalpath filesep  'Stopping_Files.mat'], 'Stopping_Files', '-mat')
+% *********************** END OF SCRIPT ************************************************************************************************************************
