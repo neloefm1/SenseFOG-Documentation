@@ -19,9 +19,11 @@ for i = 1:20
     if ~isfolder(names{i}) == 1
         fprintf(2," \n Missing File for %s \n", names{i}); continue
     elseif isfolder(names{i}) == 1
-        fprintf("\n Existing File for %s \n", names{i})
+        fprintf("\n Existing Folder for %s \n ", names{i})
         full_filename = append(subjectdata.generalpath, "/", names{i}, "/ses-standing/ieeg/", names{i}, "-ses-standing_lfpalg.mat");
-        load(full_filename)                                                                                         % Load standing LFP dataset
+        if isfile(full_filename); load(full_filename)                                                               % Load standing LFP dataset
+        elseif ~isfile(full_filename); fprintf(2," \n Missing Standing LFP File for %s \n", names{i}); continue
+        end
 
         full_filename = append(subjectdata.generalpath, "/", names{i}, "/", names{i}, "-dataevents.mat"); 
         load(full_filename)                                                                                         % Load the LFP activity log from the subject
