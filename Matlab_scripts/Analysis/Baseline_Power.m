@@ -17,9 +17,9 @@ STN_dominance = {'Left'; 'NaN'; 'Left'; 'NaN'; 'Right'; 'Right'; 'Right'; 'Right
 
 for i = 1:20
     if ~isfolder(names{i}) == 1
-        fprintf(2," \n Missing File for %s ", names{i}); continue
+        fprintf(2," \n Missing File for %s \n", names{i}); continue
     elseif isfolder(names{i}) == 1
-        fprintf("\n Existing File for %s ", names{i})
+        fprintf("\n Existing File for %s \n", names{i})
         full_filename = append(subjectdata.generalpath, "/", names{i}, "/ses-standing/ieeg/", names{i}, "-ses-standing_lfpalg.mat");
         load(full_filename)                                                                                         % Load standing LFP dataset
 
