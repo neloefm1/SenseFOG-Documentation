@@ -132,13 +132,13 @@ if subjectdata.signalpoint.(task).LFP_signal > subjectdata.signalpoint.(task).EE
 elseif subjectdata.signalpoint.(task).EEG_signal > subjectdata.signalpoint.(task).LFP_signal
    EEG_File.dat.dataset_new             = EEG_pre_signal(:,[subjectdata.signalpoint.(task).delay:end]);                                                 % Cut EEG file according to time-delay
    EEG_File.eegtime_new                 = EEG_File.eegtime_new(:, [subjectdata.signalpoint.(task).delay:end]);                                          % Cut EEG time file according to time-delay 
+   IMU_data.imutime                     = IMU_data.imutime(:,[subjectdata.signalpoint.(task).delay:end]); 
+   IMU_data.eegtime                     = IMU_data.eegtime(:,[subjectdata.signalpoint.(task).delay:end]); 
 
    for i = 1:3 
         IMU_data.interp_accelerometer(i).Sensor = IMU_data.interp_accelerometer(i).Sensor([subjectdata.signalpoint.(task).delay:end],:);                % Prepare IMU files
         IMU_data.interp_gyroscope(i).Sensor     = IMU_data.interp_gyroscope(i).Sensor([subjectdata.signalpoint.(task).delay:end],:);                    % Prepare IMU files
         IMU_data.interp_magnetometer(i).Sensor  = IMU_data.interp_magnetometer(i).Sensor([subjectdata.signalpoint.(task).delay:end],:);                 % Prepare IMU files
-        IMU_data.imutime                        = IMU_data.imutime(:,[subjectdata.signalpoint.(task).delay:end]); 
-        IMU_data.eegtime                        = IMU_data.eegtime(:,[subjectdata.signalpoint.(task).delay:end]); 
     end
    
    EEG_signal                           = EEG_File.dat.dataset_new;
