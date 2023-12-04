@@ -11,7 +11,7 @@
 %===================================================================%
 
 %Load in the data by specifying the subject and session of interest
-subjectdata.generalpath                 = uigetdir;                                                                 % Example: SenseFOG-main/sub-XX/ses-standing
+subjectdata.generalpath                 = uigetdir;                                                                 % Example: SenseFOG-main/sub-XX/ses-walk
 cd(subjectdata.generalpath)
 filename                                = extractBefore(extractAfter(subjectdata.generalpath,"-main/"),"/ses-");    % Create the specified filename
 taskname                                = append("ses-",extractAfter(subjectdata.generalpath,"/ses-"));             % Create the specified taskname
