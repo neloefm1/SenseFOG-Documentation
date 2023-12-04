@@ -8,8 +8,7 @@
 %first compute the morlet wavelet spectra for the LFP time series and
 %segment the time-frequency spectra according to the prespecified time
 %points. In a second step, we will use the standing baseline and normalize
-%the power spectra yielding the mean %-change from standing. Third, we will
-%resample all epochs and bring them up to the same data length.
+%the power spectra yielding the mean %-change from standing.
 %The current script will focus on data from the disease dominant STN.
 %===========================================================================%
 
