@@ -36,12 +36,14 @@ for t = 1:length(site)
         
         %Once the Midswing is identified, find the Heelstrike [preliminary] in the time interval after MS as the min. value of angular velocity in the sagittal plane before the maximum anterior–posterior acceleration
         x1                          = round(ms_locs(i)*fs);
+        if (x1 + 750) > IMU_time(:,end); continue; end
         temp_time                   = IMU_time(:,[x1:x1+750]);     
         temp_accl                   = Accelerometer([x1:x1+750],:);     
         [pks, locs]                 = findpeaks(temp_accl,temp_time,'SortStr','descend');
         locs                        = locs(1); 
 
         %Having found the Midswing, find the maximum anterior–posterior acceleration [after Midswing] 
+        if locs > IMU_time(:,end); continue; end
         temp_time                   = IMU_time(:, [single(ms_locs(i)*fs):single(locs*fs)]); 
         temp_gyr                    = Gyroscope([(single(ms_locs(i)*fs)):single(locs*fs)],:);
         [HS_pks, HS_locs]           = findpeaks(temp_gyr,temp_time,"MinPeakHeight",mean(Gyroscope), 'SortStr','descend');
