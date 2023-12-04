@@ -84,7 +84,7 @@ end
 clear MFF R_cwtstruct L_cwtstruct k m task
 
 
-% Segmenting Time-Frequency Matrix using pre-specified timepoints
+%Segmenting Time-Frequency Matrix using pre-specified timepoints
 %Next, extract all Heelstrike Events from the datasets and perform time- and frequency specific analyses ===============
 %For each heelstrike, take out the data post Morlet wavelet transformation
 task    = {'Walk'; 'WalkWS'; 'WalkINT'; 'WalkINT_new'};
