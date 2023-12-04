@@ -214,10 +214,10 @@ for i = 1:length(fields); Stopping_Files.(fields{i}) = struct; end
 for k = 1:length(names)
     if isfield(SSS, (names{k})) == 0; continue; end
     %Check for STN Dominance
-        if      Subjects.(names{k}.Baseline_Power.STN_dominance == "Left"; 
+        if      Subjects.(names{k}).Baseline_Power.STN_dominance == "Left"; 
             Stopping_Files = cat(2,Stopping_Files,SSS.(names{k}).Left_STN);
 
-        elseif  Subjects.(names{k}.Baseline_Power.STN_dominance == "Right";
+        elseif  Subjects.(names{k}).Baseline_Power.STN_dominance == "Right";
             Stopping_Files = cat(2,Stopping_Files,SSS.(names{k}).Right_STN);
         end
 end
