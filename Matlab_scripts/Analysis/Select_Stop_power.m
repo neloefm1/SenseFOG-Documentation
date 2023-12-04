@@ -60,7 +60,6 @@ clear a b k m task Files
 
 
 %Apply Morlet Wavelet Transformation ===================================================================================
-%BE AWARE THIS WILL CONSUME A LOT OF SPACE AND TIME (full dataset of 12 subjects may take up to 20 minutes)
 task = {'WalkWS'};
 fs      = 1000; %Sampling Frequency
 for k = 1:length(names)
