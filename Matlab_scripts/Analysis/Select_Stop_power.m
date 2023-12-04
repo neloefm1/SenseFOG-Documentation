@@ -195,17 +195,6 @@ FILES.SSS.wt_r(idx)     = []; FILES.SSS.wt_l(idx) = [];
 FILES.SSS.Option        = FILES.Option; 
 
 
-%Choose the disease dominant STN regardless of the leg in stance phase
-for i = 1:length(FILES.SSS.wt_l)
-    var = FILES.SSS.wt_l(i).name;
-    idx = strcmp(var, stn_dominance(:,1)); %find index of the current subject in stn_dominance 
-    if stn_dominance(idx,2) == "Right"
-        Stopping_Files(i) = FILES.SSS.wt_r(i);
-    elseif stn_dominance(idx,2) == "Left"
-        Stopping_Files(i) = FILES.SSS.wt_l(i); 
-   end
-end
-
 
 Stopping_Files = [];
 fields = fieldnames(SSS.(names{1}).Right_STN);
