@@ -119,6 +119,7 @@ elseif taskname == 'ses-sitting';   task = 'Sit';
 elseif taskname == 'ses-walk';      task = 'Walk';
 elseif taskname == 'ses-walkws';    task = 'WalkWS';
 elseif taskname == 'ses-walkint';   task = 'WalkINT';
+elseif taskname == 'ses-walkint2';  task = 'WalkINT_new';
 end
 
 %Align files by cutting off non-overlapping traces
