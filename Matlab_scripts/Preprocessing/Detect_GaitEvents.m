@@ -46,6 +46,7 @@ for t = 1:length(site)
         if locs > IMU_time(:,end); continue; end
         temp_time                   = IMU_time(:, [single(ms_locs(i)*fs):single(locs*fs)]); 
         temp_gyr                    = Gyroscope([(single(ms_locs(i)*fs)):single(locs*fs)],:);
+        if length(temp_time) <=2; continue; end
         [HS_pks, HS_locs]           = findpeaks(temp_gyr,temp_time,"MinPeakHeight",mean(Gyroscope), 'SortStr','descend');
         if isempty(HS_locs) == 1;  HS_locs = locs; HS_pks = Gyroscope(single(HS_locs*fs),:); end                    %Make sure the peak is the same unit as the gyroscope 
         HS_locs_1                   = HS_locs(1); 
