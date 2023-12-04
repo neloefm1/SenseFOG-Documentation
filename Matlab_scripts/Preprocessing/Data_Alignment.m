@@ -188,7 +188,7 @@ EEG_File.EEG_signal             = EEG_signal;
 EEG_File.EEG_time               = (1/subjectdata.fs_eeg):(1/subjectdata.fs_eeg):(length(EEG_File.eegtime_new)/subjectdata.fs_eeg);
 EEG_File                        = rmfield(EEG_File, {'eegtime'; 'dat'; 'data'; 'eegtime_new'});
 LFP                             = rmfield(LFP, {'raw_lfp_left'; 'raw_lfp_right'; 'fs_lfp'; 'interp_LFP_right'; 'interp_LFP_left' });
-IMU_data                        = rmfield(IMU_data, {'Accelerometer'; 'Gyroscope'; 'Magnetometer'; 'info'; 'fs'});
+IMU_data                        = rmfield(IMU_data, {'info'});
 
 
 %========================SAVING DATA ================================
