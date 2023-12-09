@@ -42,7 +42,6 @@ The following table represents the order used for preprocessing the data:
 
 
 ## TEMPORARY NEED FIXING
-- need to address the need for fieldtrip toolbox, direct users where to get it, current version?
 - for future, need to take off right and left LFP from data analyiss, also IMU cutoff...
 - Check PD17 Sitting
 - Check WalkINT2 in scripts
