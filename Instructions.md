@@ -36,7 +36,9 @@ The following table represents the order used for preprocessing the data:
 - [ ]  2.2 "Baseline_Coherence.m"      -- Compute baseline coherence from standing
 - [ ]  2.3 "Select_Walking_power.m"    -- Compute power spectra for each gait cycle (Walking)
 - [ ]  2.4 "Select_Stop_power.m"       -- Compute power spectra for self-selected stops
-- [ ]  2-5 "Select_Freeze_power.m"     -- Compute power spectra for freezing-of-gait (during walking)
+- [ ]  2.5 "Select_Freeze_power.m"     -- Compute power spectra for freezing-of-gait (during walking)
+- [ ]  2.6 "Select_Pre_Stop_power.m"   -- Compute power spectra for pre-stop gait cycles
+- [ ]  2.7 "Select_Pre_Freeze_power.m" -- Compute power spectra for pre-fog gait cycles
 
 
 ## TEMPORARY NEED FIXING
