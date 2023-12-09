@@ -154,30 +154,30 @@ for i = 1:20
                     %Indicate potential artifacts by hand
                     if i == 1 && k == 1;  datablocks(:,:,[1:10,53])                         = [];end % sub-01
                     if i == 1 && k == 2;  datablocks(:,:,[1:10])                            = [];end % sub-01
-                    if i == 2 && k == 1;  datablocks(:,:,[1:10])                            = [];end % sub-05
-                    if i == 2 && k == 2;  datablocks(:,:,[1:10,65])                         = [];end % sub-05
-                    if i == 3 && k == 1;  datablocks(:,:,[1:10,22])                         = [];end % sub-09
-                    if i == 3 && k == 2;  datablocks(:,:,[1:10])                            = [];end % sub-09
-                    if i == 4 && k == 1;  datablocks(:,:,[1:15,31])                         = [];end % sub-10
-                    if i == 4 && k == 2;  datablocks(:,:,[1:15])                            = [];end % sub-10
-                    if i == 5 && k == 1;  datablocks(:,:,[1:10,28,43])                      = [];end % sub-11
-                    if i == 5 && k == 2;  datablocks(:,:,[1:10,40])                         = [];end % sub-11
-                    if i == 6 && k == 1;  datablocks(:,:,[1:13])                            = [];end % sub-13
-                    if i == 6 && k == 2;  datablocks(:,:,[1:13])                            = [];end % sub-13
-                    if i == 7 && k == 1;  datablocks(:,:,[1:10])                            = [];end % sub-14
-                    if i == 7 && k == 2;  datablocks(:,:,[1:10])                            = [];end % sub-14
-                    if i == 8 && k == 1;  datablocks(:,:,[1:10])                            = [];end % sub-15
-                    if i == 8 && k == 2;  datablocks(:,:,[1:10])                            = [];end % sub-15
-                    if i == 9 && k == 1;  datablocks(:,:,[1:10])                            = [];end % sub-16
-                    if i == 9 && k == 2;  datablocks(:,:,[1:15])                            = [];end % sub-16
-                    if i == 10 && k == 1; datablocks(:,:,[1:10,34,47,53,60])                = [];end % sub-17
-                    if i == 10 && k == 2; datablocks(:,:,[1:10])                            = [];end % sub-17
-                    if i == 11 && k == 1; datablocks(:,:,[1:10])                            = [];end % sub-18
-                    if i == 11 && k == 2; datablocks(:,:,[1:10])                            = [];end % sub-18
-                    if i == 12 && k == 1; datablocks(:,:,[1:10])                            = [];end % sub-19
-                    if i == 12 && k == 2; datablocks(:,:,[1:10])                            = [];end % sub-19
-                    if i == 13 && k == 1; datablocks(:,:,[1:10])                            = [];end % sub-20
-                    if i == 13 && k == 2; datablocks(:,:,[1:11])                            = [];end % sub-20
+                    if i == 5 && k == 1;  datablocks(:,:,[1:10])                            = [];end % sub-05
+                    if i == 5 && k == 2;  datablocks(:,:,[1:10,65])                         = [];end % sub-05
+                    if i == 9 && k == 1;  datablocks(:,:,[1:10,22])                         = [];end % sub-09
+                    if i == 9 && k == 2;  datablocks(:,:,[1:10])                            = [];end % sub-09
+                    if i == 10 && k == 1;  datablocks(:,:,[1:15,31])                         = [];end % sub-10
+                    if i == 10 && k == 2;  datablocks(:,:,[1:15])                            = [];end % sub-10
+                    if i == 11 && k == 1;  datablocks(:,:,[1:10,28,43])                      = [];end % sub-11
+                    if i == 11 && k == 2;  datablocks(:,:,[1:10,40])                         = [];end % sub-11
+                    if i == 13 && k == 1;  datablocks(:,:,[1:13])                            = [];end % sub-13
+                    if i == 13 && k == 2;  datablocks(:,:,[1:13])                            = [];end % sub-13
+                    if i == 14 && k == 1;  datablocks(:,:,[1:10])                            = [];end % sub-14
+                    if i == 14 && k == 2;  datablocks(:,:,[1:10])                            = [];end % sub-14
+                    if i == 15 && k == 1;  datablocks(:,:,[1:10])                            = [];end % sub-15
+                    if i == 15 && k == 2;  datablocks(:,:,[1:10])                            = [];end % sub-15
+                    if i == 16 && k == 1;  datablocks(:,:,[1:10])                            = [];end % sub-16
+                    if i == 16 && k == 2;  datablocks(:,:,[1:15])                            = [];end % sub-16
+                    if i == 17 && k == 1; datablocks(:,:,[1:10,34,47,53,60])                = [];end % sub-17
+                    if i == 17 && k == 2; datablocks(:,:,[1:10])                            = [];end % sub-17
+                    if i == 18 && k == 1; datablocks(:,:,[1:10])                            = [];end % sub-18
+                    if i == 18 && k == 2; datablocks(:,:,[1:10])                            = [];end % sub-18
+                    if i == 19 && k == 1; datablocks(:,:,[1:10])                            = [];end % sub-19
+                    if i == 19 && k == 2; datablocks(:,:,[1:10])                            = [];end % sub-19
+                    if i == 20 && k == 1; datablocks(:,:,[1:10])                            = [];end % sub-20
+                    if i == 20 && k == 2; datablocks(:,:,[1:11])                            = [];end % sub-20
         
                     A                         = cat(3, datablocks);
                     baseline                  = mean(mean(A,3),2);
