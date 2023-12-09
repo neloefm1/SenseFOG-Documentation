@@ -334,7 +334,7 @@ clear A
 
 
 Pre_Stopping_Files.frequencies         = Subjects.(names{1}).(task{m}).f;
-Pre_Stopping_Files.All_Stops           = All_Stops;
+Pre_Stopping_Files.Pre_Stops           = All_Stops;
 
 clear lables idx idx_del index_del k m nfrq q time field A i  c  C baseline_standing condition_labels datafile labels task num_freq num_time store_file store_temp pre_names 
 
