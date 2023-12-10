@@ -4,7 +4,7 @@
 %Original author(s): Philipp Klocke, Moritz Loeffler
 
 %This script will first call all the timepoints for walking activity that
-%was specified and stored in the Sub_GrandActivity_Log.m file. We will
+%were specified and stored in the Sub_GrandActivity_Log.m file. We will
 %first compute the morlet wavelet spectra for the LFP time series and
 %segment the time-frequency spectra according to the prespecified time
 %points. In a second step, we will use the standing baseline and normalize
