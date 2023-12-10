@@ -192,6 +192,9 @@ for i = 1:20
          end
     end
     
+    %SAVE DATA
+    save([full_filename], 'LFP_Events', '-mat')
+
     %Clean-UP
     clear A baseline blocksize cfg channellist data_avg datablocks datainput k L p signal site store t temp_store wavelet_coh
 end
