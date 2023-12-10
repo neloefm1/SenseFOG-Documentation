@@ -42,11 +42,11 @@ The following table represents the order used for preprocessing the data:
 - [ ]  2.3.5 "Select_Pre_Freeze_power.m"       -- Compute power spectra for pre-fog gait cycles
 
 ### 2.4 Coherence Analyses
-- [ ]  2.4.1 "STN_EMG_Coherence_Walking.m"    -- Compute power spectra for each gait cycle (Walking)
-- [ ]  2.4.2 "STN_EMG_Coherence_Stop.m"       -- Compute power spectra for self-selected stops
-- [ ]  2.4.3 "STN_EMG_Coherence_Freeze.m"     -- Compute power spectra for freezing-of-gait (during walking)
-- [ ]  2.4.4 "STN_EMG_Coherence_Pre_Stop.m"   -- Compute power spectra for pre-stop gait cycles
-- [ ]  2.4.5 "STN_EMG_Coherence_Pre_Freeze.m" -- Compute power spectra for pre-fog gait cycles
+- [ ]  2.4.1 "STN_EMG_Coherence_Walking.m"    -- Compute subthalamo-muscular coherence spectra for each gait cycle (Walking)
+- [ ]  2.4.2 "STN_EMG_Coherence_Stop.m"       -- Compute subthalamo-muscular coherence for self-selected stops
+- [ ]  2.4.3 "STN_EMG_Coherence_Freeze.m"     -- Compute subthalamo-muscular coherence for freezing-of-gait (during walking)
+- [ ]  2.4.4 "STN_EMG_Coherence_Pre_Stop.m"   -- Compute subthalamo-muscular coherence for pre-stop gait cycles
+- [ ]  2.4.5 "STN_EMG_Coherence_Pre_Freeze.m" -- Compute subthalamo-muscular coherence for pre-fog gait cycles
 
 
 
