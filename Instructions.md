@@ -22,32 +22,31 @@ The following toolboxes were also acquired and will be needed to run the preproc
 The following table represents the order used for preprocessing the data:
 
 ## 1.0 Preprocessing
-- [ ]  1.1 "sub-XX-datafile"             --  Run the Subject-Files > sub-XX-datafile.m for each subjects
-- [ ]  1.2 "Import_BVA.m"                --  Import raw EEG/EMG files
-- [ ]  1.3 "Import_JSON.m"               --  Import JSON (LFP) files
-- [ ]  1.4 "Import_HDF.m"                --  Import inertial motion unit (IMU) files
-- [ ]  1.5 "Data_Alignment.m"            --  Align all datasets in time using the stimulation artefact
-- [ ]  1.6 "Detect_GaitEvents.m"         --  Compute gait cycles from all walking tasks
-- [ ]  1.7 "Sub_GrandActivity_Log.m"     --  Based on predefined time points, collect all activities (walking, turning, stops etc.)
-
+- [ ]  1.1 "sub-XX-datafile"                   --  Run the Subject-Files > sub-XX-datafile.m for each subjects
+- [ ]  1.2 "Import_BVA.m"                      --  Import raw EEG/EMG files
+- [ ]  1.3 "Import_JSON.m"                     --  Import JSON (LFP) files
+- [ ]  1.4 "Import_HDF.m"                      --  Import inertial motion unit (IMU) files
+- [ ]  1.5 "Data_Alignment.m"                  --  Align all datasets in time using the stimulation artefact
+- [ ]  1.6 "Detect_GaitEvents.m"               --  Compute gait cycles from all walking tasks
+- [ ]  1.7 "Sub_GrandActivity_Log.m"           --  Based on predefined time points, collect all activities (walking, turning, stops etc.)
 
 ## 2.0 Data Analysis
-- [ ]  2.1 "Baseline_Power.m"            -- Compute baseline power from standing
-- [ ]  2.2 "Baseline_Coherence.m"        -- Compute baseline coherence from standing
+- [ ]  2.1 "Baseline_Power.m"                  -- Compute baseline power from standing
+- [ ]  2.2 "Baseline_Coherence.m"              -- Compute baseline coherence from standing
 
 ### 2.3 Power Analyses
-- [ ]  2.3.1 "Select_Walking_power.m"    -- Compute power spectra for each gait cycle (Walking)
-- [ ]  2.3.2 "Select_Stop_power.m"       -- Compute power spectra for self-selected stops
-- [ ]  2.3.3 "Select_Freeze_power.m"     -- Compute power spectra for freezing-of-gait (during walking)
-- [ ]  2.3.4 "Select_Pre_Stop_power.m"   -- Compute power spectra for pre-stop gait cycles
-- [ ]  2.3.5 "Select_Pre_Freeze_power.m" -- Compute power spectra for pre-fog gait cycles
+- [ ]  2.3.1 "Select_Walking_power.m"          -- Compute power spectra for each gait cycle (Walking)
+- [ ]  2.3.2 "Select_Stop_power.m"             -- Compute power spectra for self-selected stops
+- [ ]  2.3.3 "Select_Freeze_power.m"           -- Compute power spectra for freezing-of-gait (during walking)
+- [ ]  2.3.4 "Select_Pre_Stop_power.m"         -- Compute power spectra for pre-stop gait cycles
+- [ ]  2.3.5 "Select_Pre_Freeze_power.m"       -- Compute power spectra for pre-fog gait cycles
 
 ### 2.4 Coherence Analyses
-- [ ]  2.4.1 "Select_Walking_power.m"    -- Compute power spectra for each gait cycle (Walking)
-- [ ]  2.4.2 "Select_Stop_power.m"       -- Compute power spectra for self-selected stops
-- [ ]  2.4.3 "Select_Freeze_power.m"     -- Compute power spectra for freezing-of-gait (during walking)
-- [ ]  2.4.4 "Select_Pre_Stop_power.m"   -- Compute power spectra for pre-stop gait cycles
-- [ ]  2.4.5 "Select_Pre_Freeze_power.m" -- Compute power spectra for pre-fog gait cycles
+- [ ]  2.4.1 "STN_EMG_Coherence_Walking.m"    -- Compute power spectra for each gait cycle (Walking)
+- [ ]  2.4.2 "STN_EMG_Coherence_Stop.m"       -- Compute power spectra for self-selected stops
+- [ ]  2.4.3 "STN_EMG_Coherence_Freeze.m"     -- Compute power spectra for freezing-of-gait (during walking)
+- [ ]  2.4.4 "STN_EMG_Coherence_Pre_Stop.m"   -- Compute power spectra for pre-stop gait cycles
+- [ ]  2.4.5 "STN_EMG_Coherence_Pre_Freeze.m" -- Compute power spectra for pre-fog gait cycles
 
 
 
