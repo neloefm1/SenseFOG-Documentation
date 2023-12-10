@@ -183,10 +183,11 @@ for i = 1:20
                     baseline                  = mean(mean(A,3),2);
                     Methods                   = 'Morlet';
                     signal                    = {'baseline_coh_L'; 'baseline_coh_R'};
+                    mode                      = {'STN_TA'; 'STN_GA'; 'TA_GA'};  
 
-                    LFP_Events.Baseline_Coherence.(signal{k,1}) = baseline;
-                    LFP_Events.Baseline_Coherence.Methods       = 'Morlet';
-                    LFP_Events.Baseline_Coherence.STN_dominance = STN_dominance{i};
+                    LFP_Events.Baseline_Coherence.(signal{k,1}).(mode{t})         = baseline;
+                    LFP_Events.Baseline_Coherence.Methods                         = 'Morlet';
+                    LFP_Events.Baseline_Coherence.STN_dominance                   = STN_dominance{i};
                     clear datablocks  datainput blocksize L Methods signal A baseline
              end
          end
