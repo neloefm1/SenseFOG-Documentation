@@ -141,7 +141,6 @@ for k = 1:length(names)
                      elseif Subjects.(names{k}).Baseline_Power.STN_dominance == "Right"; foot = "Left";
                         
                         %find index where freeze start matches HS_Loc position
-                        %idxGC3 = find(round(LF_events,4) == round(stop_start,4)); %Position of FOG onset
                         [~,idxGC3] = min( abs( LF_events-stop_start));
 
                         %GC3
