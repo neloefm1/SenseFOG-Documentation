@@ -387,9 +387,6 @@ end
 
 %***********************************************************************************************************************
 %Make Manual Adjustments after careful REVIEW of each GaitCycle
-%if isfield(Subjects.sub_01.Walk, 'Walking_Right_HS')
-%    Subjects.sub_01.Walk.Walking_Right_HS.HS_locs_1         = XX; 
-%end
 %***********************************************************************************************************************
 
 
