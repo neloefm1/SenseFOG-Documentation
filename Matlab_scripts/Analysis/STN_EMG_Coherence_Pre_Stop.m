@@ -135,7 +135,7 @@ for k = 1:length(names)
                     RF_events       = sort(Subjects.(names{k}).WalkWS.rf_events.Heelstrike_Loc);                    % Sort in ascending order
                     RF_events       = RF_events(RF_events <= stop_start);                                           % Only choose events that occur at or before stop
                     LF_events       = sort(Subjects.(names{k}).WalkWS.lf_events.Heelstrike_Loc);                    % Sort in ascending order
-                    LF_events       = LF_events(LF_events <= stop_start);                                           % Onls choose events that occur at or before stop
+                    LF_events       = LF_events(LF_events <= stop_start);                                           % Only choose events that occur at or before stop
                     DD_STN          = Subjects.(names{k}).Baseline_Power.STN_dominance;
                     
                     %Use the foot that corresponds to the disease dominant STN
