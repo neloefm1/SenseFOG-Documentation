@@ -104,7 +104,7 @@ for k = 1:length(names)
                     %Use the foot that corresponds to the disease dominant STN
                     if Subjects.(names{k}).Baseline_Power.STN_dominance == "Left"; foot = "Right";
 
-                        %find index where freeze start matches HS_Loc position                      
+                        %find index where stop start matches HS_Loc position                      
                         [~,idxGC3] = min( abs(RF_events-stop_start));
                         
                         %GC3
@@ -140,7 +140,7 @@ for k = 1:length(names)
 
                      elseif Subjects.(names{k}).Baseline_Power.STN_dominance == "Right"; foot = "Left";
                         
-                        %find index where freeze start matches HS_Loc position
+                        %find index where stop start matches HS_Loc position
                         [~,idxGC3] = min( abs( LF_events-stop_start));
 
                         %GC3
