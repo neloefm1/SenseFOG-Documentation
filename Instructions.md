@@ -54,3 +54,5 @@ The following table represents the order used for preprocessing the data:
 - for future, need to take off right and left LFP from data analyiss, also IMU cutoff...
 - Check PD17 Sitting
 - Check WalkINT2 in scripts
+- check if decelleration and acceleration, as well as gait cycles before and after turn are excluded?
+
