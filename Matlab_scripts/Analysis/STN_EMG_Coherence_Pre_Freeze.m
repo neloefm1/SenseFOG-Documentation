@@ -437,7 +437,7 @@ for k = 1:length(names)
             wavelet_coh = struct;
             wavelet_coh(1).name  = "STN_TA"; [wavelet_coh(1).coh, ~, f] = wcoherence(datafile.trial{1}(1,:),datafile.trial{1}(2,:), fs, 'FrequencyLimits',[1 40]); %1 = STN
             wavelet_coh(2).name  = "STN_GA"; [wavelet_coh(2).coh, ~, f] = wcoherence(datafile.trial{1}(1,:),datafile.trial{1}(3,:), fs, 'FrequencyLimits',[1 40]); %2 = TA
-            wavelet_coh(3).name  = "TA_GA" ; [wavelet_coh(3).coh, ~, f, ~, wavelet_coh(3).wtTA, wavelet_coh(3).wtGA] = wcoherence(datafile.trial{1}(2,:),datafile.trial{1}(3,:), fs, 'FrequencyLimits',[1 40]); %3 = GA
+            wavelet_coh(3).name  = "TA_GA" ; [wavelet_coh(3).coh, ~, f] = wcoherence(datafile.trial{1}(2,:),datafile.trial{1}(3,:), fs, 'FrequencyLimits',[1 40]); %3 = GA
             
 
             %Rawfiles
@@ -463,8 +463,6 @@ for k = 1:length(names)
                    datafile.events(i).GaitParameter(p).STN_TA           = wavelet_coh(1).coh(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]); 
                    datafile.events(i).GaitParameter(p).STN_GA           = wavelet_coh(2).coh(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]); 
                    datafile.events(i).GaitParameter(p).TA_GA            = wavelet_coh(3).coh(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]); 
-                   datafile.events(i).GaitParameter(p).wt_TA            = wavelet_coh(3).wtTA(:,[single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]); 
-                   datafile.events(i).GaitParameter(p).wt_GA            = wavelet_coh(3).wtGA(:,[single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]); 
                    datafile.events(i).GaitParameter(p).TA_raw           = TA_raw(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1):    single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]);
                    datafile.events(i).GaitParameter(p).GA_raw           = GA_raw(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1):    single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]);
                    datafile.events(i).GaitParameter(p).TA_env           = TA_env(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1):     single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]);
@@ -479,7 +477,7 @@ for k = 1:length(names)
                clear GA_env GA_rms_raw  TA_raw TA_rms_raw
 
                datafile.events(i).GaitParameter = rmfield(datafile.events(i).GaitParameter, {'HS_pks_1','HS_pks_2', 'MS_pks', 'TO_pks', 'DD_STN', 'name', 'foot'});
-               field_ids = {'STN_TA', 'STN_GA', 'TA_GA', 'wt_TA', 'wt_GA', 'TA_raw', 'GA_raw','TA_env', 'GA_env','TA_rms_raw', 'GA_rms_raw', 'Gyroscope','Accelerometer'};
+               field_ids = {'STN_TA', 'STN_GA', 'TA_GA', 'TA_raw', 'GA_raw','TA_env', 'GA_env','TA_rms_raw', 'GA_rms_raw', 'Gyroscope','Accelerometer'};
 
                 for p = 1:length(datafile.events(i).GaitParameter)
                    for y = 1:length(field_ids)
