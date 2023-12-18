@@ -55,4 +55,6 @@ The following table represents the order used for preprocessing the data:
 - Check PD17 Sitting
 - Check WalkINT2 in scripts
 - check if decelleration and acceleration, as well as gait cycles before and after turn are excluded?
+- On Mendely, PD18 Walk JSON needs to be updated
+
 
