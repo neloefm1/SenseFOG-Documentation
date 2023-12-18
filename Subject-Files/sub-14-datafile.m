@@ -59,24 +59,24 @@ end
 
 
 % INTERFERENCE - Manual Input for EEG and LFP Datasets
-subjectdata.signalpoint.Interf = [];
-subjectdata.signalpoint.Interf.EEG_signal       = 13379;                                                                        % Sample where DBS Stimulation stops showing a clear downward spike, used for later alignsignals_new.m
-subjectdata.signalpoint.Interf.LFP_signal       = 10723;                                                                        % Sample where DBS Stimulation stops showing a clear upward spike, used for later alignsignals_new.m
-if subjectdata.signalpoint.Interf.LFP_signal > subjectdata.signalpoint.Interf.EEG_signal;                                       % If clause to see if LFP signal is longer than EEG signal 
-   subjectdata.signalpoint.Interf.delay = subjectdata.signalpoint.Interf.LFP_signal - subjectdata.signalpoint.Interf.EEG_signal;% find time-delay between both EEG and LFP
-else subjectdata.signalpoint.Interf.EEG_signal > subjectdata.signalpoint.Interf.LFP_signal;                                     % If clause to see if EEG signal is longer than LFP signal
-     subjectdata.signalpoint.Interf.delay = subjectdata.signalpoint.Interf.EEG_signal - subjectdata.signalpoint.Interf.LFP_signal;% Find time-delay between both EEG and LFP
+subjectdata.signalpoint.WalkINT = [];
+subjectdata.signalpoint.WalkINT.EEG_signal       = 13379;                                                                        % Sample where DBS Stimulation stops showing a clear downward spike, used for later alignsignals_new.m
+subjectdata.signalpoint.WalkINT.LFP_signal       = 10723;                                                                        % Sample where DBS Stimulation stops showing a clear upward spike, used for later alignsignals_new.m
+if subjectdata.signalpoint.WalkINT.LFP_signal > subjectdata.signalpoint.WalkINT.EEG_signal;                                      % If clause to see if LFP signal is longer than EEG signal 
+   subjectdata.signalpoint.WalkINT.delay = subjectdata.signalpoint.WalkINT.LFP_signal - subjectdata.signalpoint.WalkINT.EEG_signal;% find time-delay between both EEG and LFP
+else subjectdata.signalpoint.WalkINT.EEG_signal > subjectdata.signalpoint.WalkINT.LFP_signal;                                    % If clause to see if EEG signal is longer than LFP signal
+     subjectdata.signalpoint.WalkINT.delay = subjectdata.signalpoint.WalkINT.EEG_signal - subjectdata.signalpoint.WalkINT.LFP_signal;% Find time-delay between both EEG and LFP
 end 
 
 
 % INTERFERENCE 2 - Manual Input for EEG and LFP Datasets
-subjectdata.signalpoint.Interf_new = [];
-subjectdata.signalpoint.Interf_new.EEG_signal       = 10136;                                                                      % Sample where DBS Stimulation stops showing a clear downward spike, used for later alignsignals_new.m
-subjectdata.signalpoint.Interf_new.LFP_signal       = 8012;                                                                       % Sample where DBS Stimulation stops showing a clear upward spike, used for later alignsignals_new.m
-if subjectdata.signalpoint.Interf_new.LFP_signal > subjectdata.signalpoint.Interf_new.EEG_signal;                                 % If clause to see if LFP signal is longer than EEG signal 
-   subjectdata.signalpoint.Interf_new.delay = subjectdata.signalpoint.Interf_new.LFP_signal - subjectdata.signalpoint.Interf_new.EEG_signal;% find time-delay between both EEG and LFP
-else subjectdata.signalpoint.Interf_new.EEG_signal > subjectdata.signalpoint.Interf_new.LFP_signal;                               % If clause to see if EEG signal is longer than LFP signal
-     subjectdata.signalpoint.Interf_new.delay = subjectdata.signalpoint.Interf_new.EEG_signal - subjectdata.signalpoint.Interf_new.LFP_signal;% Find time-delay between both EEG and LFP
+subjectdata.signalpoint.WalkINT_new = [];
+subjectdata.signalpoint.WalkINT_new.EEG_signal       = 10136;                                                                      % Sample where DBS Stimulation stops showing a clear downward spike, used for later alignsignals_new.m
+subjectdata.signalpoint.WalkINT_new.LFP_signal       = 8012;                                                                       % Sample where DBS Stimulation stops showing a clear upward spike, used for later alignsignals_new.m
+if subjectdata.signalpoint.WalkINT_new.LFP_signal > subjectdata.signalpoint.WalkINT_new.EEG_signal;                                % If clause to see if LFP signal is longer than EEG signal 
+   subjectdata.signalpoint.WalkINT_new.delay = subjectdata.signalpoint.WalkINT_new.LFP_signal - subjectdata.signalpoint.WalkINT_new.EEG_signal;% find time-delay between both EEG and LFP
+else subjectdata.signalpoint.WalkINT_new.EEG_signal > subjectdata.signalpoint.WalkINT_new.LFP_signal;                              % If clause to see if EEG signal is longer than LFP signal
+     subjectdata.signalpoint.WalkINT_new.delay = subjectdata.signalpoint.WalkINT_new.EEG_signal - subjectdata.signalpoint.WalkINT_new.LFP_signal;% Find time-delay between both EEG and LFP
 end 
 
 
