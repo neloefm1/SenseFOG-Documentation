@@ -15,20 +15,23 @@
 %===================================================================%
 
 %Load EEG and LFP data and IMU data by specifying subject and SESSION of interest
-subjectdata.generalpath                 = uigetdir;                                                         % Example: SenseFOG-main/sub-XX/ses-standing
+subjectdata.generalpath         = uigetdir;                                                         % Example: SenseFOG-main/sub-XX/ses-standing
 cd(subjectdata.generalpath)
-filename                                = extractAfter(subjectdata.generalpath,"-main/");                   % Create the specified filename
-filename                                = extractBefore(filename,"/ses-");                                  % Create the specified taskname
-taskname                                = extractAfter(subjectdata.generalpath,"/ses-");                    % Create the specified taskname
-taskname                                = append("ses-", taskname);                                         % Create the specified taskname
-filepath                                = extractBefore(subjectdata.generalpath, "/ses");                   % Create the specified filepath
-fullname = append(subjectdata.generalpath, "/ieeg/",filename, "-", taskname, "_raw.mat"); load(fullname)    % LOAD JSON [LFP] FILE
-fullname = append(subjectdata.generalpath, "/eeg/",filename, "-", taskname, "_raw.mat"); load(fullname)     % LOAD BVA [EEG] FILE
-fullname = append(subjectdata.generalpath, "/motion/",filename, "-", taskname, "_raw.mat"); load(fullname)  % LOAD HDF [IMU] FILE
-fullname = append(filepath, "/",filename, "_datafile.mat"); load(fullname);
+filename                        = extractAfter(subjectdata.generalpath,"-main/");                   % Create the specified filename
+filename                        = extractBefore(filename,"/ses-");                                  % Create the specified taskname
+taskname                        = extractAfter(subjectdata.generalpath,"/ses-");                    % Create the specified taskname
+taskname                        = append("ses-", taskname);                                         % Create the specified taskname
+filepath                        = extractBefore(subjectdata.generalpath, "/ses");                   % Create the specified filepath
+fullname                        = append(subjectdata.generalpath, "/ieeg/",filename, "-", taskname, "_raw.mat"); 
+if isfile(fullname); load(fullname); end                                                            % LOAD JSON [LFP] FILE
+fullname                        = append(subjectdata.generalpath, "/eeg/",filename, "-", taskname, "_raw.mat"); 
+if isfile(fullname); load(fullname); end                                                            % LOAD BVA [EEG] FILE
+fullname                        = append(subjectdata.generalpath, "/motion/",filename, "-", taskname, "_raw.mat");
+if isfile(fullname); load(fullname); end                                                            % LOAD HDF [IMU] FILE
+fullname                        = append(filepath, "/",filename, "_datafile.mat"); load(fullname);
 
-subjectdata.filepath                    = filepath;                                                         % Create the specified filepath
-subjectdata.fs_eeg                      = 1000;                                                             % EEG sampling rate is 1000 Hz per default
+subjectdata.filepath            = filepath;                                                         % Create the specified filepath
+subjectdata.fs_eeg              = 1000;                                                             % EEG sampling rate is 1000 Hz per default
 
 
 %=====LFP DATA =========================================================================
@@ -47,7 +50,6 @@ figure(1);
     ylabel('Amplitude [a.u.]')
     legend('Right LFP')
     
-
     ax4 = subplot(2,1,2);
     plot(1:length(LFP.interp_LFP_left),LFP.interp_LFP_left, 'LineWidth',1,'Color','b')
     xlim([minx maxx])
@@ -65,9 +67,11 @@ clear ans ax1 ax2 ax3 ax4 minx maxx
 %==== EEG DATA =========================================================================
 %Finding the M1-Sequence of the IMU Dataset that appears in the EEG dataset
 %The M1 Sequence represents the start of IMU recording in the EEG dataset
-M1                      = struct2table(EEG_File.vmrk);
-index_M1                = find(strcmp('M  1',(M1{:,2}))); %Finding the index of where M  1 appears
-sample_M1               = table2array(M1(index_M1,"sample"));
+if      exist("IMU_data")
+        M1                      = struct2table(EEG_File.vmrk);
+        index_M1                = find(strcmp('M  1',(M1{:,2}))); %Finding the index of where M  1 appears
+        sample_M1               = table2array(M1(index_M1,"sample"));
+else    sample_M1               = 1; end
 
 
 %Plot EEG Raw Data (single channels):
@@ -133,7 +137,8 @@ elseif subjectdata.signalpoint.(task).EEG_signal > subjectdata.signalpoint.(task
    EEG_File.dat.dataset_new             = EEG_pre_signal(:,[subjectdata.signalpoint.(task).delay:end]);                                                 % Cut EEG file according to time-delay
    EEG_File.eegtime_new                 = (1/subjectdata.fs_eeg):(1/subjectdata.fs_eeg):(length(EEG_File.dat.dataset_new)/subjectdata.fs_eeg):
    %EEG_File.eegtime_new                = EEG_File.eegtime_new(:, [subjectdata.signalpoint.(task).delay:end]);                                          % Cut EEG time file according to time-delay 
-   
+
+   if exist("IMU_data")
    for i = 1:3 
         IMU_data.interp_accelerometer(i).Sensor = IMU_data.interp_accelerometer(i).Sensor([subjectdata.signalpoint.(task).delay:end],:);                % Prepare IMU files
         IMU_data.interp_gyroscope(i).Sensor     = IMU_data.interp_gyroscope(i).Sensor([subjectdata.signalpoint.(task).delay:end],:);                    % Prepare IMU files
@@ -142,9 +147,7 @@ elseif subjectdata.signalpoint.(task).EEG_signal > subjectdata.signalpoint.(task
 
     IMU_data.imutime                     = (1/subjectdata.fs_eeg):(1/subjectdata.fs_eeg):(length(IMU_data.interp_accelerometer(1).Sensor)/subjectdata.fs_eeg); 
     IMU_data.eegtime                     = (1/subjectdata.fs_eeg):(1/subjectdata.fs_eeg):(length(IMU_data.interp_accelerometer(1).Sensor)/subjectdata.fs_eeg); 
-    %IMU_data.imutime                    = IMU_data.imutime(:,[subjectdata.signalpoint.(task).delay:end]); 
-    %IMU_data.eegtime                    = IMU_data.eegtime(:,[subjectdata.signalpoint.(task).delay:end]); 
-
+    end
    
    EEG_signal                           = EEG_File.dat.dataset_new;
    LFP_signal_R                         = LFP.interp_LFP_right; 
@@ -171,12 +174,14 @@ ax2 = subplot(3,1,2)
     legend('Impulse Generator [IPG]','Box', 'off')
     title('EEG Data - IPG')
 
+    if exist("IMU_data")
 ax3 = subplot(3,1,3)
     plot(1:length(IMU_data.interp_accelerometer(1).Sensor),IMU_data.interp_accelerometer(1).Sensor(:,1))
     xlabel('Samples')
     xlim([xstart-5000 xstart+5000])
     legend('Accelerometer')
-    title('IMU')  
+    title('IMU')
+    else; ax3 ) subplot(3,1,3); end
     set(gcf,'color','white')
     sgtitle({'Aligned LFP dataset and EEG dataset'; sprintf('Trial: %s ', EEG_File.eeg)})
     linkaxes([ax1, ax2 ax3],'x')
@@ -191,12 +196,11 @@ EEG_File.EEG_signal             = EEG_signal;
 EEG_File.EEG_time               = (1/subjectdata.fs_eeg):(1/subjectdata.fs_eeg):(length(EEG_File.eegtime_new)/subjectdata.fs_eeg);
 EEG_File                        = rmfield(EEG_File, {'eegtime'; 'dat'; 'data'; 'eegtime_new'});
 LFP                             = rmfield(LFP, {'raw_lfp_left'; 'raw_lfp_right'; 'fs_lfp'; 'interp_LFP_right'; 'interp_LFP_left' });
-IMU_data                        = rmfield(IMU_data, {'info'});
+if exist("IMU_data"); IMU_data  = rmfield(IMU_data, {'info'});end
 
 
 %========================SAVING DATA ================================
-save([subjectdata.filepath filesep char(taskname) filesep 'ieeg' filesep filename '-' char(taskname) '_lfpalg.mat'], 'LFP', '-mat')
-save([subjectdata.filepath filesep char(taskname) filesep 'eeg' filesep filename '-' char(taskname) '_eegalg.mat'], 'EEG_File', '-mat')
-save([subjectdata.filepath filesep char(taskname) filesep 'motion' filesep filename '-' char(taskname) '_gaitalg.mat'], 'IMU_data', '-mat')
-
+if exist("IMU_data"); save([subjectdata.filepath filesep char(taskname) filesep 'motion' filesep filename '-' char(taskname) '_gaitalg.mat'], 'IMU_data', '-mat'); end
+if exist("LFP");      save([subjectdata.filepath filesep char(taskname) filesep 'ieeg' filesep filename '-' char(taskname) '_lfpalg.mat'], 'LFP', '-mat'); end     
+if exist("EEG_File"); save([subjectdata.filepath filesep char(taskname) filesep 'eeg' filesep filename '-' char(taskname) '_eegalg.mat'], 'EEG_File', '-mat'); end
 % *********************** END OF SCRIPT ************************************************************************************************************************
