@@ -62,6 +62,8 @@ Explain here what is to be expected to be done, interations of code and expected
 - On Mendely, PD18 Walk JSON needs to be updated
 - check if PD10 files contain ECG artefacts
 - Provide detailed explanation of the code and the associated output
+- Update the titles of the repository on GitHub and Mendely Data
+
 - 
 
 
