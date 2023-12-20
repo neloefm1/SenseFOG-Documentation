@@ -22,6 +22,8 @@ The following toolboxes were also acquired and will be needed to run the preproc
 The following table represents the order used for preprocessing the data:
 
 ## 1.0 Preprocessing
+Text here
+Text here
 - [ ]  1.1 "sub-XX-datafile"                   --  Run the Subject-Files > sub-XX-datafile.m for each subjects
 - [ ]  1.2 "Import_BVA.m"                      --  Import raw EEG/EMG files
 - [ ]  1.3 "Import_JSON.m"                     --  Import JSON (LFP) files
