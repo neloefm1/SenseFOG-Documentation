@@ -22,8 +22,7 @@ The following toolboxes were also acquired and will be needed to run the preproc
 The following table represents the order used for preprocessing the data:
 
 ## 1.0 Preprocessing
-Text here
-Text here
+Explain here what is to be expected to be done, interations of code and expected output of the codes.
 - [ ]  1.1 "sub-XX-datafile"                   --  Run the Subject-Files > sub-XX-datafile.m for each subjects
 - [ ]  1.2 "Import_BVA.m"                      --  Import raw EEG/EMG files
 - [ ]  1.3 "Import_JSON.m"                     --  Import JSON (LFP) files
@@ -33,10 +32,12 @@ Text here
 - [ ]  1.7 "Sub_GrandActivity_Log.m"           --  Based on predefined time points, collect all activities (walking, turning, stops etc.)
 
 ## 2.0 Data Analysis
+Explain here what is to be expected to be done, interations of code and expected output of the codes.
 - [ ]  2.1 "Baseline_Power.m"                  -- Compute baseline power from standing
 - [ ]  2.2 "Baseline_Coherence.m"              -- Compute baseline coherence from standing
 
 ### 2.3 Power Analyses
+Explain here what is to be expected to be done, interations of code and expected output of the codes.
 - [ ]  2.3.1 "Select_Walking_power.m"          -- Compute power spectra for each gait cycle (Walking)
 - [ ]  2.3.2 "Select_Stop_power.m"             -- Compute power spectra for self-selected stops
 - [ ]  2.3.3 "Select_Freeze_power.m"           -- Compute power spectra for freezing-of-gait (during walking)
@@ -44,6 +45,7 @@ Text here
 - [ ]  2.3.5 "Select_Pre_Freeze_power.m"       -- Compute power spectra for pre-fog gait cycles
 
 ### 2.4 Coherence Analyses
+Explain here what is to be expected to be done, interations of code and expected output of the codes.
 - [ ]  2.4.1 "STN_EMG_Coherence_Walking.m"    -- Compute subthalamo-muscular coherence spectra for each gait cycle (Walking)
 - [ ]  2.4.2 "STN_EMG_Coherence_Stop.m"       -- Compute subthalamo-muscular coherence for self-selected stops
 - [ ]  2.4.3 "STN_EMG_Coherence_Freeze.m"     -- Compute subthalamo-muscular coherence for freezing-of-gait (during walking)
@@ -58,5 +60,8 @@ Text here
 - Check WalkINT2 in scripts
 - check if decelleration and acceleration, as well as gait cycles before and after turn are excluded?
 - On Mendely, PD18 Walk JSON needs to be updated
+- check if PD10 files contain ECG artefacts
+- Provide detailed explanation of the code and the associated output
+- 
 
 
