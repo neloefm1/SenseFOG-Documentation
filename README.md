@@ -26,13 +26,25 @@ To access, download and analyze data, please visit the public data repository on
 - [ ] https://data.mendeley.com/datasets/c9ckcvjxc7/1                     
 
 ## System Requirements
+# Hardware Reqruiements
 The SenseFOG-Documentation alongside the provided data requires a standard-computer with enough RAM to support the operations. 
-For analysis, Matlab version 2022a was used. 
-The following toolboxes were also acquired and will be needed to run the preprocessing and analysis scripts:
-- [ ] Fieldtrip (version 1.0.1.0)
-- [ ] Matlab Wavelet Toolbox (version 6.1)
-- [ ] Matlab Signal Processing Toolbox (version 9.0)
 
+# Software Requirements
+Computer code and running the analysis pipeline has been written and tested using MacOS Moneterey but is also compatible with Microsoft Windows. For analysis, MatLab version 2022a was used (MathWorks, Nattick, MA, USA, https://de.mathworks.com/products/matlab.html). 
+
+## Installation Guide
+
+# MatLab Package Dependencies
+Before running the analyses scripts, users should make sure to install the following MatLab toolboxes:
+
+- [ ] Fieldtrip (version 1.0.1.0)
+- [ ] MatLab Wavelet Toolbox (version 6.1)
+- [ ] MatLab Signal Processing Toolbox (version 9.0)
+
+Installtime of MatLab as well as specified toolboxes should only take a few minutes.
+
+# Instructions on how to run the scripts
+For detailed instructions on how to proceed with preprocessing the raw data and analysing the data, please see the "Instructions.md" page listed in the SenseFOG-Documentation main. 
 
 ## Methods
 
