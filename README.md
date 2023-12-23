@@ -48,8 +48,15 @@ For detailed instructions on how to proceed with preprocessing the raw data and 
 
 ## Demo
 ### Instructions to run on data
+A demo for the first 60 seconds of regular walking in subject 10 has been created. The Matlab script is stored under the subfolder "Demo" and uses pre-specified time points of heel strike events in subject 10.
+Specify the pathway to load the data stored under SenseFOG-Documentation/Demo/sub-10-dataevents.mat.
+Make sure that pre-specified toolboxes in MatLab have been installed before running the script. 
+
 ### Expected output
-### Expected run time for demo on a "normal desktop" computer
+Based on the time points for heel strikes of the left leg, the script will first produce a continous wavelet transform time-frequency matrix and segment the matrix according to the heelstrikes (Gait Cycles). Individual gait cycles will then be resampled to bring epochs up to the same length (1000 samples). TF-epochs for left and right STN will be averaged and plotted together with the corresponding IMU data. The generated output represents time-frequency information (2-100 Hz) for gait cycles of the left leg.
+
+### Expected run time for demo 
+Run time after loading in the data should not exeed 60 seconds. 
 
 ## Instructions for use
 ### How to run the software on your data
