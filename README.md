@@ -47,13 +47,13 @@ Installtime of MatLab as well as specified toolboxes should only take a few minu
 For detailed instructions on how to proceed with preprocessing the raw data and analysing the data, please see the "Instructions.md" page listed in SenseFOG-Documentation/instructions.md. 
 
 ## Demo
-# Instructions to run on data
-# Expected output
-# Expected run time for demo on a "normal desktop" computer
+### Instructions to run on data
+### Expected output
+### Expected run time for demo on a "normal desktop" computer
 
 ## Instructions for use
-# How to run the software on your data
-# Reproduction instructions
+### How to run the software on your data
+### Reproduction instructions
 
 
 ## Additional Information
