@@ -67,8 +67,7 @@ Based on the provided videofiles and kinematic data, we have created start and e
 - [ ] Turning (start and and end time points)
 - [ ] Self-Selected Stops
 - [ ] Freezing of Gait [Walking]
-- [ ] Freezing of Gait [Turning]
-- [ ] Freezing of Gait [Walk Initiation]
+
 
 For walking, we included time series both while walking straight ahead as mono task and walking with interference (dual-task).
 We rejected all time segments including turning, FoG, or stops. Further, we excluded a three-second time segment from the transition periods 
