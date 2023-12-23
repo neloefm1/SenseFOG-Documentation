@@ -149,4 +149,5 @@ p3 = subplot(3,1,3)
     b = annotation('textbox',[0.03 0.46 .2 .2],'String','b','EdgeColor','none');  b.FontSize = 18; b.FontWeight = "bold";
     c = annotation('textbox',[0.03 0.18 .2 .2],'String','c','EdgeColor','none');  c.FontSize = 18; c.FontWeight = "bold";
    
+   clear a b b ax1 ax2 c frex fs time idx p1 p2 p3 nfrq Morlets 
 % *********************** END OF SCRIPT ************************************************************************************************************************
