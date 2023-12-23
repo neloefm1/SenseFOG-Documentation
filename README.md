@@ -46,11 +46,19 @@ Installtime of MatLab as well as specified toolboxes should only take a few minu
 ### Instructions on how to run the scripts
 For detailed instructions on how to proceed with preprocessing the raw data and analysing the data, please see the "Instructions.md" page listed in SenseFOG-Documentation/instructions.md. 
 
-## Methods
+## Demo
+# Instructions to run on data
+# Expected output
+# Expected run time for demo on a "normal desktop" computer
 
+## Instructions for use
+# How to run the software on your data
+# Reproduction instructions
+
+
+## Additional Information
 ### Subjects
-12 patients with idiopathi Parkinson's disease who had previously undergone bilateral STN-DBS surgery and 
-were implanted with the Medtronic Percept impulse generator were studied.
+12 patients with idiopathic Parkinson's disease who had previously undergone bilateral STN-DBS surgery and were implanted with the Medtronic Percept impulse generator were studied.
 
 Inclusion Criteria:
 - [ ] Patients aged 18-85 years
@@ -95,7 +103,7 @@ We rejected all time segments including turning, FoG, or stops. Further, we excl
 (Pre-FoG or Pre-Stop) and the first step before and after a turn to exclude acceleration and deceleration of walking. 
 
 In the current work, we restricted analyes to FoG occuring during walking, thereby excluding FoG during turning or at gait initiation. 
-We segmented FoG-events beginnign with the last regular heelstrike contralateral to the leg displaying freezing and ending with the first heel strike
+We segmented FoG-events beginning with the last regular heelstrike contralateral to the leg displaying freezing and ending with the first heel strike
 after a FoG-event when regular walking was resumed. Only FoG episodes lasting ≥1000 ms were selected.
 
 Self-Selected Stops were identified in the video recordings and segmented based on the kinematic time series. 
@@ -110,24 +118,9 @@ During offline analysis, gait cycles were identified using the accelerometer sig
 ### Assessment of disease laterality
 We obtained further clinical characteristics by recording motor symptoms (MDS-UPDRS part III in medication off / stimulation off and medication on / stimulation on) including evaluation of the MDS-UPDRS III hemibody scores to determine disease-lateralization (calculated as sum of the rigidity (item 3.3), akinesia (items 3.4-3.8), and tremor (items 3.15-3.17) scores for one side, ranging from 0 to 44). The hemibody ranking highest on the MDS-UPDRS sum score was chosen as disease dominant side and the contralateral STN chosen as disease dominant STN.
 
-### Additional data acquired
-A brief indication of data other than the
-imaging data that was acquired as part of this experiment. In addition
-to data from other modalities and behavioral data, this might include
-questionnaires and surveys, swabs, and clinical information. Indicate
-the availability of this data.
-
-This is especially relevant if the data are not included in a `phenotype` folder.
-https://bids-specification.readthedocs.io/en/stable/03-modality-agnostic-files.html#phenotypic-and-assessment-data
-
 ### Experimental location
 Recordings took place on the premises of the University Hospital Medical Center Tübingen, Department of Neurology.
 The walking took place in a 15 x 2.5 m hallway. Two chairs narrowing the corridor were positioned (1 m width) to help provoke FoG events under laboratory conditions.
 
-
 ### Ethics
 The study was approved by the Ethics Committee of Tübingen University (166/2020BO1), and all patients provided written informed consent.
-
-
-### Other
-
