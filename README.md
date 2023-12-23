@@ -26,7 +26,7 @@ To access, download and analyze data, please visit the public data repository on
 - [ ] https://data.mendeley.com/datasets/c9ckcvjxc7/1                     
 
 ## System Requirements
-### Hardware Reqruiements
+### Hardware Requirements
 The SenseFOG-Documentation alongside the provided data requires a standard-computer with enough RAM to support the operations. 
 
 ### Software Requirements
@@ -44,7 +44,7 @@ Before running the analyses scripts, users should make sure to install the follo
 Installtime of MatLab as well as specified toolboxes should only take a few minutes.
 
 ### Instructions on how to run the scripts
-For detailed instructions on how to proceed with preprocessing the raw data and analysing the data, please see the "Instructions.md" page listed in the SenseFOG-Documentation main. 
+For detailed instructions on how to proceed with preprocessing the raw data and analysing the data, please see the "Instructions.md" page listed in SenseFOG-Documentation/instructions.md. 
 
 ## Methods
 
