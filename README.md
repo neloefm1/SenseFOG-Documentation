@@ -26,6 +26,7 @@ To access, download and analyze data, please visit the public data repository on
 - [ ] https://data.mendeley.com/datasets/c9ckcvjxc7/1                     
 
 ## System Requirements
+The SenseFOG-Documentation alongside the provided data requires a standard-computer with enough RAM to support the operations. 
 For analysis, Matlab version 2022a was used. 
 The following toolboxes were also acquired and will be needed to run the preprocessing and analysis scripts:
 - [ ] Fieldtrip (version 1.0.1.0)
