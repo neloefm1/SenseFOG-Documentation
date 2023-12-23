@@ -14,7 +14,7 @@
 
 
 %Load in the data by specifying the path for the demo file listed in the %Sensefog-main file
-subjectdata.generalpath                 = uigetdir;                                                                 % Example: Downloads/SenseFOG-main/Demo
+subjectdata.generalpath                 = uigetdir;                  % Example: Downloads/SenseFOG-main/Demo
 cd(subjectdata.generalpath)
 
 file                = load("sub-10-dataevents.mat"); 
