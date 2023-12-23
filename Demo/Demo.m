@@ -1,7 +1,7 @@
 %%=====  Demo.m ========================================%
 
 %Date: Decemebter 2023
-%Original author(s): Philipp Klocke, Moritz Löffler
+%Original author(s): Philipp Klocke, Moritz Loeffler
 
 %This script will create time-frequency information based on the first 
 %60 seconds of regular walking in subject 10. The script will make use of
