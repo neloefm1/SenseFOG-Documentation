@@ -65,5 +65,5 @@ Explain here what is to be expected to be done, interations of code and expected
 - Provide detailed explanation of the code and the associated output
 - Update the titles of the repository on GitHub and Mendely Data
 - For PD05, only use WalkWS and leave out all other files from PD05
-
+- REMOVE Data from Subj 14 Walk as not usable
 
