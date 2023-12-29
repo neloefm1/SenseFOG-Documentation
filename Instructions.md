@@ -29,7 +29,8 @@ Explain here what is to be expected to be done, interations of code and expected
 - [ ]  1.4 "Import_HDF.m"                      --  Import inertial motion unit (IMU) files
 - [ ]  1.5 "Data_Alignment.m"                  --  Align all datasets in time using the stimulation artefact
 - [ ]  1.6 "Detect_GaitEvents.m"               --  Compute gait cycles from all walking tasks
-- [ ]  1.7 "Sub_GrandActivity_Log.m"           --  Based on predefined time points, collect all activities (walking, turning, stops etc.)
+- [ ]  1.8 "Control_GaitEvents.m"              --  Adjustments to the exact timepoints of gait events are made where the algorithm was not able to 
+- [ ]  1.9 "Sub_GrandActivity_Log.m"           --  Based on predefined time points, collect all activities (walking, turning, stops etc.)
 
 ## 2.0 Data Analysis
 Explain here what is to be expected to be done, interations of code and expected output of the codes.
