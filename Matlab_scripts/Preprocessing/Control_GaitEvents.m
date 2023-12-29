@@ -1375,6 +1375,7 @@ Subjects.sub_11.ses_walkws.GaitEvents.rf_events(28).Toe_Off_Loc = 81.95;
 Subjects.sub_11.ses_walkws.GaitEvents.rf_events(31).Toe_Off_Loc = 87.712;
 Subjects.sub_11.ses_walkws.GaitEvents.rf_events(40).Toe_Off_Loc = 104.043;
 Subjects.sub_11.ses_walkws.GaitEvents.rf_events(48).Toe_Off_Loc = 120.754;
+Subjects.sub_11.ses_walkws.GaitEvents.rf_events(52).Toe_Off_Loc = -6666;
 Subjects.sub_11.ses_walkws.GaitEvents.rf_events(60).Toe_Off_Loc = 146.192;
 Subjects.sub_11.ses_walkws.GaitEvents.rf_events(67).Toe_Off_Loc = 161.148;
 Subjects.sub_11.ses_walkws.GaitEvents.rf_events(70).Toe_Off_Loc = 166.912;
