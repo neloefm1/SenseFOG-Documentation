@@ -3438,20 +3438,23 @@ Subjects.sub_20.ses_walkint.GaitEvents.lf_events(184).Toe_Off_Loc = 341.568;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(187).Toe_Off_Loc = 344.05;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(188).Toe_Off_Loc = 344.784;
 
-%Delete fields specified by '-6666'
+%Delete fields specified by '-6666' as well as empty fields
 task               = {'ses_walk'; 'ses_walkws'; 'ses_walkint'; 'ses_walkint2'};                                     % Create an edited list of taks
 for i = 1:length(names)
     for t = 1:length(task)
         if isfield(Subjects.(names{i}), task(t)) == 0; continue; end
+        idx = find(cellfun(@isempty,{Subjects.(names{i}).(task{t}).GaitEvents.rf_events.Toe_Off_Loc}));           
+        Subjects.(names{i}).(task{t}).GaitEvents.rf_events(idx) = []; clear idx
         idx_r = find(cat(2,Subjects.(names{i}).(task{t}).GaitEvents.rf_events.Toe_Off_Loc)' == -6666);
         Subjects.(names{i}).(task{t}).GaitEvents.rf_events(idx_r) = []; clear idx_r
 
+        idx = find(cellfun(@isempty,{Subjects.(names{i}).(task{t}).GaitEvents.lf_events.Toe_Off_Loc}));           
+        Subjects.(names{i}).(task{t}).GaitEvents.lf_events(idx) = []; clear idx
         idx_l = find(cat(2,Subjects.(names{i}).(task{t}).GaitEvents.lf_events.Toe_Off_Loc)' == -6666);
         Subjects.(names{i}).(task{t}).GaitEvents.lf_events(idx_l) = [];clear idx_l
     end
 end
 clear i t 
-
 
 
 %% SAVE DATA
