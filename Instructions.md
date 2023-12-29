@@ -67,3 +67,4 @@ Explain here what is to be expected to be done, interations of code and expected
 - For PD05, only use WalkWS and leave out all other files from PD05
 - REMOVE Data from Subj 14 Walk as not usable
 - PD18 WALKWS Rausnehmen, da Kameraversatz
+- PD19 WALKINT Datenversatz, rausnehmen?
