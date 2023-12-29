@@ -4,7 +4,9 @@
 %Original author(s): Philipp Klocke, Moritz Loeffler
 
 %We will call all Gait Events into matlab and control events for accuracy. 
-%Where necessary, we will do manual adjustments and save the data again.  
+%Where necessary, we will do manual adjustments and save the data again.
+%All gait events have been screened prior, where necessary, adjustments to the 
+%exact timepoints for heelstrike, toe-off and midswing have been made.
 %===================================================================%
 
 
