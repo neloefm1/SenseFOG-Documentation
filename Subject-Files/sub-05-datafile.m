@@ -37,15 +37,6 @@ else subjectdata.signalpoint.Stand.EEG_signal > subjectdata.signalpoint.Stand.LF
      subjectdata.signalpoint.Stand.delay = subjectdata.signalpoint.Stand.EEG_signal - subjectdata.signalpoint.Stand.LFP_signal; % Find time-delay between both EEG and LFP
 end 
 
-% WALK - Manual Input for EEG and LFP Datasets
-subjectdata.signalpoint.Walk = [];
-subjectdata.signalpoint.Walk.EEG_signal         = [];                                                                           % Sample where DBS Stimulation stops showing a clear downward spike, used for later alignsignals_new.m
-subjectdata.signalpoint.Walk.LFP_signal         = [];                                                                           % Sample where DBS Stimulation stops showing a clear upward spike, used for later alignsignals_new.m
-if subjectdata.signalpoint.Walk.LFP_signal > subjectdata.signalpoint.Walk.EEG_signal;                                           % If clause to see if LFP signal is longer than EEG signal 
-   subjectdata.signalpoint.Walk.delay = subjectdata.signalpoint.Walk.LFP_signal - subjectdata.signalpoint.Walk.EEG_signal;      % Find time-delay between both EEG and LFP
-else subjectdata.signalpoint.Walk.EEG_signal > subjectdata.signalpoint.Walk.LFP_signal;                                         % If clause to see if EEG signal is longer than LFP signal
-     subjectdata.signalpoint.Walk.delay = subjectdata.signalpoint.Walk.EEG_signal - subjectdata.signalpoint.Walk.LFP_signal;    % Find time-delay between both EEG and LFP
-end
 
 % WALK WITH STOPS - Manual Input for EEG and LFP Datasets
 subjectdata.signalpoint.WalkWS = [];
@@ -57,35 +48,6 @@ else subjectdata.signalpoint.WalkWS.EEG_signal > subjectdata.signalpoint.WalkWS.
      subjectdata.signalpoint.WalkWS.delay = subjectdata.signalpoint.WalkWS.EEG_signal - subjectdata.signalpoint.WalkWS.LFP_signal;% Find time-delay between both EEG and LFP
 end 
 
-
-%=== FILTERED GAIT EVENTS FOR WALK ONLY ===
-% Manual input for filtered gait events based on exact timings of heelstrikes (not shown here)
-subjectdata.events_filt.Walk = struct;
-
-%Walk 1
-subjectdata.events_filt.Walk(1).start = 2.84400000000000;
-subjectdata.events_filt.Walk(1).task = 'Walk';
-subjectdata.events_filt.Walk(1).end = 25.0330000000000;
-
-%Walk 2
-subjectdata.events_filt.Walk(2).start = 37.1970000000000;
-subjectdata.events_filt.Walk(2).task = 'Walk';
-subjectdata.events_filt.Walk(2).end = 59.1930000000000;
-
-%Walk 3
-subjectdata.events_filt.Walk(3).start = 73.3430000000000;
-subjectdata.events_filt.Walk(3).task = 'Walk';
-subjectdata.events_filt.Walk(3).end = 93.3200000000000;
-
-%Turn 1
-subjectdata.events_filt.Walk(4).start =  95.0710000000000;
-subjectdata.events_filt.Walk(4).task = 'Turn';
-subjectdata.events_filt.Walk(4).end = 101.675000000000;
-
-%Walk 4
-subjectdata.events_filt.Walk(5).start = 103.216000000000;
-subjectdata.events_filt.Walk(5).task = 'Walk';
-subjectdata.events_filt.Walk(5).end = 128.467000000000;
 
 
 %=== FILTERED GAIT EVENTS FOR WALK WITH STOPS ONLY ===
