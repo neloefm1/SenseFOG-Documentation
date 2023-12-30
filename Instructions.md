@@ -64,7 +64,8 @@ Explain here what is to be expected to be done, interations of code and expected
 - check if PD10 files contain ECG artefacts
 - Provide detailed explanation of the code and the associated output
 - Update the titles of the repository on GitHub and Mendely Data
-- For PD05, only use WalkWS and leave out all other files from PD05
-- REMOVE Data from Subj 14 Walk as not usable
-- PD18 WALKWS Rausnehmen, da Kameraversatz
-- PD19 WALKINT Datenversatz, rausnehmen?
+- For PD05, only use WalkWS and leave out all other files from PD05 (auf USB rausgenommen)
+- REMOVE Data from Subj 14 Walk as not usable (auf USB rausgenommen)
+- PD18 WALKWS Rausnehmen, da Kameraversatz (auf USB rausgenommen)
+- PD19 WALKINT Datenversatz, rausnehmen? (auf USB rausgenommen)
+- in Subjectfiles am Anfang die rausgenommenen Subfiles streichen
