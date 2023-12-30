@@ -1147,6 +1147,7 @@ Subjects.sub_10.ses_walk.GaitEvents.rf_events(133).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(218).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(290).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(88).Heelstrike_Loc = 148.575;
+Subjects.sub_10.ses_walk.GaitEvents.rf_events(200).Toe_Off_Loc = -6666;
 
 
 %SUBJECT 10 WALK LEFT FOOT
@@ -1295,6 +1296,9 @@ Subjects.sub_10.ses_walkint.GaitEvents.rf_events(145).Heelstrike_Loc = 246.417;
 Subjects.sub_10.ses_walkint.GaitEvents.rf_events(92).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walkint.GaitEvents.rf_events(122).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walkint.GaitEvents.rf_events(167).Toe_Off_Loc = -6666;
+Subjects.sub_10.ses_walkint.GaitEvents.rf_events(33).Toe_Off_Loc = -6666;
+Subjects.sub_10.ses_walkint.GaitEvents.rf_events(47).Toe_Off_Loc = -6666;
+Subjects.sub_10.ses_walkint.GaitEvents.rf_events(53).Toe_Off_Loc = -6666;
 
 
 %SUBJECT 10 WALKINT LEFT FOOT
@@ -3503,7 +3507,7 @@ Subjects.sub_20.ses_walkint.GaitEvents.lf_events(187).Toe_Off_Loc = 344.05;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(188).Toe_Off_Loc = 344.784;
 
 
-%Delete fields specified by '-6666' as well as empty fields
+% Delete fields specified by '-6666' as well as empty fields
 task               = {'ses_walk'; 'ses_walkws'; 'ses_walkint'; 'ses_walkint2'};                                     % Create an edited list of taks
 for i = 1:length(names)
     for t = 1:length(task)
