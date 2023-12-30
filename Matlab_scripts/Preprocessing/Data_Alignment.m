@@ -181,7 +181,7 @@ ax3 = subplot(3,1,3)
     xlim([xstart-5000 xstart+5000])
     legend('Accelerometer')
     title('IMU')
-    else; ax3 ) subplot(3,1,3); end
+    else; ax3 = subplot(3,1,3); end
     set(gcf,'color','white')
     sgtitle({'Aligned LFP dataset and EEG dataset'; sprintf('Trial: %s ', EEG_File.eeg)})
     linkaxes([ax1, ax2 ax3],'x')
