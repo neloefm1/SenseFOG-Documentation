@@ -68,4 +68,6 @@ Explain here what is to be expected to be done, interations of code and expected
 - REMOVE Data from Subj 14 Walk as not usable (auf USB rausgenommen)
 - PD18 WALKWS Rausnehmen, da Kameraversatz (auf USB rausgenommen)
 - PD19 WALKINT Datenversatz, rausnehmen? (auf USB rausgenommen)
-- in Subjectfiles am Anfang die rausgenommenen Subfiles streichen
+- in Subjectfiles am Anfang die rausgenommenen Subfiles streichen (auf GitHub bereits gemacht, aktuellen subjectfiles nun komplett auf GitHub)
+- Auf USB file/Mendeley DR sollten die subjectfiles rausgenomemn werden ..
+
