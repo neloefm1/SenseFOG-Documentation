@@ -61,7 +61,7 @@ for i = 1:length(names)
         IMU_time      = Subjects.(names{i}).(task{t}).IMU.IMU_data.imutime; 
 
         GaitEvents    = Subjects.(names{i}).(task{t}).GaitEvents.rf_events;
-        for k = 155:length(GaitEvents)
+        for k = 112:length(GaitEvents)
 
             textfile = char({sprintf('Name: %s - Task: %s (Right Foot) Trial: %.f / %.f', char(names(i)), char(task(t)), k,length(GaitEvents))});
             figure('Name',textfile)
@@ -1146,6 +1146,8 @@ Subjects.sub_10.ses_walk.GaitEvents.rf_events(285).Toe_Off_Loc = 437.933;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(133).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(218).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(290).Toe_Off_Loc = -6666;
+Subjects.sub_10.ses_walk.GaitEvents.rf_events(88).Heelstrike_Loc = 148.575;
+
 
 %SUBJECT 10 WALK LEFT FOOT
 Subjects.sub_10.ses_walk.GaitEvents.lf_events(30).Toe_Off_Loc = 59.574;
@@ -1221,7 +1223,7 @@ Subjects.sub_10.ses_walkws.GaitEvents.rf_events(223).Heelstrike_Loc = 407.86;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(177).Heelstrike_Loc = 313.153;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(162).Heelstrike_Loc = 291.54;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(221).Toe_Off_Loc = -6666;
-
+Subjects.sub_10.ses_walkws.GaitEvents.rf_events(76).Heelstrike_Loc = 150.549;
 
 %SUBJECT 10 WALKWS LEFT FOOT
 Subjects.sub_10.ses_walkws.GaitEvents.lf_events(20).Toe_Off_Loc = 56.961;
@@ -1635,6 +1637,11 @@ Subjects.sub_14.ses_walkint.GaitEvents.rf_events(117).Toe_Off_Loc = 202.369;
 Subjects.sub_14.ses_walkint.GaitEvents.rf_events(121).Toe_Off_Loc = 208.44;
 Subjects.sub_14.ses_walkint.GaitEvents.rf_events(124).Toe_Off_Loc = 212.213;
 Subjects.sub_14.ses_walkint.GaitEvents.rf_events(127).Toe_Off_Loc = 215.547;
+Subjects.sub_14.ses_walkint.GaitEvents.rf_events(9).Heelstrike_Loc = 30.115;
+Subjects.sub_14.ses_walkint.GaitEvents.rf_events(66).Heelstrike_Loc = 130.039;
+Subjects.sub_14.ses_walkint.GaitEvents.rf_events(67).Heelstrike_Loc = 131.395;
+Subjects.sub_14.ses_walkint.GaitEvents.rf_events(116).Heelstrike_Loc = 201.855;
+
 
 %SUBJECT 14 WALKINT LEFT FOOT
 Subjects.sub_14.ses_walkint.GaitEvents.lf_events(2).Toe_Off_Loc = 13.385;
@@ -1819,6 +1826,8 @@ Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(107).Toe_Off_Loc = 175.762;
 Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(108).Toe_Off_Loc = 177.031;
 Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(109).Toe_Off_Loc = 179.179;
 Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(110).Toe_Off_Loc = 180.401;
+Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(31).Heelstrike_Loc = 54.239;
+Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(58).Heelstrike_Loc = 94.324;
 
 
 %SUBJECT 14 WALKINT2 LEFT FOOT
@@ -2131,6 +2140,10 @@ Subjects.sub_15.ses_walk.GaitEvents.lf_events(191).Toe_Off_Loc = 272.941;
 Subjects.sub_15.ses_walk.GaitEvents.lf_events(192).Toe_Off_Loc = 273.964;
 Subjects.sub_15.ses_walk.GaitEvents.lf_events(199).Heelstrike_Loc = 282.006;
 Subjects.sub_15.ses_walk.GaitEvents.lf_events(200).Toe_Off_Loc = 282.663;
+Subjects.sub_15.ses_walk.GaitEvents.lf_events(61).Heelstrike_Loc = 89.072;
+Subjects.sub_15.ses_walk.GaitEvents.lf_events(75).Heelstrike_Loc = 109.783;
+Subjects.sub_15.ses_walk.GaitEvents.lf_events(99).Heelstrike_Loc = 143.32;
+Subjects.sub_15.ses_walk.GaitEvents.lf_events(133).Heelstrike_Loc = 192.526;
 
 
 
@@ -2423,6 +2436,8 @@ Subjects.sub_17.ses_walk.GaitEvents.lf_events(192).Toe_Off_Loc = 252.611;
 Subjects.sub_17.ses_walk.GaitEvents.lf_events(195).Toe_Off_Loc = 257.349;
 Subjects.sub_17.ses_walk.GaitEvents.lf_events(196).Toe_Off_Loc = 258.333;
 Subjects.sub_17.ses_walk.GaitEvents.lf_events(198).Toe_Off_Loc = 262.94;
+Subjects.sub_17.ses_walk.GaitEvents.lf_events(133).Heelstrike_Loc = 190.995;
+
 
 %SUBJECT 17 WALKWS RIGHT FOOT
 Subjects.sub_17.ses_walkws.GaitEvents.rf_events(11).Toe_Off_Loc = -6666;
@@ -2468,6 +2483,7 @@ Subjects.sub_17.ses_walkws.GaitEvents.lf_events(43).Heelstrike_Loc = 77.26;
 Subjects.sub_17.ses_walkws.GaitEvents.lf_events(125).Toe_Off_Loc = -6666;
 Subjects.sub_17.ses_walkws.GaitEvents.lf_events(90).Toe_Off_Loc = -6666;
 Subjects.sub_17.ses_walkws.GaitEvents.lf_events(40).Toe_Off_Loc = -6666;
+Subjects.sub_17.ses_walkws.GaitEvents.lf_events(145).Heelstrike_Loc = 227.596;
 
 
 %SUBJECT 18 WALK RIGHT FOOT
