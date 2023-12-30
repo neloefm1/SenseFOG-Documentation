@@ -166,6 +166,10 @@ Subjects.sub_01.ses_walkws.GaitEvents.rf_events(15).Toe_Off_Loc = 31.079;
 Subjects.sub_01.ses_walkws.GaitEvents.rf_events(38).Toe_Off_Loc = 64.609;
 Subjects.sub_01.ses_walkws.GaitEvents.rf_events(55).Toe_Off_Loc = 89.020;
 Subjects.sub_01.ses_walkws.GaitEvents.rf_events(67).Toe_Off_Loc = -6666;
+Subjects.sub_01.ses_walkws.GaitEvents.rf_events(4).Heelstrike_Loc = 13.805;
+Subjects.sub_01.ses_walkws.GaitEvents.rf_events(94).Heelstrike_Loc = 154.705;
+Subjects.sub_01.ses_walkws.GaitEvents.rf_events(91).Toe_Off_Loc = -6666;
+Subjects.sub_01.ses_walkws.GaitEvents.rf_events(2).Toe_Off_Loc = -6666;
 
 %SUBJECT 1 WALKWS LEFT FOOT
 Subjects.sub_01.ses_walkws.GaitEvents.lf_events(16).Toe_Off_Loc = 34.761;
@@ -1213,6 +1217,10 @@ Subjects.sub_10.ses_walkws.GaitEvents.rf_events(247).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(250).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(253).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(295).Toe_Off_Loc = -6666;
+Subjects.sub_10.ses_walkws.GaitEvents.rf_events(223).Heelstrike_Loc = 407.86;
+Subjects.sub_10.ses_walkws.GaitEvents.rf_events(177).Heelstrike_Loc = 313.153;
+Subjects.sub_10.ses_walkws.GaitEvents.rf_events(162).Heelstrike_Loc = 291.54;
+Subjects.sub_10.ses_walkws.GaitEvents.rf_events(221).Toe_Off_Loc = -6666;
 
 
 %SUBJECT 10 WALKWS LEFT FOOT
@@ -1452,8 +1460,12 @@ Subjects.sub_13.ses_walkws.GaitEvents.rf_events(93).Toe_Off_Loc = -6666;
 Subjects.sub_13.ses_walkws.GaitEvents.rf_events(103).Toe_Off_Loc = -6666;
 Subjects.sub_13.ses_walkws.GaitEvents.rf_events(119).Toe_Off_Loc = -6666;
 
+
 %SUBJECT 13 WALKWS LEFT FOOT
-%No Annotations
+Subjects.sub_13.ses_walkws.GaitEvents.lf_events(23).Heelstrike_Loc = 65.267;
+Subjects.sub_13.ses_walkws.GaitEvents.lf_events(153).Heelstrike_Loc = 312.85;
+Subjects.sub_13.ses_walkws.GaitEvents.lf_events(6).Heelstrike_Loc = 33.078;
+
 
 %SUBJECT 13 WALKINT RIGHT FOOT
 Subjects.sub_13.ses_walkint.GaitEvents.rf_events(48).Toe_Off_Loc = 93.369;
@@ -1477,6 +1489,10 @@ Subjects.sub_13.ses_walkint.GaitEvents.rf_events(49).Toe_Off_Loc = -6666;
 Subjects.sub_13.ses_walkint.GaitEvents.rf_events(69).Toe_Off_Loc = -6666;
 Subjects.sub_13.ses_walkint.GaitEvents.rf_events(176).Toe_Off_Loc = -6666;
 Subjects.sub_13.ses_walkint.GaitEvents.rf_events(199).Toe_Off_Loc = -6666;
+Subjects.sub_13.ses_walkws.GaitEvents.lf_events(151).Toe_Off_Loc = -6666;
+Subjects.sub_13.ses_walkws.GaitEvents.lf_events(21).Toe_Off_Loc = -6666;
+Subjects.sub_13.ses_walkws.GaitEvents.lf_events(3).Toe_Off_Loc = -6666;
+
 
 %SUBJECT 13 WALKINT LEFT FOOT
 Subjects.sub_13.ses_walkint.GaitEvents.lf_events(93).Toe_Off_Loc = 164.423;
@@ -1492,6 +1508,16 @@ Subjects.sub_14.ses_walkws.GaitEvents.rf_events(90).Toe_Off_Loc = 157.105;
 Subjects.sub_14.ses_walkws.GaitEvents.rf_events(91).Toe_Off_Loc = 158.121;
 Subjects.sub_14.ses_walkws.GaitEvents.rf_events(97).Toe_Off_Loc = 167.859;
 Subjects.sub_14.ses_walkws.GaitEvents.rf_events(116).Toe_Off_Loc = 197.986;
+Subjects.sub_14.ses_walkws.GaitEvents.rf_events(96).Heelstrike_Loc = 164.693;
+Subjects.sub_14.ses_walkws.GaitEvents.rf_events(79).Heelstrike_Loc = 136.249;
+Subjects.sub_14.ses_walkws.GaitEvents.rf_events(33).Heelstrike_Loc = 60.136;
+Subjects.sub_14.ses_walkws.GaitEvents.rf_events(23).Heelstrike_Loc = 45.132;
+Subjects.sub_14.ses_walkws.GaitEvents.rf_events(6).Heelstrike_Loc = 16.748;
+Subjects.sub_14.ses_walkws.GaitEvents.rf_events(3).Toe_Off_Loc = -6666;
+Subjects.sub_14.ses_walkws.GaitEvents.rf_events(20).Toe_Off_Loc = -6666;
+Subjects.sub_14.ses_walkws.GaitEvents.rf_events(30).Toe_Off_Loc = -6666;
+Subjects.sub_14.ses_walkws.GaitEvents.rf_events(76).Toe_Off_Loc = -6666;
+Subjects.sub_14.ses_walkws.GaitEvents.rf_events(93).Toe_Off_Loc = -6666;
 
 
 %SUBJECT 14 WALKWS LEFT FOOT
@@ -2107,6 +2133,7 @@ Subjects.sub_15.ses_walk.GaitEvents.lf_events(199).Heelstrike_Loc = 282.006;
 Subjects.sub_15.ses_walk.GaitEvents.lf_events(200).Toe_Off_Loc = 282.663;
 
 
+
 %SUBJECT 15 WALKWS RIGHT FOOT
 Subjects.sub_15.ses_walkws.GaitEvents.rf_events(5).Toe_Off_Loc = 18.225;
 Subjects.sub_15.ses_walkws.GaitEvents.rf_events(7).Toe_Off_Loc = 23.75;
@@ -2154,6 +2181,7 @@ Subjects.sub_15.ses_walkws.GaitEvents.lf_events(14).Toe_Off_Loc = 30.637;
 Subjects.sub_15.ses_walkws.GaitEvents.lf_events(15).Toe_Off_Loc = 31.953;
 Subjects.sub_15.ses_walkws.GaitEvents.lf_events(16).Toe_Off_Loc = 38.045;
 Subjects.sub_15.ses_walkws.GaitEvents.lf_events(20).Toe_Off_Loc = 38.042;
+Subjects.sub_15.ses_walkws.GaitEvents.lf_events(20).Heelstrike_Loc = 38.216;
 Subjects.sub_15.ses_walkws.GaitEvents.lf_events(21).Toe_Off_Loc = 40.384;
 Subjects.sub_15.ses_walkws.GaitEvents.lf_events(32).Toe_Off_Loc = 55.682;
 Subjects.sub_15.ses_walkws.GaitEvents.lf_events(52).Toe_Off_Loc = 85.004;
@@ -2166,6 +2194,7 @@ Subjects.sub_15.ses_walkws.GaitEvents.lf_events(74).Toe_Off_Loc = 132.205;
 Subjects.sub_15.ses_walkws.GaitEvents.lf_events(93).Toe_Off_Loc = -6666;
 Subjects.sub_15.ses_walkws.GaitEvents.lf_events(125).Toe_Off_Loc = 211.109;
 Subjects.sub_15.ses_walkws.GaitEvents.lf_events(130).Toe_Off_Loc = 217.594;
+Subjects.sub_15.ses_walkws.GaitEvents.lf_events(17).Toe_Off_Loc = -6666;
 
 
 %SUBJECT 15 WALKINT RIGHT FOOT
@@ -2433,6 +2462,13 @@ Subjects.sub_17.ses_walkws.GaitEvents.lf_events(134).Toe_Off_Loc = 203.147;
 Subjects.sub_17.ses_walkws.GaitEvents.lf_events(135).Toe_Off_Loc = 204.208;
 Subjects.sub_17.ses_walkws.GaitEvents.lf_events(139).Toe_Off_Loc = 208.812;
 Subjects.sub_17.ses_walkws.GaitEvents.lf_events(154).Heelstrike_Loc = 230.761;
+Subjects.sub_17.ses_walkws.GaitEvents.lf_events(128).Heelstrike_Loc = 194.081;
+Subjects.sub_17.ses_walkws.GaitEvents.lf_events(93).Heelstrike_Loc = 148.504;
+Subjects.sub_17.ses_walkws.GaitEvents.lf_events(43).Heelstrike_Loc = 77.26;
+Subjects.sub_17.ses_walkws.GaitEvents.lf_events(125).Toe_Off_Loc = -6666;
+Subjects.sub_17.ses_walkws.GaitEvents.lf_events(90).Toe_Off_Loc = -6666;
+Subjects.sub_17.ses_walkws.GaitEvents.lf_events(40).Toe_Off_Loc = -6666;
+
 
 %SUBJECT 18 WALK RIGHT FOOT
 Subjects.sub_18.ses_walk.GaitEvents.rf_events(1).Toe_Off_Loc = 9.208;
@@ -2756,6 +2792,17 @@ Subjects.sub_19.ses_walkws.GaitEvents.lf_events(123).Toe_Off_Loc = -6666;
 Subjects.sub_19.ses_walkws.GaitEvents.lf_events(124).Toe_Off_Loc = 233.226;
 Subjects.sub_19.ses_walkws.GaitEvents.lf_events(125).Toe_Off_Loc = 233.934;
 Subjects.sub_19.ses_walkws.GaitEvents.lf_events(126).Toe_Off_Loc = 234.704;
+Subjects.sub_19.ses_walkws.GaitEvents.lf_events(129).Heelstrike_Loc = 238.517;
+Subjects.sub_19.ses_walkws.GaitEvents.lf_events(44).Heelstrike_Loc = 78.801;
+Subjects.sub_19.ses_walkws.GaitEvents.lf_events(29).Heelstrike_Loc = 54.692;
+Subjects.sub_19.ses_walkws.GaitEvents.lf_events(16).Heelstrike_Loc = 31.554;
+Subjects.sub_19.ses_walkws.GaitEvents.lf_events(126).Toe_Off_Loc = -6666;
+Subjects.sub_19.ses_walkws.GaitEvents.lf_events(41).Toe_Off_Loc = -6666;
+Subjects.sub_19.ses_walkws.GaitEvents.lf_events(26).Toe_Off_Loc = -666;
+Subjects.sub_19.ses_walkws.GaitEvents.lf_events(26).Toe_Off_Loc = -6666;
+Subjects.sub_19.ses_walkws.GaitEvents.lf_events(13).Toe_Off_Loc = -6666;
+
+
 
 %SUBJECT 19 WALKINT RIGHT FOOT
 Subjects.sub_19.ses_walkint.GaitEvents.rf_events(12).Toe_Off_Loc = 23.099;
@@ -3439,6 +3486,7 @@ Subjects.sub_20.ses_walkint.GaitEvents.lf_events(184).Toe_Off_Loc = 341.568;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(187).Toe_Off_Loc = 344.05;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(188).Toe_Off_Loc = 344.784;
 
+
 %Delete fields specified by '-6666' as well as empty fields
 task               = {'ses_walk'; 'ses_walkws'; 'ses_walkint'; 'ses_walkint2'};                                     % Create an edited list of taks
 for i = 1:length(names)
@@ -3458,6 +3506,7 @@ end
 clear i t 
 
 
+
 %% SAVE DATA
 for i = 1:length(fieldnames(Subjects))
     filename            = fieldnames(Subjects);
@@ -3471,5 +3520,6 @@ for i = 1:length(fieldnames(Subjects))
         save([subjectdata.generalpath filesep char(new_filename) filesep char(new_taskname) filesep 'motion' filesep char(new_filename) '-' char(new_taskname) '_gaitfilt_cor.mat'], 'GaitEvents', '-mat');
     end
 end
+
 
 % *********************** END OF SCRIPT ************************************************************************************************************************
