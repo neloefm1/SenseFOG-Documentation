@@ -22,7 +22,7 @@ filepath                                = extractBefore(subjectdata.generalpath,
 fullname = append(subjectdata.generalpath, "/ieeg/",filename, "-", taskname, "_lfpalg.mat"); load(fullname)     % LOAD JSON [LFP] FILE
 fullname = append(subjectdata.generalpath, "/eeg/",filename, "-", taskname, "_eegalg.mat"); load(fullname)      % LOAD BVA [EEG] FILE
 fullname = append(subjectdata.generalpath, "/motion/",filename, "-", taskname, "_gaitalg.mat"); load(fullname)  % LOAD HDF [IMU] FILE
-fullname = append(subjectdata.generalpath, "/motion/",filename, "-", taskname, "_gaitfilt.mat"); load(fullname) % LOAD GaitEvents
+fullname = append(subjectdata.generalpath, "/motion/",filename, "-", taskname, "_gaitfilt_cor.mat"); load(fullname) % LOAD GaitEvents
 fullname = append(filepath, "/",filename, "_datafile.mat"); load(fullname);
 
 subjectdata.filepath                    = filepath;                                                             % Create the specified filepath
