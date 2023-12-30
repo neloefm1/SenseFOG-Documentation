@@ -18,7 +18,7 @@ cd(path)
 
 % SIT - Manual Input for EEG and LFP Datasets
 subjectdata.signalpoint.Sit = [];
-subjectdata.signalpoint.Sit.EEG_signal          = 53118;                                                                        % Sample where DBS Stimulation stops showing a clear downward spike, used for later alignsignals_new.m
+subjectdata.signalpoint.Sit.EEG_signal          = 62868;                                                                        % Sample where DBS Stimulation stops showing a clear downward spike, used for later alignsignals_new.m
 subjectdata.signalpoint.Sit.LFP_signal          = 29780;                                                                        % Sample where DBS Stimulation stops showing a clear upward spike, used for later alignsignals_new.m
 if subjectdata.signalpoint.Sit.LFP_signal > subjectdata.signalpoint.Sit.EEG_signal;                                             % If clause to see if LFP signal is longer than EEG signal 
    subjectdata.signalpoint.Sit.delay = subjectdata.signalpoint.Sit.LFP_signal - subjectdata.signalpoint.Sit.EEG_signal;         % Find time-delay between both EEG and LFP
