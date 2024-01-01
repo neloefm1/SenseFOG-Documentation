@@ -381,8 +381,12 @@ Pre_Stopping_Files.frequencies         = Subjects.(names{1}).(task{1}).f;
 Pre_Stopping_Files.Pre_Stops           = All_Stops;
 Pre_Stopping_Files.Pre_Stops           = rmfield(Pre_Stopping_Files.Pre_Stops,'Pre_GC'); 
 
+GaitData_Pre_Stop                      = Pre_Stopping_Files.Pre_Stops; 
+GaitData_Pre_Stop                      = rmfield(GaitData_Pre_Stop, {'wt_rs'; 'wt_standing'; 'IMU_signal_rs'; 'frequency_domain'; 'baseline_stand_org'; 'baseline_stand'});
+
 clear lables idx idx_del index_del k m nfrq q time field A i  c  C baseline_standing condition_labels datafile labels task num_freq num_time store_file store_temp pre_names 
 
 %SAVE DATA
 save([subjectdata.generalpath filesep 'Time-Frequency-Data' filesep 'Pre_Stopping_Files.mat'], 'Pre_Stopping_Files', '-mat')
+save([subjectdata.generalpath filesep 'Kinematic-Data' filesep 'Pre_Stopping_Files.mat'], 'GaitData_Pre_Stop', '-mat')
 % *********************** END OF SCRIPT ************************************************************************************************************************
