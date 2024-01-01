@@ -12,7 +12,6 @@
 %The current script will focus on data from the disease dominant STN.
 %===========================================================================%
 
-
 subjectdata.generalpath                 = uigetdir;                                                                 % Example: Call the SenseFOG-main file
 cd(subjectdata.generalpath)
 names                                   = cellstr(strsplit(sprintf('sub-%02d ',1:20)));                             % Create a list of sub-names
@@ -159,7 +158,7 @@ for k = 1:length(names)
                 SSS.(names{k}).Right_STN(i+l).baseline                = Subjects.(names{k}).Baseline_Power.baseline_pwr_R ./  sum(Subjects.(names{k}).Baseline_Power.baseline_pwr_R([10:33, 37:48, 52:90],:))'; %Normalize here                                
                 SSS.(names{k}).Right_STN(i+l).baseline_org            = Subjects.(names{k}).Baseline_Power.baseline_pwr_R;
                 SSS.(names{k}).Left_STN(i+l).baseline_org             = Subjects.(names{k}).Baseline_Power.baseline_pwr_L;
-                l                                                         = length(SSS.(names{k}).Right_STN);
+                l                                                     = length(SSS.(names{k}).Right_STN);
             end
     end
 end
@@ -186,20 +185,15 @@ for k = 1:length(names)
     if isfield(FILES.SSS, 'wt_r') == 0; FILES.SSS.wt_r = []; FILES.SSS.wt_l = []; end
         datafile_r          = SSS.(names{k}).Right_STN;
         datafile_l          = SSS.(names{k}).Left_STN;
-        FILES.SSS.wt_r  = [FILES.SSS.wt_r, datafile_r]; %Concatenate all Stop Events 
-        FILES.SSS.wt_l  = [FILES.SSS.wt_l, datafile_l]; %Concatenate all Stop Events 
+        FILES.SSS.wt_r  = cat(2,datafile_r, FILES.SSS.wt_r); %Concatenate all Stop Events 
+        FILES.SSS.wt_l  = cat(2,datafile_l, FILES.SSS.wt_l); %Concatenate all Stop Events 
 end
 
 idx = find(cellfun(@isempty,{FILES.SSS.wt_r.wt}));
 FILES.SSS.wt_r(idx)     = []; FILES.SSS.wt_l(idx) = [];
 FILES.SSS.Option        = FILES.Option; 
 
-
-
 Stopping_Files = [];
-fields = fieldnames(SSS.(names{1}).Right_STN);
-for i = 1:length(fields); Stopping_Files.(fields{i}) = struct; end   
-
 for k = 1:length(names)
     if isfield(SSS, (names{k})) == 0; continue; end
     %Check for STN Dominance
@@ -211,7 +205,8 @@ for k = 1:length(names)
         end
 end
 
+clear datafile_l datafile_r  i idx k store time_vector
 
 %SAVE DATA
-%save([subjectdata.generalpath filesep  'Stopping_Files.mat'], 'Stopping_Files', '-mat')
+save([subjectdata.generalpath filesep 'Time-Frequency-Data' filesep 'Stopping_Files.mat'], 'Stopping_Files', '-mat')
 % *********************** END OF SCRIPT ************************************************************************************************************************
