@@ -42,10 +42,10 @@ end
 
 
 %Update September 2023 - Gyroscope Data of PD20 is deg/s switch to rad/s 
-if isfield(Subjects,"sub_20");       Subjects.sub_20.Walk.Gyroscope_LF = rad2deg(Subjects.sub_20.Walk.Gyroscope_LF);end
-if isfield(Subjects,"sub_20");       Subjects.sub_20.Walk.Gyroscope_RF = rad2deg(Subjects.sub_20.Walk.Gyroscope_RF);end
-if isfield(Subjects,"sub_20"); Subjects.sub_20.WalkINT.Gyroscope_LF = rad2deg(Subjects.sub_20.WalkINT.Gyroscope_LF);end
-if isfield(Subjects,"sub_20"); Subjects.sub_20.WalkINT.Gyroscope_RF = rad2deg(Subjects.sub_20.WalkINT.Gyroscope_RF);end
+%if isfield(Subjects,"sub_20");       Subjects.sub_20.Walk.Gyroscope_LF = rad2deg(Subjects.sub_20.Walk.Gyroscope_LF);end
+%if isfield(Subjects,"sub_20");       Subjects.sub_20.Walk.Gyroscope_RF = rad2deg(Subjects.sub_20.Walk.Gyroscope_RF);end
+%if isfield(Subjects,"sub_20"); Subjects.sub_20.WalkINT.Gyroscope_LF = rad2deg(Subjects.sub_20.WalkINT.Gyroscope_LF);end
+%if isfield(Subjects,"sub_20"); Subjects.sub_20.WalkINT.Gyroscope_RF = rad2deg(Subjects.sub_20.WalkINT.Gyroscope_RF);end
 
 %Update September 2023 - Remove Subject 15 WalkINT as data are compromised by artefacts
 Subjects.sub_15 = rmfield(Subjects.sub_15, "WalkINT");
@@ -129,7 +129,7 @@ for k = 1:length(names)
                 pretrialtime    = 0;                                                                                % Baseline before onset of freezing
                 epochduration   = 1000;                                                                             % Duration that shall be extracted after start in ms
                 start           = single(1000*Subjects.(names{k}).(task{m}).(field{1})(i).start) - pretrialtime;    % Transition time 
-                stop            = start + pretrialtime + epochduration;                                             % [] seconds into freezing
+                stop            = start + pretrialtime + epochduration-1;                                           % [] seconds into freezing
                 stop2           = single(1000*Subjects.(names{k}).(task{m}).(field{1})(i).end);                     % Full length of freezing
                 
                 for t = 1:width(input)
@@ -177,9 +177,6 @@ for k = 1:length(names)
                 Freeze_ERP.(names{k}).Right_STN(i+l).wt                      = Subjects.(names{k}).(task{m}).(field{1})(i).R_wt;                        %Baseline-subtracted (Standing) TF Data
                 Freeze_ERP.(names{k}).Left_STN(i+l).wt_org                   = Subjects.(names{k}).(task{m}).(field{1})(i).L_wt_org;                    %Non-Baseline subtracted TF Data
                 Freeze_ERP.(names{k}).Right_STN(i+l).wt_org                  = Subjects.(names{k}).(task{m}).(field{1})(i).R_wt_org;                    %Non-Baseline subtracted TF Data
-                
-                %Freeze_ERP.(names{k}).Right_STN(i+l).foot                    = datafile(i).Foot;
-                %Freeze_ERP.(names{k}).Left_STN(i+l).foot                     = datafile(i).Foot;
                 Freeze_ERP.(names{k}).Left_STN(i+l).IMU                      = Subjects.(names{k}).(task{m}).(field{1})(i).Gyroscope_RF;
                 Freeze_ERP.(names{k}).Right_STN(i+l).IMU                     = Subjects.(names{k}).(task{m}).(field{1})(i).Gyroscope_LF;
 
@@ -213,10 +210,10 @@ FILES.Freeze_ERP = []; %Create empty struct for all Self-Selected Stop
 for k = 1:length(names)
     if isfield(Freeze_ERP, (names{k})) == 0; continue; end
     if isfield(FILES.Freeze_ERP, 'wt_r') == 0; FILES.Freeze_ERP.wt_r = []; FILES.Freeze_ERP.wt_l = []; end
-        datafile_r          = Freeze_ERP.(names{k}).Right_STN;
-        datafile_l          = Freeze_ERP.(names{k}).Left_STN;
-        FILES.Freeze_ERP.wt_r  = [FILES.Freeze_ERP.wt_r, datafile_r]; %Concatenate all Stop Events 
-        FILES.Freeze_ERP.wt_l  = [FILES.Freeze_ERP.wt_l, datafile_l]; %Concatenate all Stop Events 
+        datafile_r             = Freeze_ERP.(names{k}).Right_STN;
+        datafile_l             = Freeze_ERP.(names{k}).Left_STN;
+        FILES.Freeze_ERP.wt_r  = cat(2,datafile_r, FILES.Freeze_ERP.wt_r); %Concatenate all Stop Events 
+        FILES.Freeze_ERP.wt_l  = cat(2,datafile_l, FILES.Freeze_ERP.wt_l); %Concatenate all Stop Events 
 end
 
 idx = find(cellfun(@isempty,{FILES.Freeze_ERP.wt_r.wt}));
@@ -225,23 +222,18 @@ FILES.Freeze_ERP.Option        = FILES.Option;
 
 
 Freezing_Files = [];
-fields = fieldnames(Freeze_ERP.(names{1}).Right_STN);
-for i = 1:length(fields); Freezing_Files.(fields{i}) = struct; end   
-
 for k = 1:length(names)
     if isfield(Freeze_ERP, (names{k})) == 0; continue; end
     %Check for STN Dominance
-        if      Subjects.(names{k}).Baseline_Power.STN_dominance == "Left"; 
+    if      Subjects.(names{k}).Baseline_Power.STN_dominance == "Left"; 
             Freezing_Files = cat(2,Freezing_Files,Freeze_ERP.(names{k}).Left_STN);
 
-        elseif  Subjects.(names{k}).Baseline_Power.STN_dominance == "Right";
+    elseif  Subjects.(names{k}).Baseline_Power.STN_dominance == "Right";
             Freezing_Files = cat(2,Freezing_Files,Freeze_ERP.(names{k}).Right_STN);
-        end
+    end
 end
-
-if isstruct(Freezing_Files(1).name); Freezing_Files(1) = []; end 
 
 
 %SAVE DATA
-%save([subjectdata.generalpath filesep  'Stopping_Files.mat'], 'Stopping_Files', '-mat')
+save([subjectdata.generalpath filesep 'Time-Frequency-Data' filesep 'Freezing_Files.mat'], 'Freezing_Files', '-mat')
 % *********************** END OF SCRIPT ************************************************************************************************************************
