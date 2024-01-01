@@ -102,6 +102,22 @@ for k = 1:length(names)
                 start                                                        = single(1000*Subjects.(names{k}).(task{m}).(site{n})(i).start);   % HS start
                 stop                                                         = single(1000*Subjects.(names{k}).(task{m}).(site{n})(i).end);     % HS end
                 
+                %Assign exact gait parameters to this heelstrike
+                if n == 1; 
+                    [idx, loc] = ismembertol([Subjects.(names{k}).(task{m}).rf_events.Heelstrike_Loc],Subjects.(names{k}).(task{m}).(site{n})(i).end);
+                    Subjects.(names{k}).(task{m}).(site{n})(i).Midswing_Loc     = Subjects.(names{k}).(task{m}).rf_events(idx,:).Midswing_Loc; 
+                    Subjects.(names{k}).(task{m}).(site{n})(i).Midswing_Peak    = Subjects.(names{k}).(task{m}).rf_events(idx,:).Midswing_Peak; 
+                    Subjects.(names{k}).(task{m}).(site{n})(i).Toe_Off_Loc      = Subjects.(names{k}).(task{m}).rf_events(idx,:).Toe_Off_Loc; 
+                    if Subjects.(names{k}).(task{m}).(site{n})(i).Toe_Off_Loc > Subjects.(names{k}).(task{m}).(site{n})(i).Midswing_Loc;  Subjects.(names{k}).(task{m}).(site{n})(i).Midswing_Loc = []; Subjects.(names{k}).(task{m}).(site{n})(i).Toe_Off_Loc = []; end;  
+                elseif n == 2; 
+                    [idx, loc] = ismembertol([Subjects.(names{k}).(task{m}).lf_events.Heelstrike_Loc],Subjects.(names{k}).(task{m}).(site{n})(i).end);
+                    Subjects.(names{k}).(task{m}).(site{n})(i).Midswing_Loc     = Subjects.(names{k}).(task{m}).lf_events(idx,:).Midswing_Loc; 
+                    Subjects.(names{k}).(task{m}).(site{n})(i).Midswing_Peak    = Subjects.(names{k}).(task{m}).lf_events(idx,:).Midswing_Peak; 
+                    Subjects.(names{k}).(task{m}).(site{n})(i).Toe_Off_Loc      = Subjects.(names{k}).(task{m}).lf_events(idx,:).Toe_Off_Loc; 
+                    if Subjects.(names{k}).(task{m}).(site{n})(i).Toe_Off_Loc > Subjects.(names{k}).(task{m}).(site{n})(i).Midswing_Loc;  Subjects.(names{k}).(task{m}).(site{n})(i).Midswing_Loc = []; Subjects.(names{k}).(task{m}).(site{n})(i).Toe_Off_Loc = []; end;  
+                end
+
+
                 %Extract IMU Foot Information 
                 Subjects.(names{k}).(task{m}).(site{n})(i).IMU_acc_rs        = Subjects.(names{k}).(task{m}).(IMU{n,1})([start:stop],3)'; 
                 Subjects.(names{k}).(task{m}).(site{n})(i).IMU_gyr_rs        = rad2deg(Subjects.(names{k}).(task{m}).(IMU{n,2})([start:stop],2))'; 
@@ -120,7 +136,18 @@ for k = 1:length(names)
                 %TIME DOMAIN Data (Normalization will occur after resampling)
                 Subjects.(names{k}).(task{m}).(site{n})(i).wt                 = Subjects.(names{k}).(task{m}).(input{n,1})(:, [start:stop]); %FOOT HS But contralateral STN
                               
+                %Extract Sitting Power
+                if isfield(Subjects.(names{k}),'Sitting_Power') == 1
+                    if      n == 1; baseline = Subjects.(names{k}).Sitting_Power.baseline_pwr_L;
+                    elseif  n == 2; baseline = Subjects.(names{k}).Sitting_Power.baseline_pwr_R; end
+                    sum_FD  = sum(baseline([10:33, 37:48, 52:90],:));
+                    Subjects.(names{k}).(task{m}).(site{n})(i).sitting = (baseline ./ sum_FD)';                        % Normalize baseline to yield relative power
+                    clear baseline
+                elseif ~isfield(Subjects.(names{k}),'Sitting_Power') == 1
+                    Subjects.(names{k}).(task{m}).(site{n})(i).sitting = [];
+                end
 
+                   
                 %Resample HS to same length (1000 datapoints)
                 for t = 1:height(Subjects.(names{k}).(task{m}).(site{n})(i).wt)
                     pp = [flip(Subjects.(names{k}).(task{m}).(site{n})(i).wt(t,:)) Subjects.(names{k}).(task{m}).(site{n})(i).wt(t,:) flip(Subjects.(names{k}).(task{m}).(site{n})(i).wt(t,:))]; 
@@ -171,7 +198,7 @@ for k = 1:length(names)
 end
 
 %Clean-UP
-clear ans bands i input k LFP m n pp qq site t task IMU
+clear ans bands i input k LFP m n pp qq site t IMU sum_FD
 
 %Store all data according to disease laterality (based on MDS-UPDRS III scores)
 Walking_Files           = struct;
@@ -182,7 +209,7 @@ Walking_Files.names     = names;
 task            = {'Walk', 'WalkWS', 'WalkINT', 'WalkINT_new'};
 fieldnames      = {'Walking_Right_HS', 'Walking_Left_HS'};
 
-for i = 1:length(fieldnames); Walking_Files.(fieldnames{i}) = struct; end                                                   %Final struct array where all DOMINANT STN files will be stored
+for i = 1:length(fieldnames); Walking_Files.(fieldnames{i}) = struct; end                                           %Final struct array where all DOMINANT STN files will be stored
 
 for i = 1:length(names)
     if isfield(Subjects,names(i)) == 0; continue; end                                                               %Check if fields exist, otherwise skip i for 1 itr.
@@ -206,9 +233,58 @@ for i = 1:length(names)
         end
     end
 end
+clear i k z m fs ans datafield datafile Option
+
+%Store Gait Data for non-disease dominant leg
+fieldnames      = {'Walking_Right_HS', 'Walking_Left_HS'};
+GaitData_Walk = struct; GaitData_Walk.dominant = []; GaitData_Walk.nondominant = [];
+
+for i = 1:length(names)
+    if isfield(Subjects,names(i)) == 0; continue; end                                                               %Check if fields exist, otherwise skip i for 1 itr.
+    datafile    = Subjects.(names{i});
+    for k = 1:length(task)
+        if isfield(datafile, task{k}) == 0; continue; end                                                           %Check if fields exist, otherwise skip k for 1 itr.
+        datafield = getfield(datafile, task{k});
+        if isfield(datafield, fieldnames(1)) == 0; continue; end
+
+        %Check for STN Dominance
+        if      datafile.Baseline_Power.STN_dominance == "Left"; m = 1; z = 2; 
+        elseif  datafile.Baseline_Power.STN_dominance == "Right"; m = 2; z = 1; 
+        end
+        store = getfield(datafield, fieldnames{m});
+        store = rmfield(store,{ 'IMU_acc_rs'; 'IMU_gyr_rs'; 'frequency_domain'; 'sitting'; 'wt_rs'; 'wt_org'; 'baseline'});
+        GaitData_Walk.dominant = cat(2,store, GaitData_Walk.dominant);
+
+        store = getfield(datafield, fieldnames{z});
+        store = rmfield(store,{ 'IMU_acc_rs'; 'IMU_gyr_rs'; 'frequency_domain'; 'sitting'; 'wt_rs'; 'wt_org'; 'baseline'});
+        GaitData_Walk.nondominant = cat(2,store, GaitData_Walk.nondominant);
+        clear datafield
+    end
+    clear datafile
+end
+clear fieldnames i idx k loc m store z site
+
+%Compute relative gait cycle timepoints
+site = {'dominant'; 'nondominant'};
+for t = 1:length(site)
+    for i = 1:length(GaitData_Walk.(site{t}))
+        %Relative Midswing (relative to its gait cycle)
+        if isempty(GaitData_Walk.(site{t})(i).Midswing_Loc) == 0 && size(GaitData_Walk.(site{t})(i).Midswing_Loc,1) == 1 
+        temp_store                          = (GaitData_Walk.(site{t})(i).end - GaitData_Walk.(site{t})(i).Midswing_Loc);
+        GaitData_Walk.(site{t})(i).Midswing = (1-(temp_store / GaitData_Walk.(site{t})(i).diff))*100;
+
+        %Relative Toe-OFF (relative to its gait cycle)
+        temp_store                          = (GaitData_Walk.(site{t})(i).end - GaitData_Walk.(site{t})(i).Toe_Off_Loc);
+        GaitData_Walk.(site{t})(i).Toe_Off  = (1-(temp_store / GaitData_Walk.(site{t})(i).diff))*100;
+        end
+    end
+    idx = find(cellfun(@isempty,{GaitData_Walk.(site{t}).Midswing}));
+    GaitData_Walk.(site{t})(idx) = []; clear idx 
+end
+clear t site i temp_store task
 
 
 %SAVE DATA
-%save([subjectdata.generalpath filesep 'Walking_Files.mat'], 'Walking_Files', '-mat')
-
+save([subjectdata.generalpath filesep 'Time-Frequency-Data' filesep 'Walking_Files.mat'], 'Walking_Files', '-mat')
+save([subjectdata.generalpath filesep 'Kinematic-Data' filesep 'Walking_Files.mat'], 'GaitData_Walk', '-mat')
 % *********************** END OF SCRIPT ************************************************************************************************************************
