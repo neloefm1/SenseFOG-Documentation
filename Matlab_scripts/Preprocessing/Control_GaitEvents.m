@@ -1151,6 +1151,9 @@ Subjects.sub_10.ses_walk.GaitEvents.rf_events(200).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(305).Heelstrike_Loc = 146.820;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(305).Midswing_Loc = 146.597;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(305).Toe_Off_Loc = 146.371;
+Subjects.sub_10.ses_walk.GaitEvents.rf_events(305).Heelstrike_Peak = 45.5871;
+Subjects.sub_10.ses_walk.GaitEvents.rf_events(305).Midswing_Peak = 88.8803;
+Subjects.sub_10.ses_walk.GaitEvents.rf_events(305).Toe_Off_Peak = -3.2259;
 
 
 %SUBJECT 10 WALK LEFT FOOT
@@ -3517,7 +3520,7 @@ Subjects.sub_20.ses_walkint.GaitEvents.lf_events(182).Toe_Off_Loc = 338.524;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(184).Toe_Off_Loc = 341.568;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(187).Toe_Off_Loc = 344.05;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(188).Toe_Off_Loc = 344.784;
-%
+
 
 % Delete fields specified by '-6666' as well as empty fields
 task               = {'ses_walk'; 'ses_walkws'; 'ses_walkint'; 'ses_walkint2'};                                     % Create an edited list of taks
