@@ -318,7 +318,7 @@ clear k m q A ans i store
 %Average over trials within a given Pre-Stop
 task        = {'WalkWS'};
 labels      = {'wt_rs'; 'wt_standing'; 'IMU_signal_rs'};
-imu_label   = {'Midswing'; 'Toe_Off';'Midswing_Peak'}; 
+imu_label   = {'Midswing'; 'Toe_Off';'Midswing_Peak'; 'duration'}; 
 All_Stops   = [];
 pre_names   = fieldnames(Pre_STOP);
 
