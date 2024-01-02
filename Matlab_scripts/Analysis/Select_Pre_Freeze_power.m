@@ -333,7 +333,7 @@ clear k m q A ans index minDis task IMU_file
 % Average over all gaitcycles within a given pre-freeze event
 task        = {'Walk'; 'WalkWS'; 'WalkINT'; 'WalkINT_new'};
 field       = {'Walking_Freeze'};
-labels      = {'wt_rs'; 'wt_standing'; 'IMU_signal'};
+labels      = {'wt_rs'; 'wt_standing'; 'IMU_signal'; 'duration'};
 imu_label   = {'Midswing'; 'Toe_Off';'Midswing_Peak'}; 
 All_FOGs    = [];
 
