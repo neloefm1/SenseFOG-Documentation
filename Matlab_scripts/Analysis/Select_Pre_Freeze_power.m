@@ -42,10 +42,10 @@ end
 
 
 %Update September 2023 - Gyroscope Data of PD20 is deg/s switch to rad/s 
-if isfield(Subjects,"sub_20");       Subjects.sub_20.Walk.Gyroscope_LF = rad2deg(Subjects.sub_20.Walk.Gyroscope_LF);end
-if isfield(Subjects,"sub_20");       Subjects.sub_20.Walk.Gyroscope_RF = rad2deg(Subjects.sub_20.Walk.Gyroscope_RF);end
-if isfield(Subjects,"sub_20"); Subjects.sub_20.WalkINT.Gyroscope_LF = rad2deg(Subjects.sub_20.WalkINT.Gyroscope_LF);end
-if isfield(Subjects,"sub_20"); Subjects.sub_20.WalkINT.Gyroscope_RF = rad2deg(Subjects.sub_20.WalkINT.Gyroscope_RF);end
+%if isfield(Subjects,"sub_20");       Subjects.sub_20.Walk.Gyroscope_LF = rad2deg(Subjects.sub_20.Walk.Gyroscope_LF);end
+%if isfield(Subjects,"sub_20");       Subjects.sub_20.Walk.Gyroscope_RF = rad2deg(Subjects.sub_20.Walk.Gyroscope_RF);end
+%if isfield(Subjects,"sub_20"); Subjects.sub_20.WalkINT.Gyroscope_LF = rad2deg(Subjects.sub_20.WalkINT.Gyroscope_LF);end
+%if isfield(Subjects,"sub_20"); Subjects.sub_20.WalkINT.Gyroscope_RF = rad2deg(Subjects.sub_20.WalkINT.Gyroscope_RF);end
 
 %Update September 2023 - Remove Subject 15 WalkINT as data are compromised by artefacts
 Subjects.sub_15 = rmfield(Subjects.sub_15, "WalkINT");
@@ -109,72 +109,109 @@ for k = 1:length(names)
                 for i = 1:length(datafile)
 
                     freeze_start    = datafile(i).start;
-                    RF_events       = sort(Subjects.(names{k}).(task{m}).rf_events.Heelstrike_Loc);                 % Sort in ascending order
-                    RF_events       = RF_events(RF_events <= freeze_start);                                         % Only choose events that occur at or before stop
-                    LF_events       = sort(Subjects.(names{k}).(task{m}).lf_events.Heelstrike_Loc);                 % Sort in ascending order
-                    LF_events       = LF_events(LF_events <= freeze_start);                                         % Only choose events that occur at or before stop
+                    %RF_events       = sort(Subjects.(names{k}).(task{m}).rf_events.Heelstrike_Loc);                 % Sort in ascending order
+                    %RF_events       = RF_events(RF_events <= freeze_start);                                         % Only choose events that occur at or before stop
+                    %LF_events       = sort(Subjects.(names{k}).(task{m}).lf_events.Heelstrike_Loc);                 % Sort in ascending order
+                    %LF_events       = LF_events(LF_events <= freeze_start);                                         % Only choose events that occur at or before stop
+                    RF_events       = sortrows(Subjects.(names{k}).(task{m}).rf_events, "Heelstrike_Loc");
+                    RF_events       = RF_events(RF_events.Heelstrike_Loc <= freeze_start,:);                            
+                    LF_events       = sortrows(Subjects.(names{k}).(task{m}).lf_events, "Heelstrike_Loc");
+                    LF_events       = LF_events(LF_events.Heelstrike_Loc <= freeze_start,:);                            
                     DD_STN          = Subjects.(names{k}).Baseline_Power.STN_dominance;                             % Choose disease dominant STN
          
                     %Use the foot that corresponds to the disease dominant STN
                     if Subjects.(names{k}).Baseline_Power.STN_dominance == "Right"; foot = "Left";
                     
                         %Find Left Foot Heelstrikes occurring before freeze onset
-                        [minDis,idxGC3] = min(abs(LF_events-freeze_start));
+                        %[minDis,idxGC3] = min(abs(LF_events-freeze_start));
+                        [minDis,idxGC3] = min( abs(LF_events.Heelstrike_Loc-freeze_start));
+                        if iscell(LF_events.Midswing_Loc);  LF_events.Midswing_Loc = cell2mat(cell2num({LF_events.Midswing_Loc}));end
+                        if iscell(LF_events.Midswing_Peak);  LF_events.Midswing_Peak = cell2mat(cell2num({LF_events.Midswing_Peak}));end 
+                        if iscell(LF_events.Toe_Off_Peak);  LF_events.Toe_Off_Peak = cell2mat(cell2num({LF_events.Toe_Off_Peak}));end
+                        if iscell(LF_events.Heelstrike_Peak); LF_events.Heelstrike_Peak = cell2mat(cell2num({LF_events.Heelstrike_Peak}));end
+                        if istable(LF_events); LF_events = table2array(LF_events); end
+                        if istable(RF_events); RF_events = table2array(RF_events); end
                        
                         %GC1
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).start             = LF_events(idxGC3-1);          % Choose the HS Loc before FOG onset
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).end               = LF_events(idxGC3);            % Start with FOG Onset
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).duration          = LF_events(idxGC3) -LF_events(idxGC3-1); %Compute Difference
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).start             = LF_events(idxGC3-1,5);          % Choose the HS Loc before FOG onset
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).end               = LF_events(idxGC3,5);            % Start with FOG Onset
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).duration          = LF_events(idxGC3,5) -LF_events(idxGC3-1,5); %Compute Difference
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).Midswing_Loc      = LF_events(idxGC3,1);
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).Midswing_Peak     = LF_events(idxGC3,2);
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).Toe_Off_Loc       = LF_events(idxGC3,3);
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).foot              = "Left";  
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).DD_STN            = DD_STN;
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).distance_FoG      = Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).duration + minDis;  
                         
                         %GC2
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).start             = LF_events(idxGC3-2);          % Choose the HS that occurs before the end
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).end               = LF_events(idxGC3-1);          % Choose one HS Loc before FOG onset
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).duration          = LF_events(idxGC3-1) -LF_events(idxGC3-2); %Compute Difference
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).start             = LF_events(idxGC3-2,5);          % Choose the HS that occurs before the end
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).end               = LF_events(idxGC3-1,5);          % Choose one HS Loc before FOG onset
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).duration          = LF_events(idxGC3-1,5) -LF_events(idxGC3-2,5); %Compute Difference
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).Midswing_Loc      = LF_events(idxGC3-1,1);
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).Midswing_Peak     = LF_events(idxGC3-1,2);
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).Toe_Off_Loc       = LF_events(idxGC3-1,3);
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).foot              = "Left";  
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).DD_STN            = DD_STN;
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).distance_FoG      = Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).distance_FoG + Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).duration;
            
                         %GC3
                         if idxGC3 > 3
-                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).start         = LF_events(idxGC3-3);          % Choose the HS that occurs before the end
-                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).end           = LF_events(idxGC3-2);          % Choose two HS Loc before FOG onset
-                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).duration      = LF_events(idxGC3-2) -LF_events(idxGC3-3); %Compute Difference
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).start         = LF_events(idxGC3-3,5);          % Choose the HS that occurs before the end
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).end           = LF_events(idxGC3-2,5);          % Choose two HS Loc before FOG onset
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).duration      = LF_events(idxGC3-2,5) -LF_events(idxGC3-3,5); %Compute Difference
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).Midswing_Loc  = LF_events(idxGC3-2,1);
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).Midswing_Peak = LF_events(idxGC3-2,2);
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).Toe_Off_Loc   = LF_events(idxGC3-2,3);
                             Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).foot          = "Left";
                             Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).DD_STN        = DD_STN;
                             Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).distance_FoG  = Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).distance_FoG + Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).duration;
                         end
                         clear foot 
 
-                        
+                  
                     elseif Subjects.(names{k}).Baseline_Power.STN_dominance == "Left"; foot = "Right";
                         
                        %Find Right Foot Heelstrikes occurring before freezeonset
-                        [minDis,idxGC3] = min( abs( RF_events-freeze_start));
+                        %[minDis,idxGC3] = min( abs( RF_events-freeze_start));
+                        [minDis,idxGC3] = min( abs(RF_events.Heelstrike_Loc-freeze_start));
+                        if iscell(RF_events.Midswing_Loc);  RF_events.Midswing_Loc = cell2mat(cell2num({RF_events.Midswing_Loc}));end
+                        if iscell(RF_events.Midswing_Peak);  RF_events.Midswing_Peak = cell2mat(cell2num({RF_events.Midswing_Peak}));end
+                        if iscell(RF_events.Toe_Off_Peak);  RF_events.Toe_Off_Peak = cell2mat(cell2num({RF_events.Toe_Off_Peak}));end
+                        if iscell(RF_events.Heelstrike_Peak); RF_events.Heelstrike_Peak = cell2mat(cell2num({RF_events.Heelstrike_Peak})); end
+                        if istable(LF_events); LF_events = table2array(LF_events); end
+                        if istable(RF_events); RF_events = table2array(RF_events); end
 
+                       
                         %GC3
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).start             = RF_events(idxGC3-1);          % Choose the HS Loc before FOG onset
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).end               = RF_events(idxGC3);            % Start with FOG Onset
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).duration          = RF_events(idxGC3) - RF_events(idxGC3-1); %Compute Difference
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).start             = RF_events(idxGC3-1,5);          % Choose the HS Loc before FOG onset
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).end               = RF_events(idxGC3,5);            % Start with FOG Onset
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).duration          = RF_events(idxGC3,5) - RF_events(idxGC3-1,5); %Compute Difference
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).Midswing_Loc      = RF_events(idxGC3,1);
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).Midswing_Peak     = RF_events(idxGC3,2);
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).Toe_Off_Loc       = RF_events(idxGC3,3);
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).foot              = "Right";
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).DD_STN            = DD_STN;
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).distance_FoG      = Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).duration + minDis;  
                                               
                         %GC2
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).start             = RF_events(idxGC3-2);          % Choose the HS that occurs before the end
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).end               = RF_events(idxGC3-1);          % Choose one HS Loc before FOG onset
-                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).duration          = RF_events(idxGC3-1) - RF_events(idxGC3-2); %Compute Difference
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).start             = RF_events(idxGC3-2,5);          % Choose the HS that occurs before the end
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).end               = RF_events(idxGC3-1,5);          % Choose one HS Loc before FOG onset
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).duration          = RF_events(idxGC3-1,5) - RF_events(idxGC3-2,5); %Compute Difference
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).Midswing_Loc      = RF_events(idxGC3-1,1);
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).Midswing_Peak     = RF_events(idxGC3-1,2);
+                        Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).Toe_Off_Loc       = RF_events(idxGC3-1,3);
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).foot              = "Right";  
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).DD_STN            = DD_STN;
                         Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).distance_FoG      = Pre_FOG.(names{k}).(task{m})(i).Pre_GC(1).distance_FoG + Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).duration;
                                              
                         %GC3
                         if idxGC3 > 3
-                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).start         = RF_events(idxGC3-3);          % Choose the HS that occurs before the end
-                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).end           = RF_events(idxGC3-2);          % Choose two HS Loc before FOG onset
-                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).duration      = RF_events(idxGC3-2) - RF_events(idxGC3-3); %Compute Difference
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).start         = RF_events(idxGC3-3,5);          % Choose the HS that occurs before the end
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).end           = RF_events(idxGC3-2,5);          % Choose two HS Loc before FOG onset
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).duration      = RF_events(idxGC3-2,5) - RF_events(idxGC3-3,5); %Compute Difference
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).Midswing_Loc  = RF_events(idxGC3-2,1);
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).Midswing_Peak = RF_events(idxGC3-2,2);
+                            Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).Toe_Off_Loc   = RF_events(idxGC3-2,3);
                             Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).foot          = "Right";
                             Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).DD_STN        = DD_STN;
                             Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).distance_FoG  = Pre_FOG.(names{k}).(task{m})(i).Pre_GC(2).distance_FoG + Pre_FOG.(names{k}).(task{m})(i).Pre_GC(3).duration;
@@ -211,11 +248,11 @@ for k = 1:length(names)
                 end
                 Pre_FOG.(names{k}).(task{m})(i).Pre_GC(index_del:end) = [];
             end
+            idx     = find(cellfun(@isempty,{Pre_FOG.(names{k}).(task{m}).Pre_GC}));
+            Pre_FOG.(names{k}).(task{m})(idx) = []; clear idx
     end
 end
 
-%Clear Files that have no content
-idx = find(cellfun(@isempty,{Pre_FOG.(names{k}).(task{m}).Pre_GC}));  Pre_FOG.(names{k}).(task{m})(idx) = []; clear idx
 clear i index_del k m t index minDis datafile
 
 
@@ -276,6 +313,13 @@ for k = 1:length(pre_names)
 
             %Time-Frequency Domain [Standing Baseline subtracted]
             Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC(t).wt_standing = ((Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC(t).wt_rs - baseline_standing) ./ baseline_standing) * 100;
+
+            %Compute relative timepoints for gait cycle
+            store = Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC(t).end - Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC(t).Midswing_Loc;
+            Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC(t).Midswing = (1-(store / Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC(t).duration))*100;
+
+            store = Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC(t).end - Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC(t).Toe_Off_Loc;
+            Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC(t).Toe_Off = (1-(store / Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC(t).duration))*100;
             end
 
             clear h i input LFP_file  p pp qq t xend xstart sum_FD sumFD baseline_standing  
@@ -290,6 +334,7 @@ clear k m q A ans index minDis task IMU_file
 task        = {'Walk'; 'WalkWS'; 'WalkINT'; 'WalkINT_new'};
 field       = {'Walking_Freeze'};
 labels      = {'wt_rs'; 'wt_standing'; 'IMU_signal'};
+imu_label   = {'Midswing'; 'Toe_Off';'Midswing_Peak'}; 
 All_FOGs    = [];
 
 pre_names = fieldnames(Pre_FOG);
@@ -303,6 +348,12 @@ for k = 1:length(pre_names)
             for q = 1:length(labels)
                 A = cat(3, Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC.(labels{q}));
                 Pre_FOG.(pre_names{k}).(task{m})(i).(labels{q}) = mean(A,3);
+            end
+
+            for q = 1:length(imu_label)
+                if isfield(Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC, imu_label(q)) == 0; continue; end
+                A = cat(2,Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC.(imu_label{q}));
+                Pre_FOG.(pre_names{k}).(task{m})(i).(imu_label{q}) = mean(A,2);
             end
 
             Pre_FOG.(pre_names{k}).(task{m})(i).frequency_domain    = mean(cell2mat({Pre_FOG.(pre_names{k}).(task{m})(i).Pre_GC.frequency_domain}'),1,"omitnan");
@@ -323,9 +374,16 @@ clear A
 
 Pre_Freezing_Files.frequencies         = Subjects.(names{1}).(task{1}).f;
 Pre_Freezing_Files.Pre_Fogs            = All_FOGs;
+Pre_Freezing_Files.Pre_Fogs            = rmfield(Pre_Freezing_Files.Pre_Fogs,'Pre_GC'); 
+Pre_Freezing_Files.Pre_fog_count       = size(cell2mat({All_FOGs.Pre_GC}),2);
 
-clear lables idx idx_del index_del k m nfrq q time field A i  c  C baseline_standing condition_labels datafile labels task num_freq num_time store_file store_temp pre_names 
+GaitData_Pre_Fog                       = Pre_Freezing_Files.Pre_Fogs; 
+GaitData_Pre_Fog                       = rmfield(GaitData_Pre_Fog, {'wt_rs'; 'wt_standing'; 'IMU_signal'; 'frequency_domain'; 'baseline_stand_org'; 'baseline_stand'});
+
+clear lables idx idx_del imu_label store t  index_del k m nfrq q time field A i  c  C baseline_standing condition_labels datafile labels task num_freq num_time store_file store_temp pre_names 
 
 %SAVE DATA
-%save([subjectdata.generalpath filesep  'Pre_Freezing_Files.mat'], 'Pre_Freezing_Files', '-mat')
+save([subjectdata.generalpath filesep 'Time-Frequency-Data' filesep 'Pre_Freezing_Files.mat'], 'Pre_Freezing_Files', '-mat')
+save([subjectdata.generalpath filesep 'Kinematic-Data' filesep 'Pre_Freezing_Files.mat'], 'GaitData_Pre_Fog', '-mat')
+
 % *********************** END OF SCRIPT ************************************************************************************************************************
