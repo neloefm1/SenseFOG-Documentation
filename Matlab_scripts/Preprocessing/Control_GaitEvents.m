@@ -61,7 +61,7 @@ for i = 1:length(names)
         IMU_time      = Subjects.(names{i}).(task{t}).IMU.IMU_data.imutime; 
 
         GaitEvents    = Subjects.(names{i}).(task{t}).GaitEvents.rf_events;
-        for k = 112:length(GaitEvents)
+        for k = 60:length(GaitEvents)
 
             textfile = char({sprintf('Name: %s - Task: %s (Right Foot) Trial: %.f / %.f', char(names(i)), char(task(t)), k,length(GaitEvents))});
             figure('Name',textfile)
@@ -1148,6 +1148,9 @@ Subjects.sub_10.ses_walk.GaitEvents.rf_events(218).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(290).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(88).Heelstrike_Loc = 148.575;
 Subjects.sub_10.ses_walk.GaitEvents.rf_events(200).Toe_Off_Loc = -6666;
+Subjects.sub_10.ses_walk.GaitEvents.rf_events(305).Heelstrike_Loc = 146.820;
+Subjects.sub_10.ses_walk.GaitEvents.rf_events(305).Midswing_Loc = 146.597;
+Subjects.sub_10.ses_walk.GaitEvents.rf_events(305).Toe_Off_Loc = 146.371;
 
 
 %SUBJECT 10 WALK LEFT FOOT
@@ -1197,6 +1200,7 @@ Subjects.sub_10.ses_walk.GaitEvents.lf_events(319).Toe_Off_Loc = -6666;
 
 %SUBJECT 10 WALKWS RIGHT FOOT
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(67).Toe_Off_Loc = 133.352;
+Subjects.sub_10.ses_walkws.GaitEvents.rf_events(75).Heelstrike_Loc = 149.33480;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(88).Toe_Off_Loc = 171.464;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(95).Toe_Off_Loc = 184.436;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(151).Toe_Off_Loc = 274.904;
@@ -1225,6 +1229,7 @@ Subjects.sub_10.ses_walkws.GaitEvents.rf_events(177).Heelstrike_Loc = 313.153;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(162).Heelstrike_Loc = 291.54;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(221).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(76).Heelstrike_Loc = 150.549;
+
 
 %SUBJECT 10 WALKWS LEFT FOOT
 Subjects.sub_10.ses_walkws.GaitEvents.lf_events(20).Toe_Off_Loc = 56.961;
@@ -1608,6 +1613,7 @@ Subjects.sub_14.ses_walkint.GaitEvents.rf_events(63).Toe_Off_Loc = 125.924;
 Subjects.sub_14.ses_walkint.GaitEvents.rf_events(64).Toe_Off_Loc = 127.16;
 Subjects.sub_14.ses_walkint.GaitEvents.rf_events(66).Toe_Off_Loc = 129.764;
 Subjects.sub_14.ses_walkint.GaitEvents.rf_events(67).Toe_Off_Loc = 131.142;
+Subjects.sub_14.ses_walkint.GaitEvents.rf_events(67).Heelstrike_Loc = 131.39409;
 Subjects.sub_14.ses_walkint.GaitEvents.rf_events(68).Toe_Off_Loc = 132.328;
 Subjects.sub_14.ses_walkint.GaitEvents.rf_events(70).Toe_Off_Loc = 136.294;
 Subjects.sub_14.ses_walkint.GaitEvents.rf_events(74).Toe_Off_Loc = 140.709;
@@ -1805,6 +1811,7 @@ Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(50).Toe_Off_Loc = 83.234;
 Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(51).Toe_Off_Loc = 84.558;
 Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(53).Toe_Off_Loc = 87.885;
 Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(54).Toe_Off_Loc = 89.246;
+Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(56).Heelstrike_Loc = 92.3210;
 Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(57).Toe_Off_Loc = 93.067;
 Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(60).Toe_Off_Loc = 95.89;
 Subjects.sub_14.ses_walkint2.GaitEvents.rf_events(61).Toe_Off_Loc = 106.108;
@@ -2441,6 +2448,11 @@ Subjects.sub_17.ses_walk.GaitEvents.lf_events(195).Toe_Off_Loc = 257.349;
 Subjects.sub_17.ses_walk.GaitEvents.lf_events(196).Toe_Off_Loc = 258.333;
 Subjects.sub_17.ses_walk.GaitEvents.lf_events(198).Toe_Off_Loc = 262.94;
 Subjects.sub_17.ses_walk.GaitEvents.lf_events(133).Heelstrike_Loc = 190.995;
+Subjects.sub_17.ses_walk.GaitEvents.lf_events(206).Midswing_Loc = 189.866;
+Subjects.sub_17.ses_walk.GaitEvents.lf_events(206).Midswing_Peak = 108.845;
+Subjects.sub_17.ses_walk.GaitEvents.lf_events(206).Toe_Off_Loc = 189.599;
+Subjects.sub_17.ses_walk.GaitEvents.lf_events(206).Heelstrike_Loc = 190.0590;
+
 
 
 %SUBJECT 17 WALKWS RIGHT FOOT
@@ -2487,7 +2499,7 @@ Subjects.sub_17.ses_walkws.GaitEvents.lf_events(43).Heelstrike_Loc = 77.26;
 Subjects.sub_17.ses_walkws.GaitEvents.lf_events(125).Toe_Off_Loc = -6666;
 Subjects.sub_17.ses_walkws.GaitEvents.lf_events(90).Toe_Off_Loc = -6666;
 Subjects.sub_17.ses_walkws.GaitEvents.lf_events(40).Toe_Off_Loc = -6666;
-Subjects.sub_17.ses_walkws.GaitEvents.lf_events(145).Heelstrike_Loc = 227.596;
+Subjects.sub_17.ses_walkws.GaitEvents.lf_events(151).Heelstrike_Loc = 227.5950;
 
 
 %SUBJECT 18 WALK RIGHT FOOT
@@ -3505,7 +3517,7 @@ Subjects.sub_20.ses_walkint.GaitEvents.lf_events(182).Toe_Off_Loc = 338.524;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(184).Toe_Off_Loc = 341.568;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(187).Toe_Off_Loc = 344.05;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(188).Toe_Off_Loc = 344.784;
-
+%
 
 % Delete fields specified by '-6666' as well as empty fields
 task               = {'ses_walk'; 'ses_walkws'; 'ses_walkint'; 'ses_walkint2'};                                     % Create an edited list of taks
@@ -3524,6 +3536,7 @@ for i = 1:length(names)
     end
 end
 clear i t 
+
 
 
 
