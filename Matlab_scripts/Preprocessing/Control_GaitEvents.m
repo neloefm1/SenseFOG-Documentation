@@ -2455,6 +2455,8 @@ Subjects.sub_17.ses_walk.GaitEvents.lf_events(206).Midswing_Loc = 189.866;
 Subjects.sub_17.ses_walk.GaitEvents.lf_events(206).Midswing_Peak = 108.845;
 Subjects.sub_17.ses_walk.GaitEvents.lf_events(206).Toe_Off_Loc = 189.599;
 Subjects.sub_17.ses_walk.GaitEvents.lf_events(206).Heelstrike_Loc = 190.0590;
+Subjects.sub_17.ses_walk.GaitEvents.lf_events(206).Heelstrike_Peak = 69.8213;
+Subjects.sub_17.ses_walk.GaitEvents.lf_events(206).Toe_Off_Peak = -4.5124;
 
 
 
@@ -3522,7 +3524,7 @@ Subjects.sub_20.ses_walkint.GaitEvents.lf_events(187).Toe_Off_Loc = 344.05;
 Subjects.sub_20.ses_walkint.GaitEvents.lf_events(188).Toe_Off_Loc = 344.784;
 
 
-% Delete fields specified by '-6666' as well as empty fields
+%% Delete fields specified by '-6666' as well as empty fields
 task               = {'ses_walk'; 'ses_walkws'; 'ses_walkint'; 'ses_walkint2'};                                     % Create an edited list of taks
 for i = 1:length(names)
     for t = 1:length(task)
