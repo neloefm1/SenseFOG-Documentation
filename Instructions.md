@@ -71,4 +71,4 @@ Explain here what is to be expected to be done, interations of code and expected
 - Sitting LFP Files für Subject 11 und 17 müssen noch ins DataRepository aufgenommen werden, da diese fehlen in den Rohdaten, in GitHub sollte hierzu eine erklärung folgen!
 - Take out all WalkINT Subject 15 Walking Files, Freezes
 - Vermutlich EEG Aligned files zusammen mit den LFPs von SUb10 schon in datarepository machen und in GitHub darauf verweisen
-
+- Make sure PD15WalkInt is excluded in files
