@@ -235,7 +235,7 @@ t2.Layout.TileSpan=[1 1];
     d = annotation('textbox',[0.04 0.07 .2 .2],'String','d','EdgeColor','none'); d.FontSize = 18; d.FontWeight = "bold";
 
     cd(filepath)
-    saveas(gcf,'Walking Time-Frequency')
+    saveas(gcf,'Figure 2')
     save([sprintf('%s.mat',"Figure_2"],"Sensefog_ResultsTable");
 
     clear a b c C c1 c2 i idx imagefile imratio new_imagefile p1 store subjectfiles t0 t1 t2 d mycolormap stat 
