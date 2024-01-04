@@ -195,7 +195,11 @@ FINAL_TABLE2.("Pre-FoG (D)")          = strcat({Table_2.Walking_vs_Pre_Fog.Pre_F
 FINAL_TABLE2.("Walking ( D)")         = strcat({Table_2.Walking_vs_Pre_Fog.Dominant},B,{Table_2.Walking_vs_Pre_Fog.dom_SD})';
 
 %Save Table
-cd(subjectdata.generalpath)
+filepath        = subjectdata.generalpath; cd(filepath)
+filepath        = extractBefore(filepath,"/Time-Frequency-Data");   
+filepath        = append(filepath, "/Table & Figures"); cd(filepath)
+cd(filepath)
 writetable(FINAL_TABLE2,"Table_2.xlsx",'Sheet',1,'Range','A1:J10')
+
 
 % *********************** END OF SCRIPT ************************************************************************************************************************
