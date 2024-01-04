@@ -74,7 +74,6 @@ data_names.title            = Sensefog_ResultsTable.title;
 eventfile       = []; baseline        = [];
 for i = 1:length(input_file)
     eventfile(i).file(1,:,:) = input_file(i).wt_rs;
-    %eventfile(i).file(1,:,:) = ((input_file(i).wt_org - input_file(i).baseline_org') ./ input_file(i).baseline_org') * 100;
     baseline(i).file(1,:,:)  = [zeros(size(input_file(i).wt_org))];
 end
 
