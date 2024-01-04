@@ -50,8 +50,6 @@ for i = 1:length(unique([Walking.name]))
     store(i).mean_Midswing  =  mean(cat(3,subjectfiles.Midswing),3);
 end
 
-
-%Exclude WALKINT 15 if not done elsewhere!!
 Sensefog_ResultsTable.time                 = linspace(1,size(Walking(1).wt_rs,2),size(Walking(1).wt_rs,2));
 Sensefog_ResultsTable.frex                 = f;
 Sensefog_ResultsTable.tf_map               = mean(cat(3,Walking.wt_rs),3);
