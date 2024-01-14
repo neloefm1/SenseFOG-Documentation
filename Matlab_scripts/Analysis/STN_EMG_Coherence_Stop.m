@@ -228,9 +228,9 @@ for i = 1:length(COHERENCE.Self_Selected_Stop_L)
     stn_dominance   = Subjects.(name_idx{1}).Baseline_Coherence.STN_dominance;  
 
     if stn_dominance == "Left"
-        Stopping_Files_Coherence.Stop = cat(2, Stopping_Files_Coherence.Stop, COHERENCE.Self_Selected_Stop_L(i));
-    elseif stn_dominance == "Right"
         Stopping_Files_Coherence.Stop = cat(2, Stopping_Files_Coherence.Stop, COHERENCE.Self_Selected_Stop_R(i));
+    elseif stn_dominance == "Right"
+        Stopping_Files_Coherence.Stop = cat(2, Stopping_Files_Coherence.Stop, COHERENCE.Self_Selected_Stop_L(i));
 
     end
 end
