@@ -91,13 +91,10 @@ for k = 1:length(names)
             if isfield(Subjects.(names{k}).(task{m}), field) == 0; continue; end
             
             datafile = Subjects.(names{k}).(task{m}).(field{1});
+            idx = find([datafile.duration] < 1); datafile(idx) = [];                                                    % Find index of stops < 1s duraiton and delete                                                                                        
             for i = 1:length(datafile)
 
                     stop_start      = datafile(i).start;
-                    %RF_events      = sort(Subjects.(names{k}).(task{m}).rf_events.Heelstrike_Loc);                     % Sort in ascending order
-                    %RF_events      = RF_events(RF_events <= stop_start);                                               % Only choose events that occur at or before stop
-                    %LF_events       = sort(Subjects.(names{k}).(task{m}).lf_events.Heelstrike_Loc);                     % Sort in ascending order
-                    %LF_events       = LF_events(LF_events <= stop_start);                                               % Only choose events that occur at or before stop
                     RF_events       = sortrows(Subjects.(names{k}).(task{m}).rf_events, "Heelstrike_Loc");
                     RF_events       = RF_events(RF_events.Heelstrike_Loc <= stop_start,:);                            
                     LF_events       = sortrows(Subjects.(names{k}).(task{m}).lf_events, "Heelstrike_Loc");
