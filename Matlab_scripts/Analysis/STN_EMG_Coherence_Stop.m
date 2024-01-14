@@ -11,6 +11,7 @@
 %spectra will be computed for the tibialis anterior (TA) and gastrocnemius
 %muscles (GA) yielding the subthalamo-muscular coherence. Only the disease
 %dominant STN will be focus of the current analysis. 
+%Make sure, Fieltrip is added to the current path.
 %===========================================================================%
 
 subjectdata.generalpath                 = uigetdir;                                                                 % Example: Call the SenseFOG-main file
@@ -149,7 +150,9 @@ for k = 1:length(names)
         for t = 1:size(site,1)
             if isfield(Stop_Coherence.(names{k}).(task{m}), site(t,1)) == 0; continue; end
 
-            datafile = Stop_Coherence.(names{k}).(task{m}).(site{t});
+            datafile             = Stop_Coherence.(names{k}).(task{m}).(site{t});
+            idx                  = find([datafile.events.duration] < 1);                                                % Delete stops whose duration is < 1000 ms
+            datafile.events(idx) = []; 
 
             wavelet_coh          = struct;
             wavelet_coh(1).name  = "STN_TA"; [wavelet_coh(1).coh, ~, f] = wcoherence(datafile.trial{1}(1,:),datafile.trial{1}(2,:), fs, 'FrequencyLimits',[1 100]); %1 = STN
@@ -217,39 +220,28 @@ for k = 1:length(names)
 end
 clear i k m t modes site task
 
+%Choose Files belonging to the disease dominant STN
+Stopping_Files_Coherence.Stop = []; 
 
-%PLACE FILES INTO DOMINANT AND NON-DOMINANT CATEGORIES
-COHERENCE.DOMINANT_STN = []; COHERENCE.NON_DOMINANT_STN = [];
 for i = 1:length(COHERENCE.Self_Selected_Stop_L)
     name_idx        = COHERENCE.Self_Selected_Stop_L(i).name;
     stn_dominance   = Subjects.(name_idx{1}).Baseline_Coherence.STN_dominance;  
+
     if stn_dominance == "Left"
-        COHERENCE.NON_DOMINANT_STN = [COHERENCE.NON_DOMINANT_STN, COHERENCE.Self_Selected_Stop_L(i)];
+        Stopping_Files_Coherence.Stop = cat(2, Stopping_Files_Coherence.Stop, COHERENCE.Self_Selected_Stop_L(i));
     elseif stn_dominance == "Right"
-         COHERENCE.DOMINANT_STN = [COHERENCE.DOMINANT_STN, COHERENCE.Self_Selected_Stop_L(i)];
+        Stopping_Files_Coherence.Stop = cat(2, Stopping_Files_Coherence.Stop, COHERENCE.Self_Selected_Stop_R(i));
+
     end
 end
 
-for i = 1:length(COHERENCE.Self_Selected_Stop_R)
-   name_idx        = COHERENCE.Self_Selected_Stop_R(i).name;
-   stn_dominance   = Subjects.(name_idx{1}).Baseline_Coherence.STN_dominance;  
-    if stn_dominance == "Right"
-        COHERENCE.NON_DOMINANT_STN = [COHERENCE.NON_DOMINANT_STN, COHERENCE.Self_Selected_Stop_R(i)];
-    elseif stn_dominance == "Left"
-         COHERENCE.DOMINANT_STN = [COHERENCE.DOMINANT_STN, COHERENCE.Self_Selected_Stop_R(i)];
-    end
-end
-
-
-%REMOVE EXCESSIVE DATA
-STN_EMG_COHERENCE.STOP                  = COHERENCE.DOMINANT_STN;
-STN_EMG_COHERENCE.f                     = f; 
+Stopping_Files_Coherence.f                     = f; 
 
 %Clean-UP
-clear bsl_names filepath fs i idx k l modes pp qq site sites stn_dominance t task wavelet_coh z f m 
+clear bsl_names filepath fs i idx k l modes pp qq site sites stn_dominance t task wavelet_coh z f m name_idx 
 
 
 %SAVE DATA
-%save([subjectdata.generalpath filesep 'STN_EMG_Coherence_Stop_Files.mat'], 'STN_EMG_COHERENCE', '-mat')
+save([subjectdata.generalpath filesep 'Coherence-Data', filesep 'Stopping_Files_Coherence.mat'], 'Stopping_Files_Coherence', '-mat')
 
 % *********************** END OF SCRIPT ************************************************************************************************************************
