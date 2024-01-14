@@ -10,7 +10,8 @@
 %coherence as our baseline and normalize coherence spectra. Coherence
 %spectra will be computed for the tibialis anterior (TA) and gastrocnemius
 %muscles (GA) yielding the subthalamo-muscular coherence. Only the disease
-%dominant STN will be focus of the current analysis. 
+%dominant STN will be focus of the current analysis.
+%Make sure, Fieldtrip is added to the current path.
 %===========================================================================%
 
 subjectdata.generalpath                 = uigetdir;                                                                 % Example: Call the SenseFOG-main file
@@ -41,13 +42,9 @@ for i = 1:length(Files)
     Subjects.(names{i}) = Files(i).File.LFP_Events;
 end
 
-if isfield(Subjects, "sub_20")
-    %Update September 2023 - Gyroscope Data of PD20 is deg/s switch to rad/s as we will switch back to deg/s later
-    Subjects.PD20.Walk.Gyroscope_LF     = rad2deg(Subjects.PD20.Walk.Gyroscope_LF);
-    Subjects.PD20.Walk.Gyroscope_RF     = rad2deg(Subjects.PD20.Walk.Gyroscope_RF);
-    Subjects.PD20.WalkINT.Gyroscope_LF  = rad2deg(Subjects.PD20.WalkINT.Gyroscope_LF);
-    Subjects.PD20.WalkINT.Gyroscope_RF  = rad2deg(Subjects.PD20.WalkINT.Gyroscope_RF);
-end
+%Update September 2023 - Remove Subject 15 WalkINT as data are compromised by artefacts
+Subjects.sub_15 = rmfield(Subjects.sub_15, "WalkINT");
+
 
 % PRE-PROCESS LFP DATA
 task    = {'Walk'; 'WalkWS'; 'WalkINT'; 'WalkINT_new'};
@@ -202,6 +199,7 @@ for k = 1:length(names)
 end
 
 clear filepath fs GA_raw IMU k m modes site t TA_raw task wavelet_coh i TA_rms_raw GA_rms_raw Baseline_COH Files
+clear cfg channellist data_avg store temp_store
 
 
 task    = {'Walk'; 'WalkWS'; 'WalkINT'; 'WalkINT_new'};
@@ -223,39 +221,27 @@ for k = 1:length(names)
 end
 
 
-%PLACE FILES INTO DOMINANT AND NON-DOMINANT CATEGORIES
-COHERENCE.DOMINANT_STN = []; COHERENCE.NON_DOMINANT_STN = [];
-for i = 1:length(COHERENCE.Freeze_LF)
-    name_idx        = COHERENCE.Freeze_LF(i).name;
-    stn_dominance   = Subjects.(name_idx{1}).Baseline_Coherence.STN_dominance;  
-    if stn_dominance == "Left"
-        COHERENCE.NON_DOMINANT_STN = [COHERENCE.NON_DOMINANT_STN, COHERENCE.Freeze_LF(i)];
-    elseif stn_dominance == "Right"
-         COHERENCE.DOMINANT_STN = [COHERENCE.DOMINANT_STN, COHERENCE.Freeze_LF(i)];
-    end
-end
+%Choose Files belonging to the disease dominant STN
+Freezing_Files_Coherence.FOG = []; 
 
 for i = 1:length(COHERENCE.Freeze_RF)
-   name_idx        = COHERENCE.Freeze_RF(i).name;
-   stn_dominance   = Subjects.(name_idx{1}).Baseline_Coherence.STN_dominance;  
-    if stn_dominance == "Right"
-        COHERENCE.NON_DOMINANT_STN = [COHERENCE.NON_DOMINANT_STN, COHERENCE.Freeze_RF(i)];
-    elseif stn_dominance == "Left"
-         COHERENCE.DOMINANT_STN = [COHERENCE.DOMINANT_STN, COHERENCE.Freeze_RF(i)];
+    name_idx        = COHERENCE.Freeze_RF(i).name;
+    stn_dominance   = Subjects.(name_idx{1}).Baseline_Coherence.STN_dominance;  
+
+    if stn_dominance == "Left"
+        Freezing_Files_Coherence.FOG = cat(2, Freezing_Files_Coherence.FOG, COHERENCE.Freeze_LF(i));
+    elseif stn_dominance == "Right"
+        Freezing_Files_Coherence.FOG = cat(2, Freezing_Files_Coherence.FOG, COHERENCE.Freeze_RF(i));
     end
 end
-
-
-%REMOVE EXCESSIVE DATA
-STN_EMG_COHERENCE.Freeze        = COHERENCE.DOMINANT_STN;
-STN_EMG_COHERENCE.f             = f; 
+Freezing_Files_Coherence.f             = f; 
 
 
 %Clean-UP
-clear bsl_names filepath fs i idx k l modes pp qq site sites stn_dominance t task wavelet_coh z f m name_idx
+clear bsl_names filepath fs i idx k l modes pp qq site sites stn_dominance t task wavelet_coh z f m name_idx 
 
 
 %SAVE DATA
-%save([subjectdata.generalpath filesep 'STN_EMG_Coherence_Freeze_Files.mat'], 'STN_EMG_COHERENCE', '-mat')
+save([subjectdata.generalpath filesep 'Coherence-Data' filesep 'Freezing_Files_Coherence.mat'], 'Freezing_Files_Coherence', '-mat')
 
 % *********************** END OF SCRIPT ************************************************************************************************************************
