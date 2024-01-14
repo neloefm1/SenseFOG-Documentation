@@ -1,4 +1,4 @@
-%%=====  Detect_GaitEvents.m ========================================%
+%%=====  Control_GaitEvents.m ========================================%
 
 %Date: November 2023
 %Original author(s): Philipp Klocke, Moritz Loeffler
@@ -1230,7 +1230,6 @@ Subjects.sub_10.ses_walkws.GaitEvents.rf_events(295).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(223).Heelstrike_Loc = 407.86;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(177).Heelstrike_Loc = 313.153;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(162).Heelstrike_Loc = 291.54;
-Subjects.sub_10.ses_walkws.GaitEvents.rf_events(221).Toe_Off_Loc = -6666;
 Subjects.sub_10.ses_walkws.GaitEvents.rf_events(76).Heelstrike_Loc = 150.549;
 
 
@@ -3541,9 +3540,6 @@ for i = 1:length(names)
     end
 end
 clear i t 
-
-
-
 
 %% SAVE DATA
 for i = 1:length(fieldnames(Subjects))
