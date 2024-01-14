@@ -171,88 +171,87 @@ c3 = [0.6350 0.0780 0.1840];    %Activity color
 
 figure
     tiledlayout(1,3)
+    %Walking, Standing, Sitting
     nexttile
-    ax1 = plot(store_all(1).z,store_all(1).y,'Color', c2, 'LineWidth', 1);
+    ax1 = plot(Sensefog_ResultsTable(6).z,Sensefog_ResultsTable(6).x,'Color', c2, 'LineWidth', 1); %Sitting
     hold on 
-    patch([store_all(1).z flip(store_all(1).z)],[(store_all(1).y + store_all(1).y_sem) flip(store_all(1).y - store_all(1).y_sem)], c2,'FaceAlpha',0.25, 'EdgeColor', 'none');
+    patch([Sensefog_ResultsTable(6).z flip(Sensefog_ResultsTable(6).z)],[(Sensefog_ResultsTable(6).x + Sensefog_ResultsTable(6).x_sem) flip(Sensefog_ResultsTable(6).x - Sensefog_ResultsTable(6).x_sem)], c2,'FaceAlpha',0.25, 'EdgeColor', 'none');
 
-    ax2 =  plot(store_all(1).z, store_all(1).x, 'Color', c1, 'LineWidth', 1);
+    ax2 =  plot(Sensefog_ResultsTable(5).z, Sensefog_ResultsTable(5).y, 'Color', c1, 'LineWidth', 1); %Standing
     hold on
-    patch([store_all(1).z flip(store_all(1).z)],[(store_all(1).x + store_all(1).x_sem) flip(store_all(1).x - store_all(1).x_sem)], c1 ,'FaceAlpha',0.25, 'EdgeColor', 'none');
+    patch([Sensefog_ResultsTable(5).z flip(Sensefog_ResultsTable(5).z)],[(Sensefog_ResultsTable(5).y + Sensefog_ResultsTable(5).y_sem) flip(Sensefog_ResultsTable(5).y - Sensefog_ResultsTable(5).y_sem)], c1 ,'FaceAlpha',0.25, 'EdgeColor', 'none');
  
-    ax3 =  plot(store_all(5).z, store_all(5).x, 'Color', c3, 'LineWidth', 1);
-    patch([store_all(5).z flip(store_all(5).z)],[(store_all(5).x + store_all(5).x_sem) flip(store_all(5).x - store_all(5).x_sem)], c3,'FaceAlpha',0.25, 'EdgeColor', 'none');
+    ax3 =  plot(Sensefog_ResultsTable(5).z, Sensefog_ResultsTable(5).x, 'Color', c3, 'LineWidth', 1); %Walking
+    patch([Sensefog_ResultsTable(5).z flip(Sensefog_ResultsTable(5).z)],[(Sensefog_ResultsTable(5).x + Sensefog_ResultsTable(5).x_sem) flip(Sensefog_ResultsTable(5).x - Sensefog_ResultsTable(5).x_sem)], c3,'FaceAlpha',0.25, 'EdgeColor', 'none');
     
     xlim([3 35]); ylim([-19 -12]);ylimits = ylim; 
-    for i = 1:length(store_all(1).startpoint)
-        rectangle('Position',[store_all(1).startpoint(i), ylimits(1)*0.99 , (store_all(1).stoppoint(i) - store_all(1).startpoint(i)),  0.1], 'FaceColor','black', 'EdgeColor', 'none') 
+    for i = 1:length(Sensefog_ResultsTable(6).startpoint)
+        rectangle('Position',[Sensefog_ResultsTable(6).startpoint(i), ylimits(1)*0.99 , (Sensefog_ResultsTable(6).stoppoint(i) - Sensefog_ResultsTable(6).startpoint(i)),  0.1], 'FaceColor','black', 'EdgeColor', 'none') 
     end
     
-    for i = 1:length(store_all(5).startpoint)
-        rectangle('Position',[store_all(5).startpoint(i), ylimits(1)*0.98 , (store_all(5).stoppoint(i) - store_all(5).startpoint(i)),  0.1], 'FaceColor',[.7 .7 .7], 'EdgeColor', 'none') 
+    for i = 1:length(Sensefog_ResultsTable(5).startpoint)
+        rectangle('Position',[Sensefog_ResultsTable(5).startpoint(i), ylimits(1)*0.98 , (Sensefog_ResultsTable(5).stoppoint(i) - Sensefog_ResultsTable(5).startpoint(i)),  0.1], 'FaceColor',[.7 .7 .7], 'EdgeColor', 'none') 
     end
-    legend([ax1 ax2 ax3], store_all(1).y_name, store_all(1).x_name,store_all(5).x_name,'Box','off','FontSize', 10)
+    legend([ax2 ax1 ax3], Sensefog_ResultsTable(6).y_name, Sensefog_ResultsTable(6).x_name,Sensefog_ResultsTable(5).x_name,'Box','off','FontSize', 10)
     ylabel('Relative Power [dB]'); xlabel('Frequency [Hz]')
     box off
    
 nexttile
-    ax1 = plot(store_all(6).z,store_all(6).y,'Color', c2, 'LineWidth', 1);
+    %Self-selected Stop, Pre-Stop, Standing
+    ax1 = plot(Sensefog_ResultsTable(1).z,Sensefog_ResultsTable(1).y,'Color', c2, 'LineWidth', 1);
     hold on 
-    patch([store_all(6).z flip(store_all(6).z)],[(store_all(6).y + store_all(6).y_sem) flip(store_all(6).y - store_all(6).y_sem)], c2,'FaceAlpha',0.25, 'EdgeColor', 'none');
+    patch([Sensefog_ResultsTable(1).z flip(Sensefog_ResultsTable(1).z)],[(Sensefog_ResultsTable(1).y + Sensefog_ResultsTable(1).y_sem) flip(Sensefog_ResultsTable(1).y - Sensefog_ResultsTable(1).y_sem)], c2,'FaceAlpha',0.25, 'EdgeColor', 'none');
     
-    ax2 = plot(store_all(4).z,store_all(4).x,'Color', c1, 'LineWidth', 1);
-    patch([store_all(4).z flip(store_all(4).z)],[(store_all(4).x + store_all(4).x_sem) flip(store_all(4).x - store_all(4).x_sem)], c1,'FaceAlpha',0.25, 'EdgeColor', 'none');
+    ax2 = plot(Sensefog_ResultsTable(3).z,Sensefog_ResultsTable(3).x,'Color', c1, 'LineWidth', 1);
+    patch([Sensefog_ResultsTable(3).z flip(Sensefog_ResultsTable(3).z)],[(Sensefog_ResultsTable(3).x + Sensefog_ResultsTable(3).x_sem) flip(Sensefog_ResultsTable(3).x - Sensefog_ResultsTable(3).x_sem)], c1,'FaceAlpha',0.25, 'EdgeColor', 'none');
 
-    ax3 = plot(store_all(6).z,store_all(6).x,'Color', c3, 'LineWidth', 1);
-    patch([store_all(6).z flip(store_all(6).z)],[(store_all(6).x + store_all(6).x_sem) flip(store_all(6).x - store_all(6).x_sem)], c3,'FaceAlpha',0.25, 'EdgeColor', 'none');
+    ax3 = plot(Sensefog_ResultsTable(1).z,Sensefog_ResultsTable(1).x,'Color', c3, 'LineWidth', 1);
+    patch([Sensefog_ResultsTable(1).z flip(Sensefog_ResultsTable(1).z)],[(Sensefog_ResultsTable(1).x + Sensefog_ResultsTable(1).x_sem) flip(Sensefog_ResultsTable(1).x - Sensefog_ResultsTable(1).x_sem)], c3,'FaceAlpha',0.25, 'EdgeColor', 'none');
     
     xlim([3 35]); ylim([-19 -12]); ylimits = ylim; 
-    for i = 1:length(store_all(6).startpoint)
-        rectangle('Position',[store_all(6).startpoint(i), ylimits(1)*0.99 , (store_all(6).stoppoint(i) - store_all(6).startpoint(i)),  0.1], 'FaceColor','black', 'EdgeColor', 'none') 
+    for i = 1:length(Sensefog_ResultsTable(1).startpoint)
+        rectangle('Position',[Sensefog_ResultsTable(1).startpoint(i), ylimits(1)*0.99 , (Sensefog_ResultsTable(1).stoppoint(i) - Sensefog_ResultsTable(1).startpoint(i)),  0.1], 'FaceColor','black', 'EdgeColor', 'none') 
     end
-    for i = 1:length(store_all(4).startpoint)
-        rectangle('Position',[store_all(4).startpoint(i), ylimits(1)*0.98 , (store_all(4).stoppoint(i) - store_all(4).startpoint(i)),  0.1], 'FaceColor',[.7 .7 .7], 'EdgeColor', 'none') 
+    for i = 1:length(Sensefog_ResultsTable(3).startpoint)
+        rectangle('Position',[Sensefog_ResultsTable(3).startpoint(i), ylimits(1)*0.98 , (Sensefog_ResultsTable(3).stoppoint(i) - Sensefog_ResultsTable(3).startpoint(i)),  0.1], 'FaceColor',[.7 .7 .7], 'EdgeColor', 'none') 
     end
-    legend([ax1 ax2 ax3], store_all(6).y_name, store_all(4).x_name,store_all(6).x_name,'Box','off','FontSize', 10)
+    legend([ax1 ax2 ax3], Sensefog_ResultsTable(1).y_name, Sensefog_ResultsTable(1).x_name,Sensefog_ResultsTable(3).x_name,'Box','off','FontSize', 10)
     ylabel('Relative Power [dB]'); xlabel('Frequency [Hz]')
     box off
 
-nexttile     
-    ax1 = plot(store_all(2).z,store_all(2).y,'Color', c2, 'LineWidth', 1);
+nexttile  
+    %FoG, Pre-FoG, Standing
+    ax1 = plot(Sensefog_ResultsTable(2).z,Sensefog_ResultsTable(2).y,'Color', c2, 'LineWidth', 1);
     hold on 
-    patch([store_all(2).z flip(store_all(2).z)],[(store_all(2).y + store_all(2).y_sem) flip(store_all(2).y - store_all(2).y_sem)], c2,'FaceAlpha',0.25, 'EdgeColor', 'none');
+    patch([Sensefog_ResultsTable(2).z flip(Sensefog_ResultsTable(2).z)],[(Sensefog_ResultsTable(2).y + Sensefog_ResultsTable(2).y_sem) flip(Sensefog_ResultsTable(2).y - Sensefog_ResultsTable(2).y_sem)], c2,'FaceAlpha',0.25, 'EdgeColor', 'none');
       
-    ax2 = plot(store_all(3).z,store_all(3).x,'Color', c1, 'LineWidth', 1);
-    patch([store_all(3).z flip(store_all(3).z)],[(store_all(3).x + store_all(3).x_sem) flip(store_all(3).x - store_all(3).x_sem)], c1,'FaceAlpha',0.25, 'EdgeColor', 'none');
+    ax2 = plot(Sensefog_ResultsTable(4).z,Sensefog_ResultsTable(4).x,'Color', c1, 'LineWidth', 1);
+    patch([Sensefog_ResultsTable(4).z flip(Sensefog_ResultsTable(4).z)],[(Sensefog_ResultsTable(4).x + Sensefog_ResultsTable(4).x_sem) flip(Sensefog_ResultsTable(4).x - Sensefog_ResultsTable(4).x_sem)], c1,'FaceAlpha',0.25, 'EdgeColor', 'none');
 
-    ax3 = plot(store_all(2).z,store_all(2).x,'Color', c3, 'LineWidth', 1);
+    ax3 = plot(Sensefog_ResultsTable(2).z,Sensefog_ResultsTable(2).x,'Color', c3, 'LineWidth', 1);
     hold on
-    patch([store_all(2).z flip(store_all(2).z)],[(store_all(2).x + store_all(2).x_sem) flip(store_all(2).x - store_all(2).x_sem)], c3,'FaceAlpha',0.25, 'EdgeColor', 'none');
+    patch([Sensefog_ResultsTable(2).z flip(Sensefog_ResultsTable(2).z)],[(Sensefog_ResultsTable(2).x + Sensefog_ResultsTable(2).x_sem) flip(Sensefog_ResultsTable(2).x - Sensefog_ResultsTable(2).x_sem)], c3,'FaceAlpha',0.25, 'EdgeColor', 'none');
  
 
     xlim([3 35]); ylim([-19 -12]); ylimits = ylim; 
-    for i = 1:length(store_all(2).startpoint)
-        rectangle('Position',[store_all(2).startpoint(i), ylimits(1)*0.99 , (store_all(2).stoppoint(i) - store_all(2).startpoint(i)),  0.1], 'FaceColor','black', 'EdgeColor', 'none') 
+    for i = 1:length(Sensefog_ResultsTable(2).startpoint)
+        rectangle('Position',[Sensefog_ResultsTable(2).startpoint(i), ylimits(1)*0.99 , (Sensefog_ResultsTable(2).stoppoint(i) - Sensefog_ResultsTable(2).startpoint(i)),  0.1], 'FaceColor','black', 'EdgeColor', 'none') 
     end
-    for i = 1:length(store_all(3).startpoint)
-        rectangle('Position',[store_all(3).startpoint(i), ylimits(1)*0.98 , (store_all(3).stoppoint(i) - store_all(3).startpoint(i)),  0.1], 'FaceColor',[.7 .7 .7], 'EdgeColor', 'none') 
+    for i = 1:length(Sensefog_ResultsTable(4).startpoint)
+        rectangle('Position',[Sensefog_ResultsTable(4).startpoint(i), ylimits(1)*0.98 , (Sensefog_ResultsTable(4).stoppoint(i) - Sensefog_ResultsTable(4).startpoint(i)),  0.1], 'FaceColor',[.7 .7 .7], 'EdgeColor', 'none') 
     end
-    legend([ax1 ax2 ax3], store_all(2).y_name, store_all(3).x_name,store_all(2).x_name,'Box', 'off','FontSize', 10)
+    legend([ax1 ax2 ax3], Sensefog_ResultsTable(2).y_name, Sensefog_ResultsTable(3).x_name,Sensefog_ResultsTable(2).x_name,'Box', 'off','FontSize', 10)
     ylabel('Relative Power [dB]'); xlabel('Frequency [Hz]')
     set(gcf,'color','w'); box off
-
-   
-
-    %Clean Up 
-    clear ans ax1 ax2 ax3 c C cfg data_names eventfile test
 
 
     a = annotation('textbox',[0.07 0.745 .2 .2],'String','a','EdgeColor','none'); a.FontSize = 18; a.FontWeight = "bold";
     b = annotation('textbox',[0.350 0.745 .2 .2],'String','b','EdgeColor','none'); b.FontSize = 18; b.FontWeight = "bold";
     c = annotation('textbox',[0.63 0.745 .2 .2],'String','c','EdgeColor','none'); c.FontSize = 18; c.FontWeight = "bold";
 
- cd('/Users/philipp/Desktop/SENSE-FOG/Write-Up/Results_Table')%Create a filename
- saveas(gcf,'Frequency_Domain_Plots_combined','m')
+   saveas(gcf,'Figure_1','m')
 
+   %Clean Up 
+   clear ans ax1 ax2 ax3 c C cfg data_names eventfile test a b c c1 c2 c3 i t ylimits
 
-
+% *********************** END OF SCRIPT ************************************************************************************************************************
