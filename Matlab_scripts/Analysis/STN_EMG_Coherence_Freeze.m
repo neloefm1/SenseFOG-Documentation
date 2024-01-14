@@ -229,9 +229,9 @@ for i = 1:length(COHERENCE.Freeze_RF)
     stn_dominance   = Subjects.(name_idx{1}).Baseline_Coherence.STN_dominance;  
 
     if stn_dominance == "Left"
-        Freezing_Files_Coherence.FOG = cat(2, Freezing_Files_Coherence.FOG, COHERENCE.Freeze_LF(i));
-    elseif stn_dominance == "Right"
         Freezing_Files_Coherence.FOG = cat(2, Freezing_Files_Coherence.FOG, COHERENCE.Freeze_RF(i));
+    elseif stn_dominance == "Right"
+        Freezing_Files_Coherence.FOG = cat(2, Freezing_Files_Coherence.FOG, COHERENCE.Freeze_LF(i));
     end
 end
 Freezing_Files_Coherence.f             = f; 
