@@ -41,12 +41,6 @@ for i = 1:length(Files)
 end
 
 
-%Update September 2023 - Gyroscope Data of PD20 is deg/s switch to rad/s 
-%if isfield(Subjects,"sub_20");       Subjects.sub_20.Walk.Gyroscope_LF = rad2deg(Subjects.sub_20.Walk.Gyroscope_LF);end
-%if isfield(Subjects,"sub_20");       Subjects.sub_20.Walk.Gyroscope_RF = rad2deg(Subjects.sub_20.Walk.Gyroscope_RF);end
-%if isfield(Subjects,"sub_20"); Subjects.sub_20.WalkINT.Gyroscope_LF = rad2deg(Subjects.sub_20.WalkINT.Gyroscope_LF);end
-%if isfield(Subjects,"sub_20"); Subjects.sub_20.WalkINT.Gyroscope_RF = rad2deg(Subjects.sub_20.WalkINT.Gyroscope_RF);end
-
 %Update September 2023 - Remove Subject 15 WalkINT as data are compromised by artefacts
 Subjects.sub_15 = rmfield(Subjects.sub_15, "WalkINT");
 
