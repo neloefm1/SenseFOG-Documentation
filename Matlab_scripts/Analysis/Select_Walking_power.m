@@ -42,6 +42,9 @@ for i = 1:length(Files)
     Subjects.(names{i}) = Files(i).File.LFP_Events;
 end
 
+%Update September 2023 - Remove Subject 15 WalkINT as data are compromised by artefacts
+Subjects.sub_15 = rmfield(Subjects.sub_15, "WalkINT");
+
 
 %High Pass LFP Data ===================================================================================================
 %Highpass LFP Data (1 Hz cutoff, Butterworth filter, filter order6, passed
