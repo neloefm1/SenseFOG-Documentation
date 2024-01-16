@@ -354,5 +354,8 @@ a = -40; b = 40;       x1 = 0; x2 = 1000;       y1 = 4; y2 = 40;    xl1 = 0.2; x
     set(gcf, 'Color', 'white')
     clear t0 t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 x1 x2 xl1 xl2 y1 y2 p1 p2 ax1 ax2 c a b C pt1 pt2 
 
+    %Save Figure
     cd(filepath)
     saveas(gcf,'Figure_4')
+    
+    % *********************** END OF SCRIPT ************************************************************************************************************************
