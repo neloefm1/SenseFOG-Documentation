@@ -10,7 +10,8 @@
 %Second, we will use the standing coherence as our baseline and normalize
 %coherence spectra. Coherence spectra will be computed for the tibialis
 %anterior (TA) and gastrocnemius muscles (GA) yielding the subthalamo-muscular
-%coherence. Only the disease dominant STN will be focus of the current analysis. 
+%coherence. Only the disease dominant STN will be focus of the current analysis.
+%Make sure, Fieldtrip is added to the current path.
 %===========================================================================%
 
 subjectdata.generalpath                 = uigetdir;                                                                 % Example: Call the SenseFOG-main file
@@ -44,7 +45,7 @@ end
 %PRE-PROCESS LFP DATA
 task    = {'WalkWS'};
 site    = {'LFP_signal_L', 'Self_Selected_Stop_R' , 'STN'; 'LFP_signal_R', 'Self_Selected_Stop_L', 'STN'}; 
-foot    = {'Accelerometer_RF', 'Gyroscope_RF'; 'Accelerometer_LF', 'Gyroscope_LF'};
+footsite= {'Accelerometer_RF', 'Gyroscope_RF'; 'Accelerometer_LF', 'Gyroscope_LF'};
 fs      = 1000;                                                                                                     %Sampling Frequency
 
 Pre_Stop_Coherence = struct; 
@@ -80,7 +81,7 @@ for k = 1:length(names)
             datafile.fsample    = fs;                                                                               % Assign the correct sampling rate to the configuration structure
 
             channellist.Self_Selected_Stop_R    = {'TA_R1', 'TA_R2' 'TA';'GA_R1' 'GA_R2' 'GA'};
-            channellist.Self_Selected_Stop_L     = {'TA_L1', 'TA_L2' 'TA';'GA_L1' 'GA_L2' 'GA'};
+            channellist.Self_Selected_Stop_L    = {'TA_L1', 'TA_L2' 'TA';'GA_L1' 'GA_L2' 'GA'};
 
              for i = 1:height(channellist.Self_Selected_Stop_R)
                 cfg                      = [];
@@ -125,95 +126,122 @@ for k = 1:length(names)
                LFP.sampleinfo    = EMG.sampleinfo;
             end
             Pre_Stop_Coherence.(names{k}).(task{m}).(site{t,2})                      = ft_appenddata([], LFP, EMG);
+            Pre_Stop_Coherence.(names{k}).(task{m}).(site{t,2}).Gyroscope            = rad2deg(Subjects.(names{k}).(task{m}).(footsite{t,2})(:,2))';                                % Gyroscope Saggital Plane
                 
             %Prepare individual Gait Cycle Events
             %***************************************************************************************************************
            datafile = Subjects.(names{k}).WalkWS.Self_Selected_Stop;
+           idx = find([datafile.duration] < 1); datafile(idx) = [];                                                 % Find index of stops < 1s duraiton and delete    
              for p = 1:length(datafile)
 
                     stop_start      = datafile(p).start;
-                    RF_events       = sort(Subjects.(names{k}).WalkWS.rf_events.Heelstrike_Loc);                    % Sort in ascending order
-                    RF_events       = RF_events(RF_events <= stop_start);                                           % Only choose events that occur at or before stop
-                    LF_events       = sort(Subjects.(names{k}).WalkWS.lf_events.Heelstrike_Loc);                    % Sort in ascending order
-                    LF_events       = LF_events(LF_events <= stop_start);                                           % Only choose events that occur at or before stop
-                    DD_STN          = Subjects.(names{k}).Baseline_Power.STN_dominance;
+                    RF_events       = sortrows(Subjects.(names{k}).(task{m}).rf_events, "Heelstrike_Loc");              % Sort in ascending order
+                    RF_events       = RF_events(RF_events.Heelstrike_Loc <= stop_start,:);                              % Only choose events that occur at or before stop       
+                    LF_events       = sortrows(Subjects.(names{k}).(task{m}).lf_events, "Heelstrike_Loc");              % Sort in ascending order
+                    LF_events       = LF_events(LF_events.Heelstrike_Loc <= stop_start,:);                              % Only choose events that occur at or before stop        
+                    DD_STN          = Subjects.(names{k}).Baseline_Power.STN_dominance;                                 % Choose disease dominant STN
+
                     
                     %Use the foot that corresponds to the disease dominant STN
                     if Subjects.(names{k}).Baseline_Power.STN_dominance == "Left"; foot = "Right";
 
                         %find index where freeze start matches HS_Loc position                      
-                        [~,idxGC3] = min( abs(RF_events-stop_start));
+                        %[~,idxGC3] = min( abs(RF_events-stop_start));
+                        [~,idxGC3] = min( abs(RF_events.Heelstrike_Loc-stop_start));
+                        if istable(LF_events); LF_events = table2array(LF_events); end
+                        if istable(RF_events); RF_events = table2array(RF_events); end
+
                                         
                         %GC3
-                        store(p).Pre_GC(1).start                 = RF_events(idxGC3-1);                             % Choose the HS Loc before STOP onset
-                        store(p).Pre_GC(1).end                   = RF_events(idxGC3);                               % Start with STOP Onset
-                        store(p).Pre_GC(1).duration              = RF_events(idxGC3) -RF_events(idxGC3-1);          % Compute Difference
-                        store(p).Pre_GC(1).predefined_foot       = datafile(p).Foot;                                % Find the pre-defined foot for stopping (from previous analyses)
-                        store(p).Pre_GC(1).foot                  = "Right";  
-                        store(p).Pre_GC(1).DD_STN                = DD_STN;
-                        store(p).Pre_GC(1).dist_Stop             = store(p).Pre_GC(1).duration; 
+                        store(p).Pre_GC(1).start             = RF_events(idxGC3-1,5);           %Choose the HS Loc before FOG onset
+                        store(p).Pre_GC(1).end               = RF_events(idxGC3,5);             %Start with FOG Onset
+                        store(p).Pre_GC(1).duration          = RF_events(idxGC3,5) -RF_events(idxGC3-1,5); %Compute Difference
+                        store(p).Pre_GC(1).Midswing_Loc      = RF_events(idxGC3,1);
+                        store(p).Pre_GC(1).Midswing_Peak     = RF_events(idxGC3,2);
+                        store(p).Pre_GC(1).Toe_Off_Loc       = RF_events(idxGC3,3);
+                        store(p).Pre_GC(1).predefined_foot   = datafile(i).Foot;                %Find the pre-defined foot for stopping (from previous analyses)
+                        store(p).Pre_GC(1).foot              = "Right";  
+                        store(p).Pre_GC(1).DD_STN            = DD_STN;
+                        store(p).Pre_GC(1).dist_Stop         = store(p).Pre_GC(1).duration; 
                         
                         %GC2
-                        store(p).Pre_GC(2).start                 = RF_events(idxGC3-2);                             % Choose the HS that occurs before the end
-                        store(p).Pre_GC(2).end                   = RF_events(idxGC3-1);                             % Choose one HS Loc before STOP onset
-                        store(p).Pre_GC(2).duration              = RF_events(idxGC3-1) -RF_events(idxGC3-2);        % Compute Difference
-                        store(p).Pre_GC(2).predefined_foot       = datafile(p).Foot;                                % Find the pre-defined foot for stopping (from previous analyses)
-                        store(p).Pre_GC(2).foot                  = "Right";  
-                        store(p).Pre_GC(2).DD_STN                = DD_STN;
-                        store(p).Pre_GC(2).dist_Stop             = store(p).Pre_GC(1).dist_Stop + store(p).Pre_GC(2).duration;
+                        store(p).Pre_GC(2).start             = RF_events(idxGC3-2,5);           %Choose the HS that occurs before the end
+                        store(p).Pre_GC(2).end               = RF_events(idxGC3-1,5);           %Choose one HS Loc before FOG onset
+                        store(p).Pre_GC(2).duration          = RF_events(idxGC3-1,5) -RF_events(idxGC3-2,5); %Compute Difference
+                        store(p).Pre_GC(2).Midswing_Loc      = RF_events(idxGC3-1,1);
+                        store(p).Pre_GC(2).Midswing_Peak     = RF_events(idxGC3-1,2);
+                        store(p).Pre_GC(2).Toe_Off_Loc       = RF_events(idxGC3-1,3);
+                        store(p).Pre_GC(2).predefined_foot   = datafile(i).Foot;                %Find the pre-defined foot for stopping (from previous analyses)
+                        store(p).Pre_GC(2).foot              = "Right";  
+                        store(p).Pre_GC(2).DD_STN            = DD_STN;
+                        store(p).Pre_GC(2).dist_Stop         = store(p).Pre_GC(1).dist_Stop + store(p).Pre_GC(2).duration;
            
                         %GC3
                         if idxGC3 > 3
-                            store(p).Pre_GC(3).start             = RF_events(idxGC3-3);                              % Choose the HS that occurs before the end
-                            store(p).Pre_GC(3).end               = RF_events(idxGC3-2);                              % Choose two HS Loc before STOP onset
-                            store(p).Pre_GC(3).duration          = RF_events(idxGC3-2) -RF_events(idxGC3-3);         % Compute Difference
-                            store(p).Pre_GC(3).predefined_foot   = datafile(p).Foot;                                 % Find the pre-defined foot for stopping (from previous analyses)
-                            store(p).Pre_GC(3).foot              = "Right";
-                            store(p).Pre_GC(3).DD_STN            = DD_STN;
-                            store(p).Pre_GC(3).dist_Stop         = store(p).Pre_GC(2).dist_Stop + store(p).Pre_GC(3).duration;
+                            store(p).Pre_GC(3).start         = RF_events(idxGC3-3,5);           %Choose the HS that occurs before the end
+                            store(p).Pre_GC(3).end           = RF_events(idxGC3-2,5);           %Choose two HS Loc before FOG onset
+                            store(p).Pre_GC(3).duration      = RF_events(idxGC3-2,5) -RF_events(idxGC3-3,5); %Compute Difference
+                            store(p).Pre_GC(3).Midswing_Loc  = RF_events(idxGC3-2,1);
+                            store(p).Pre_GC(3).Midswing_Peak = RF_events(idxGC3-2,2);
+                            store(p).Pre_GC(3).Toe_Off_Loc   = RF_events(idxGC3-2,3);
+                            store(p).Pre_GC(3).predefined_foot= datafile(i).Foot;               %Find the pre-defined foot for stopping (from previous analyses)
+                            store(p).Pre_GC(3).foot          = "Right";
+                            store(p).Pre_GC(3).DD_STN        = DD_STN;
+                            store(p).Pre_GC(3).dist_Stop     = store(p).Pre_GC(2).dist_Stop + store(p).Pre_GC(3).duration;
                         end
 
                         clear foot 
 
-                    elseif Subjects.(names{k}).Baseline_Power.STN_dominance == "Right"; foot = "Left";
-                       
-                    %find index where stop start matches HS_Loc position
-                    [~,idxGC3] = min( abs( LF_events-stop_start));
+                     elseif Subjects.(names{k}).Baseline_Power.STN_dominance == "Right"; foot = "Left";
+                        
+                        %find index where stop start matches HS_Loc position
+                        %[~,idxGC3] = min( abs( LF_events-stop_start));
+                        [~,idxGC3] = min( abs(LF_events.Heelstrike_Loc-stop_start));
+                        if istable(LF_events); LF_events = table2array(LF_events); end
+                        if istable(RF_events); RF_events = table2array(RF_events); end
 
-                   
+
                         %GC3
-                        store(p).Pre_GC(1).start                 = LF_events(idxGC3-1);                             % Choose the HS Loc before STOP onset
-                        store(p).Pre_GC(1).end                   = LF_events(idxGC3);                               % Start with STOP Onset
-                        store(p).Pre_GC(1).duration              = LF_events(idxGC3) -LF_events(idxGC3-1);          % Compute Difference
-                        store(p).Pre_GC(1).predefined_foot       = datafile(p).Foot;                                % Find the pre-defined foot for stopping (from previous analyses)
-                        store(p).Pre_GC(1).foot                  = "Left";
-                        store(p).Pre_GC(1).DD_STN                = DD_STN;
-                        store(p).Pre_GC(1).dist_Stop             = store(p).Pre_GC(1).duration; 
+                        store(p).Pre_GC(1).start             = LF_events(idxGC3-1,5);             %Choose the HS Loc before FOG onset
+                        store(p).Pre_GC(1).end               = LF_events(idxGC3,5);               %Start with FOG Onset
+                        store(p).Pre_GC(1).duration          = LF_events(idxGC3,5) -LF_events(idxGC3-1,5); %Compute Difference
+                        store(p).Pre_GC(1).Midswing_Loc      = LF_events(idxGC3,1);
+                        store(p).Pre_GC(1).Midswing_Peak     = LF_events(idxGC3,2);
+                        store(p).Pre_GC(1).Toe_Off_Loc       = LF_events(idxGC3,3);
+                        store(p).Pre_GC(1).predefined_foot   = datafile(i).Foot;                %Find the pre-defined foot for stopping (from previous analyses)
+                        store(p).Pre_GC(1).foot              = "Left";
+                        store(p).Pre_GC(1).DD_STN            = DD_STN;
+                        store(p).Pre_GC(1).dist_Stop         = store(p).Pre_GC(1).duration; 
                                               
                         %GC2
-                        store(p).Pre_GC(2).start                 = LF_events(idxGC3-2);                             % Choose the HS that occurs before the end
-                        store(p).Pre_GC(2).end                   = LF_events(idxGC3-1);                             % Choose one HS Loc before STOP onset
-                        store(p).Pre_GC(2).duration              = LF_events(idxGC3-1) -LF_events(idxGC3-2);        % Compute Difference
-                        store(p).Pre_GC(2).predefined_foot       = datafile(p).Foot;                                % Find the pre-defined foot for stopping (from previous analyses)
-                        store(p).Pre_GC(2).foot                  = "Left";  
-                        store(p).Pre_GC(2).DD_STN                = DD_STN;
-                        store(p).Pre_GC(2).dist_Stop             = store(p).Pre_GC(1).dist_Stop + store(p).Pre_GC(2).duration;
+                        store(p).Pre_GC(2).start             = LF_events(idxGC3-2,5);             %Choose the HS that occurs before the end
+                        store(p).Pre_GC(2).end               = LF_events(idxGC3-1,5);             %Choose one HS Loc before FOG onset
+                        store(p).Pre_GC(2).duration          = LF_events(idxGC3-1,5) -LF_events(idxGC3-2,5); %Compute Difference
+                        store(p).Pre_GC(2).Midswing_Loc      = LF_events(idxGC3-1,1);
+                        store(p).Pre_GC(2).Midswing_Peak     = LF_events(idxGC3-1,2);
+                        store(p).Pre_GC(2).Toe_Off_Loc       = LF_events(idxGC3-1,3);
+                        store(p).Pre_GC(2).predefined_foot   = datafile(i).Foot;                %Find the pre-defined foot for stopping (from previous analyses)
+                        store(p).Pre_GC(2).foot              = "Left";  
+                        store(p).Pre_GC(2).DD_STN            = DD_STN;
+                        store(p).Pre_GC(2).dist_Stop         = store(p).Pre_GC(1).dist_Stop + store(p).Pre_GC(2).duration;
                                    
                         %GC3
-                        if idxGC3
-                            store(p).Pre_GC(3).start             = LF_events(idxGC3-3);                             % Choose the HS that occurs before the end
-                            store(p).Pre_GC(3).end               = LF_events(idxGC3-2);                             % Choose two HS Loc before STOP onset
-                            store(p).Pre_GC(3).duration          = LF_events(idxGC3-2) -LF_events(idxGC3-3);        % Compute Difference
-                            store(p).Pre_GC(3).predefined_foot   = datafile(p).Foot;                                % Find the pre-defined foot for stopping (from previous analyses)
-                            store(p).Pre_GC(3).foot              = "Left";
-                            store(p).Pre_GC(3).DD_STN            = DD_STN;
-                            store(p).Pre_GC(3).dist_Stop         = store(p).Pre_GC(2).dist_Stop + store(p).Pre_GC(3).duration;
-                            clear foot
+                        if idxGC3 > 3
+                            store(p).Pre_GC(3).start         = LF_events(idxGC3-3,5);             %Choose the HS that occurs before the end
+                            store(p).Pre_GC(3).end           = LF_events(idxGC3-2,5);             %Choose two HS Loc before FOG onset
+                            store(p).Pre_GC(3).duration      = LF_events(idxGC3-2,5) -LF_events(idxGC3-3,5); %Compute Difference
+                            store(p).Pre_GC(3).Midswing_Loc  = LF_events(idxGC3-2,1);
+                            store(p).Pre_GC(3).Midswing_Peak = LF_events(idxGC3-2,2);
+                            store(p).Pre_GC(3).Toe_Off_Loc   = LF_events(idxGC3-2,3);
+                            store(p).Pre_GC(3).predefined_foot   = datafile(i).Foot;            %Find the pre-defined foot for stopping (from previous analyses)
+                            store(p).Pre_GC(3).foot          = "Left";
+                            store(p).Pre_GC(3).DD_STN        = DD_STN;
+                            store(p).Pre_GC(3).dist_Stop     = store(p).Pre_GC(2).dist_Stop + store(p).Pre_GC(3).duration;
                         end
+                        clear foot
 
                     else foot = "Error";
                     end   
-
                     clear LF_events RF_events stop_start  idxGC3
             end
             
@@ -262,151 +290,9 @@ for k = 1:length(names)
 end
 
 %Clear-UP
-clear cfg channellist data_avg datafile fs i k m site store t task  temp_store trl p DD_STN index index_del q
+clear cfg channellist data_avg datafile fs i k m site store t task  temp_store trl p DD_STN index index_del q idx footsite
 
 
-%Re-Compute Gait Cycles with exact timepoints for heelstrikes and to-offs etc.
-fs      = 1000; %Sampling Rate
-site    = {'Self_Selected_Stop_R'; 'Self_Selected_Stop_L'};
-
-for k = 1:length(names)
-    if isfield(Pre_Stop_Coherence, names(k)) == 0; continue; end
-    if  isfield(Pre_Stop_Coherence.(names{k}), 'WalkWS') == 0; continue; end
-    for p = 1:length(site)
-        if isfield(Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}), 'events') == 0; continue; end
-        for i = 1:length(Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events)
-            datafile = Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).Pre_GC;
-            GaitParameter                   = struct;
-            for t = 1:length(datafile)
-    
-                %Determine which foot was used anc choose Gyroscope/Acceleroemter
-                if datafile(t).foot == "Right"
-                    Gyroscope       = rad2deg(Subjects.(names{k}).WalkWS.Gyroscope_RF(:,2));                        % Saggital Plane - Make sure the output is deg/s
-                    Accelerometer   = Subjects.(names{k}).WalkWS.Accelerometer_RF(:,3);                             % Anterior-Posterior Plane
-                elseif datafile(t).foot == "Left"
-                    Gyroscope       = rad2deg(Subjects.(names{k}).WalkWS.Gyroscope_LF(:,2));                        % Saggital Plane - Make sure the output is deg/s
-                    Accelerometer   = Subjects.(names{k}).WalkWS.Accelerometer_LF(:,3);                             % Anterior-Posterior Plane
-                end
-                IMU_time            = (1/fs):(1/fs):(length(Accelerometer)/fs);
-                 
-                    %FIND HEELSTRIKE 1 ==============================================================
-                    x1                          = single(datafile(t).start*fs);
-                    temp_time                   = IMU_time(:,[x1-500:x1]);                                          % Find preceding midswing within 500 ms range
-                    temp_gyr                    = Gyroscope([x1-500:x1],:);                                         % Find preceding midswing within 500 ms range
-                    [MS_pks, MS_locs]           = findpeaks(-temp_gyr,temp_time, "SortStr","descend");
-                    MS_locs                     = MS_locs(1); MS_pks = MS_pks(1);                                   % Make sure sign (+/-) is right
-                
-                    %Once the Midswing is identified, find the Heelstrike in the time interval after MS as the min. value of angular velocity in the sagittal plane before the maximum anterior–posterior acceleration
-                    temp_time                   = IMU_time(:, [single(MS_locs * fs):single(MS_locs * fs)+500]);
-                    temp_accl                   = Accelerometer([single(MS_locs * fs):single(MS_locs * fs)+500],:); 
-                    [pks, locs]                 = findpeaks(temp_accl,temp_time,'SortStr','descend');
-                    locs                        = locs(1);
-                
-                    %Having found the Midswing and the maximum anterior–posterior acceleration, identify the minimum value of angular velocity 
-                    temp_time                   = IMU_time(:, [single(MS_locs*fs):single(locs*fs)]); 
-                    temp_gyr                    = Gyroscope([single(MS_locs*fs):single(locs*fs)],:);
-                    [HS_pks, HS_locs]           = findpeaks(temp_gyr,temp_time, 'SortStr','descend');
-                    if isempty(HS_locs) == 1;     HS_locs = locs; HS_pks = Gyroscope(single(HS_locs*fs),:); end     % Make sure the peak is the same unit as the gyroscope 
-                    GaitParameter(t).HS_locs_1  = HS_locs(1); 
-                    GaitParameter(t).HS_pks_1   = HS_pks(1); 
-                               
-                    clear x1 temp_time temp_gyr temp_accl MS_pks MS_locs pks locs HS_pks HS_locs
-    
-                    %Find HEELSTRIKE 2 ==============================================================
-                    x2                          = single(datafile(t).end*fs);
-                    temp_time                   = IMU_time(:,[x2-500:x2]);                                          % Find preceding midswing within 500 ms range
-                    temp_gyr                    = Gyroscope([x2-500:x2],:);                                         % Find preceding midswing within 500 ms range
-                    [MS_pks, MS_locs]           = findpeaks(-temp_gyr,temp_time, "SortStr","descend");
-                    MS_locs                     = MS_locs(1); MS_pks = -MS_pks(1);                                  % Make sure sign (+/-) is right
-                    GaitParameter(t).MS_locs    = MS_locs; 
-                    GaitParameter(t).MS_pks     = MS_pks; 
-                 
-                    %Once the Midswing is identified, find the preceding Toe-OFF as minimum anterior–posterior acceleration 
-                    temp_time                   = IMU_time(:, [single(MS_locs * fs)-500:single(MS_locs * fs)]);
-                    temp_accl                   = Accelerometer([single(MS_locs * fs)-500:single(MS_locs * fs)],:); 
-                    [TO_pks, TO_locs]           = findpeaks(-temp_accl, temp_time,'SortStr','descend');
-                    GaitParameter(t).TO_locs    = TO_locs(1); 
-                    GaitParameter(t).TO_pks     = TO_pks(1); 
-                
-                    %Once the Midswing is identified, find the Heelstrike in the time interval after MS as the min. value of angular velocity in the sagittal plane before the maximum anterior–posterior acceleration
-                    temp_time                   = IMU_time(:, [single(MS_locs * fs):single(MS_locs * fs)+500]);
-                    temp_accl                   = Accelerometer([single(MS_locs * fs):single(MS_locs * fs)+500],:); 
-                    [pks, locs]                 = findpeaks(temp_accl,temp_time,'SortStr','descend');
-                    locs                        = locs(1);
-                
-                    %Having found the Midswing and the maximum anterior–posterior acceleration, identify the minimum value of angular velocity 
-                    temp_time                   = IMU_time(:, [single(locs*fs)-100:single(locs*fs)]); 
-                    temp_gyr                    = Gyroscope([single(locs*fs)-100:single(locs*fs)],:);
-                    [HS_pks, HS_locs]           = findpeaks(temp_gyr,temp_time, 'SortStr','descend');
-                    if isempty(HS_locs) == 1;     HS_locs = locs; HS_pks = Gyroscope(single(HS_locs*fs),:); end    % Make sure the peak is the same unit as the gyroscope 
-                    GaitParameter(t).HS_locs_2  = HS_locs(1); 
-                    GaitParameter(t).HS_pks_2   = HS_pks(1); 
-                    GaitParameter(t).GC_duration= GaitParameter(t).HS_locs_2 - GaitParameter(t).HS_locs_1;
-                    GaitParameter(t).name       = names(k);
-                    GaitParameter(t).foot       = datafile(t).foot; 
-                    GaitParameter(t).DD_STN     = Subjects.(names{k}).Baseline_Power.STN_dominance; 
-    
-                   clear temp_time temp_gyr temp_accl MS_pks MS_locs pks locs HS_pks HS_locs TO_pks TO_locs x2 index
-            end
-
-            %ACTIVATE IF YOU WANT TO LOOK AT EACH GAIT CYCLE WHILST COMPUTING
-            %{
-            figure(12389)
-            for t = 1:length(GaitParameter)
-                x1 = single(GaitParameter(t).MS_locs *fs);
-    
-            ax1 =subplot(2,1,1); %Accelerometer
-                plot(IMU_time(:,[x1-1200:x1+500]), Accelerometer([x1-1200:x1+500],:),'r', GaitParameter(t).TO_locs, GaitParameter(t).TO_pks, 'go', 'MarkerFaceColor','g')
-                xline(GaitParameter(t).TO_locs, '--')
-                xline([GaitParameter(t).HS_locs_1,GaitParameter(t).HS_locs_2,], '--')
-                legend('Accelerometer', 'Toe-OFF','Location', 'southeast','box', 'off')
-    
-            ax2 = subplot(2,1,2);
-                plot(IMU_time(:,[x1-1200:x1+500]), Gyroscope([x1-1200:x1+500],:),'b', GaitParameter(t).MS_locs, GaitParameter(t).MS_pks, 'bv', 'MarkerFaceColor', 'b', 'DisplayName', 'Midswing')
-                hold on 
-                plot(IMU_time(:,[x1-1200:x1+500]), Gyroscope([x1-1200:x1+500],:),'b', GaitParameter(t).HS_locs_1, GaitParameter(t).HS_pks_1, "square", 'MarkerEdgeColor','r', 'MarkerFaceColor', 'r', 'DisplayName', 'Heelstrike');
-                plot(IMU_time(:,[x1-1200:x1+500]), Gyroscope([x1-1200:x1+500],:),'b', GaitParameter(t).HS_locs_2, GaitParameter(t).HS_pks_2, "square", 'MarkerEdgeColor','r', 'MarkerFaceColor', 'r', 'DisplayName', 'Heelstrike');
-                xline(GaitParameter(t).TO_locs, '--')
-                xline([GaitParameter(t).HS_locs_1,GaitParameter(t).HS_locs_2,], '--')
-                legend('Gyroscope [saggital plane]', 'Midswing', '', 'Heelstrike', 'Location', 'southeast', 'box', 'off')
-            linkaxes([ax1 ax2],'x')
-            set(gcf,'Color', 'white')
-            sgtitle(sprintf('%s: \n Pre-STOP Site: %s \n Gait Cycle No: %d / %d',string(GaitParameter(t).name), string(site{p}), i, t))
-          
-            pause
-            %waitforbuttonpress  
-            hold off
-            end
-            %}
-            Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).Gyroscope               = Gyroscope; 
-            Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).Accelerometer           = Accelerometer;
-            Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter = GaitParameter;
-        end
-     end  
-end
-
-%***********************************************************************************************************************
-%Make Manual Adjustments after careful REVIEW of each GaitCycle
-%***********************************************************************************************************************
-
-
-%Recompute Relative Timepoints fos Gait Cycle events (Rel- TO and Rel MS)
-for k = 1:length(names)
-    if isfield(Pre_Stop_Coherence, names(k)) == 0; continue; end
-    for p = 1:length(site)
-        if isfield(Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}), 'events') == 0; continue; end
-        for i = 1:length(Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events)
-           
-            for t = 1:length(Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter);
-                Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter(t).GC_duration = Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter(t).HS_locs_2 - Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter(t).HS_locs_1;
-                Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter(t).TO_rel      = (Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter(t).TO_locs - Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter(t).HS_locs_1) / Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter(t).GC_duration * 100;
-                Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter(t).MS_rel      = (Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter(t).MS_locs - Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter(t).HS_locs_1) / Pre_Stop_Coherence.(names{k}).WalkWS.(site{p}).events(i).GaitParameter(t).GC_duration * 100;
-            end
-        end
-    end
-end
-
-clear Accelerometer ans ax1 ax2 datafile GaitParameter i IMU_time k p site t x1 Gyroscope
 
 %Compute Wavelet Coherence
 task    = {'WalkWS'};
@@ -446,42 +332,49 @@ for k = 1:length(names)
 
             %Extract TF-information based on timepoints
             for i = 1:length(datafile.events)
-               for p = 1:length(datafile.events(i).GaitParameter)
-                   datafile.events(i).GaitParameter(p).STN_TA           = wavelet_coh(1).coh(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]); 
-                   datafile.events(i).GaitParameter(p).STN_GA           = wavelet_coh(2).coh(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]); 
-                   datafile.events(i).GaitParameter(p).TA_GA            = wavelet_coh(3).coh(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]); 
-                   datafile.events(i).GaitParameter(p).TA_raw           = TA_raw(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1):     single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]);
-                   datafile.events(i).GaitParameter(p).GA_raw           = GA_raw(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1):     single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]);
-                   datafile.events(i).GaitParameter(p).TA_env           = TA_env(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1):     single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]);
-                   datafile.events(i).GaitParameter(p).GA_env           = GA_env(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1):     single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]);
-                   datafile.events(i).GaitParameter(p).TA_rms_raw       = TA_rms_raw(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]);
-                   datafile.events(i).GaitParameter(p).GA_rms_raw       = GA_rms_raw(:, [single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)]);
-                   datafile.events(i).GaitParameter(p).Gyroscope        = datafile.Gyroscope([single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)],:)';
-                   datafile.events(i).GaitParameter(p).Accelerometer    = datafile.Accelerometer([single(1000*datafile.events(i).GaitParameter(p).HS_locs_1): single(1000*datafile.events(i).GaitParameter(p).HS_locs_2)],:)';
+               for p = 1:length(datafile.events(i).Pre_GC)
+                   datafile.events(i).Pre_GC(p).STN_TA           = wavelet_coh(1).coh(:, [single(1000*datafile.events(i).Pre_GC(p).start): single(1000*datafile.events(i).Pre_GC(p).end)]); 
+                   datafile.events(i).Pre_GC(p).STN_GA           = wavelet_coh(2).coh(:, [single(1000*datafile.events(i).Pre_GC(p).start): single(1000*datafile.events(i).Pre_GC(p).end)]); 
+                   datafile.events(i).Pre_GC(p).TA_GA            = wavelet_coh(3).coh(:, [single(1000*datafile.events(i).Pre_GC(p).start): single(1000*datafile.events(i).Pre_GC(p).end)]); 
+                   datafile.events(i).Pre_GC(p).TA_raw           = TA_raw(:, [single(1000*datafile.events(i).Pre_GC(p).start):     single(1000*datafile.events(i).Pre_GC(p).end)]);
+                   datafile.events(i).Pre_GC(p).GA_raw           = GA_raw(:, [single(1000*datafile.events(i).Pre_GC(p).start):     single(1000*datafile.events(i).Pre_GC(p).end)]);
+                   datafile.events(i).Pre_GC(p).TA_env           = TA_env(:, [single(1000*datafile.events(i).Pre_GC(p).start):     single(1000*datafile.events(i).Pre_GC(p).end)]);
+                   datafile.events(i).Pre_GC(p).GA_env           = GA_env(:, [single(1000*datafile.events(i).Pre_GC(p).start):     single(1000*datafile.events(i).Pre_GC(p).end)]);
+                   datafile.events(i).Pre_GC(p).TA_rms_raw       = TA_rms_raw(:, [single(1000*datafile.events(i).Pre_GC(p).start): single(1000*datafile.events(i).Pre_GC(p).end)]);
+                   datafile.events(i).Pre_GC(p).GA_rms_raw       = GA_rms_raw(:, [single(1000*datafile.events(i).Pre_GC(p).start): single(1000*datafile.events(i).Pre_GC(p).end)]);
+                   datafile.events(i).Pre_GC(p).Gyroscope        = datafile.Gyroscope(:,[single(1000*datafile.events(i).Pre_GC(p).start): single(1000*datafile.events(i).Pre_GC(p).end)]);
+
+                   %Compute relative timepoints for gait cycle
+                   store = datafile.events(i).Pre_GC(p).end - datafile.events(i).Pre_GC(p).Midswing_Loc;
+                   datafile.events(i).Pre_GC(p).Midswing = (1-(store / datafile.events(i).Pre_GC(p).duration))*100;
+
+                   store = datafile.events(i).Pre_GC(p).end - datafile.events(i).Pre_GC(p).Toe_Off_Loc;
+                   datafile.events(i).Pre_GC(p).Toe_Off = (1-(store / datafile.events(i).Pre_GC(p).duration))*100;
                end
 
-               %Clean-Up
-               clear GA_env GA_rms_raw TA_env TA_rms_raw fc a b 
-
-               datafile.events(i).GaitParameter = rmfield(datafile.events(i).GaitParameter, {'HS_pks_1','HS_pks_2', 'MS_pks', 'TO_pks', 'DD_STN', 'name', 'foot'});
+             
+               %datafile.events(i).GaitParameter = rmfield(datafile.events(i).GaitParameter, {'HS_pks_1','HS_pks_2', 'MS_pks', 'TO_pks', 'DD_STN', 'name', 'foot'});
                 
-               field_ids = {'STN_TA', 'STN_GA', 'TA_GA', 'TA_raw', 'GA_raw','TA_env', 'GA_env', 'TA_rms_raw', 'GA_rms_raw', 'Gyroscope','Accelerometer'};
-                for p = 1:length(datafile.events(i).GaitParameter)
+               field_ids = {'STN_TA', 'STN_GA', 'TA_GA', 'TA_raw', 'GA_raw','TA_env', 'GA_env', 'TA_rms_raw', 'GA_rms_raw', 'Gyroscope'};
+                for p = 1:length(datafile.events(i).Pre_GC)
                    for y = 1:length(field_ids)
-                        for z = 1:height(datafile.events(i).GaitParameter(p).(field_ids{y}))
-                           pp = [flip(datafile.events(i).GaitParameter(p).(field_ids{y})(z,:)) datafile.events(i).GaitParameter(p).(field_ids{y})(z,:) flip(datafile.events(i).GaitParameter(p).(field_ids{y})(z,:))]; 
+                        for z = 1:height(datafile.events(i).Pre_GC(p).(field_ids{y}))
+                           pp = [flip(datafile.events(i).Pre_GC(p).(field_ids{y})(z,:)) datafile.events(i).Pre_GC(p).(field_ids{y})(z,:) flip(datafile.events(i).Pre_GC(p).(field_ids{y})(z,:))]; 
                            qq = resample(pp,3000,length(pp));
                            zz(z,:) = qq(:,1001:2000);
                         end
-                        datafile.events(i).GaitParameter(p).(sprintf("%s_rs" , field_ids{y})) = zz; 
+                        datafile.events(i).Pre_GC(p).(sprintf("%s_rs" , field_ids{y})) = zz; 
                         clear zz qq pp z 
                    end
                 end
                 
                 %Delete excessive data
-                datafile.events(i).GaitParameter = rmfield(datafile.events(i).GaitParameter, field_ids);
-           end
-           
+                datafile.events(i).GaitParameter = rmfield(datafile.events(i).Pre_GC, field_ids);
+                datafile.events(i).GaitParameter = rmfield(datafile.events(i).GaitParameter, {'start', 'end', 'duration', 'Midswing_Loc', 'Midswing_Peak' 'Toe_Off_Loc', 'dist_Stop', 'predefined_foot', 'foot', 'DD_STN'});
+            end
+
+            clear a b fc GA_env GA_raw GA_rms_raw TA_raw TA_env TA_rms_raw wavelet_coh store
+            
 
            %Average over all Sub-Pre_GaitCycles
            for i = 1:length(datafile.events)
@@ -523,13 +416,13 @@ for k = 1:length(names)
     end
 end
 
-COHERENCE.DOMINANT_STN = rmfield(COHERENCE.DOMINANT_STN,{'HS_locs_1','MS_locs', 'TO_locs', 'HS_locs_2'});
-STN_EMG_COHERENCE.Pre_STOP        = COHERENCE.DOMINANT_STN;
+Pre_Stopping_Files.Pre_Stops        = COHERENCE.DOMINANT_STN;
+Pre_Stopping_Files.f                = f; 
 
 %Clean-UP
 clear bsl_names filepath fs i idx k l modes pp qq site sites stn_dominance t task wavelet_coh z f m COHERENCE
 
 %SAVE DATA
-%save([subjectdata.generalpath filesep 'STN_EMG_Coherence_Pre_Stop_Files.mat'], 'STN_EMG_COHERENCE', '-mat')
+save([subjectdata.generalpath filesep 'Coherence-Data' filesep 'Pre_Stopping_Files_Coherence.mat'], 'Pre_Stopping_Files', '-mat')
 
 % *********************** END OF SCRIPT ************************************************************************************************************************
