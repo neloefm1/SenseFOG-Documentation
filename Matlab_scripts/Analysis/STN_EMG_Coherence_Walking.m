@@ -310,5 +310,4 @@ clear GA_raw TA_raw foot name_idx Coherence
 %SAVE DATA
 save([subjectdata.generalpath filesep 'Coherence-Data' filesep 'Walking_Files_Coherence.mat'], 'Walking_Files_Coherence', '-mat','-v7.3')
 
-
 % *********************** END OF SCRIPT ************************************************************************************************************************
