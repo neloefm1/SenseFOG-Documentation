@@ -284,7 +284,7 @@ COHERENCE = rmfield(COHERENCE, {'Walking_Right_HS', 'Walking_Left_HS'});
 
 %RESAMPLE TF-MATRICES TO SAME LENGTH [e.g. 1000]
 sites    = {'DOMINANT_STN'};
-modes    = {'STN_TA', 'STN_TA_rs'; 'STN_GA', 'STN_GA_rs'; 'TA_GA', 'TA_GA_rs'; 'TA_raw', 'TA_raw_rs'; 'GA_raw', 'GA_raw_rs'; 'TA_rms_raw', 'TA_rms_raw_rs'; 'GA_rms_raw', 'GA_rms_raw_rs';'TA_env', 'TA_env_rs'; 'GA_env', 'GA_env_rs'; 'Accelerometer', 'Accelerometer_rs'; 'Gyroscope', 'Gyroscope_rs'}; 
+modes    = {'STN_TA', 'STN_TA_rs'; 'STN_GA', 'STN_GA_rs'; 'TA_GA', 'TA_GA_rs'; 'TA_raw', 'TA_raw_rs'; 'GA_raw', 'GA_raw_rs'; 'TA_rms_raw', 'TA_rms_raw_rs'; 'GA_rms_raw', 'GA_rms_raw_rs';'TA_env', 'TA_env_rs'; 'GA_env', 'GA_env_rs'; 'Gyroscope', 'Gyroscope_rs'}; 
 
 for t = 1:length(sites)
     for l = 1:length(modes)
@@ -298,7 +298,7 @@ for t = 1:length(sites)
     end
 end
          
-COHERENCE.DOMINANT_STN                  = rmfield(COHERENCE.DOMINANT_STN, {'STN_TA', 'STN_GA', 'TA_GA', 'GA_raw', 'TA_raw', 'TA_rms_raw', 'GA_rms_raw', 'TA_env', 'GA_env', 'Accelerometer', 'Gyroscope'});
+COHERENCE.DOMINANT_STN                  = rmfield(COHERENCE.DOMINANT_STN, {'STN_TA', 'STN_GA', 'TA_GA', 'GA_raw', 'TA_raw', 'TA_rms_raw', 'GA_rms_raw', 'TA_env', 'GA_env', 'Gyroscope'});
 Walking_Files_Coherence.Walk            = COHERENCE.DOMINANT_STN;
 Walking_Files_Coherence.f               = f; 
 
