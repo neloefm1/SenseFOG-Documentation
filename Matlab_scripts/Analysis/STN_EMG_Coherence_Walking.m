@@ -10,7 +10,8 @@
 %coherence as our baseline and normalize coherence spectra. Coherence
 %spectra will be computed for the tibialis anterior (TA) and gastrocnemius
 %muscles (GA) yielding the subthalamo-muscular coherence. Only the disease
-%dominant STN will be focus of the current analysis. 
+%dominant STN will be focus of the current analysis.
+%Make sure, Fieldtrip is added to the current path.
 %===========================================================================%
 
 
@@ -42,111 +43,44 @@ for i = 1:length(Files)
     Subjects.(names{i}) = Files(i).File.LFP_Events;
 end
 
-if isfield(Subjects, "sub_20")
-    %Update September 2023 - Gyroscope Data of PD20 is deg/s switch to rad/s as we will switch back to deg/s later
-    Subjects.PD20.Walk.Gyroscope_LF     = rad2deg(Subjects.PD20.Walk.Gyroscope_LF);
-    Subjects.PD20.Walk.Gyroscope_RF     = rad2deg(Subjects.PD20.Walk.Gyroscope_RF);
-    Subjects.PD20.WalkINT.Gyroscope_LF  = rad2deg(Subjects.PD20.WalkINT.Gyroscope_LF);
-    Subjects.PD20.WalkINT.Gyroscope_RF  = rad2deg(Subjects.PD20.WalkINT.Gyroscope_RF);
-end
 
-%Re-compute gait cycles and add features such as toe-off, midswing etc. 
-task    = {'Walk'; 'WalkWS'; 'WalkINT'; 'WalkINT_new'};
-site    = {'Walking_Right_HS'; 'Walking_Left_HS'};
-IMU     = {'Accelerometer_RF','Gyroscope_RF'; 'Accelerometer_LF','Gyroscope_LF'};
-fs      = 1000; 
+%Update September 2023 - Remove Subject 15 WalkINT as data are compromised by artefacts
+Subjects.sub_15 = rmfield(Subjects.sub_15, "WalkINT");
 
+
+%Add corresponding Toe-Offs and Midswing to each heelstrike
+task        = {'Walk'; 'WalkWS'; 'WalkINT'; 'WalkINT_new'};
+site        = {'rf_events', 'Walking_Right_HS' ; 'lf_events', 'Walking_Left_HS'}; 
 
 for k = 1:length(names)
     for m = 1:length(task)
-         if isfield(Subjects.(names{k}), task(m)) == 0; continue; end
-         for t = 1:length(site)
-             if isfield(Subjects.(names{k}).(task{m}),site(t)) == 0; continue; end
+        if isfield(Subjects.(names{k}), task(m)) == 0; continue; end
+        for t = 1:size(site,1)
+            if isfield(Subjects.(names{k}).(task{m}), site(t,2)) == 0; continue; end
 
-             datafile                        = Subjects.(names{k}).(task{m});
-             Accelerometer                   = datafile.(IMU{t,1})(:,3);                        %Defines Accelerometer in Anterior-Posterior plane
-             Gyroscope                       = rad2deg(datafile.(IMU{t,2})(:,2));               %Defines Gyroscope in Saggital Plane and converts from rad/s to degrees/s
-             IMU_time                        =  (1/fs):(1/fs):(length(Accelerometer)/fs);
+            gaitevents = Subjects.(names{k}).(task{m}).(site{t,1});
+            datafile   = Subjects.(names{k}).(task{m}).(site{t,2});
+            for i = 1:length(datafile)
+                [~,index] = min(abs([gaitevents.Heelstrike_Loc]-datafile(i).end));
+                datafile(i).Midswing_Loc = gaitevents.Midswing_Loc(index);                                          % find corresponding Midswing
+                datafile(i).Toe_off_Loc  = gaitevents.Toe_Off_Loc(index);                                           % find corresponding Toe-Off
+                datafile(i).Midswing     = (1-((datafile(i).end - datafile(i).Midswing_Loc)/datafile(i).diff))*100; % compute relative Midswing
+                datafile(i).Toe_off      = (1-((datafile(i).end - datafile(i).Toe_off_Loc)/datafile(i).diff))*100;  % compute relative Toe off
+            end
 
-             GaitParameter                   = struct;
-             for i = 1:length(datafile.(site{t}))
-                 %FIND HEELSTRIKE 1 ==============================================================
-                x1                          = single(datafile.(site{t})(i).start*fs);
-                temp_time                   = IMU_time(:,[x1-500:x1]);                          %Find preceding midswing within 500 ms range
-                temp_gyr                    = Gyroscope([x1-500:x1],:);                         %Find preceding midswing within 500 ms range
-                [MS_pks, MS_locs]           = findpeaks(-temp_gyr,temp_time, "SortStr","descend");
-                MS_locs                     = MS_locs(1); MS_pks = MS_pks(1);                   %Make sure sign (+/-) is right
-            
-                %Once the Midswing is identified, find the Heelstrike in the time interval after MS as the min. value of angular velocity in the sagittal plane before the maximum anterior–posterior acceleration
-                temp_time                   = IMU_time(:, [single(MS_locs * fs):single(MS_locs * fs)+500]);
-                temp_accl                   = Accelerometer([single(MS_locs * fs):single(MS_locs * fs)+500],:); 
-                [pks, locs]                 = findpeaks(temp_accl,temp_time,'SortStr','descend');
-                locs                        = locs(1);
-            
-                %Having found the Midswing and the maximum anterior–posterior acceleration, identify the minimum value of angular velocity 
-                temp_time                   = IMU_time(:, [single(MS_locs*fs):single(locs*fs)]); 
-                temp_gyr                    = Gyroscope([single(MS_locs*fs):single(locs*fs)],:);
-                [HS_pks, HS_locs]           = findpeaks(temp_gyr,temp_time, 'SortStr','descend');
-                if isempty(HS_locs) == 1;     HS_locs = locs; HS_pks = Gyroscope(single(HS_locs*fs),:); end     %Make sure the peak is the same unit as the gyroscope 
-                GaitParameter(i).HS_locs_1  = HS_locs(1); 
-               
-                clear x1 temp_time temp_gyr temp_accl MS_pks MS_locs pks locs HS_pks HS_locs
-
-                %Find HEELSTRIKE 2 ==============================================================
-                x2                          = single(datafile.(site{t})(i).end*fs);
-                temp_time                   = IMU_time(:,[x2-500:x2]);                          %Find preceding midswing within 500 ms range
-                temp_gyr                    = Gyroscope([x2-500:x2],:);                         %Find preceding midswing within 500 ms range
-                [MS_pks, MS_locs]           = findpeaks(-temp_gyr,temp_time, "SortStr","descend");
-                MS_locs                     = MS_locs(1); MS_pks = -MS_pks(1);                  %Make sure sign (+/-) is right
-                GaitParameter(i).MS_locs    = MS_locs; 
-               
-                %Once the Midswing is identified, find the preceding Toe-OFF as minimum anterior–posterior acceleration 
-                temp_time                   = IMU_time(:, [single(MS_locs * fs)-500:single(MS_locs * fs)]);
-                temp_accl                   = Accelerometer([single(MS_locs * fs)-500:single(MS_locs * fs)],:); 
-                [TO_pks, TO_locs]           = findpeaks(-temp_accl, temp_time,'SortStr','descend');
-                GaitParameter(i).TO_locs    = TO_locs(1); 
-               
-                %Once the Midswing is identified, find the Heelstrike in the time interval after MS as the min. value of angular velocity in the sagittal plane before the maximum anterior–posterior acceleration
-                temp_time                   = IMU_time(:, [single(MS_locs * fs):single(MS_locs * fs)+500]);
-                temp_accl                   = Accelerometer([single(MS_locs * fs):single(MS_locs * fs)+500],:); 
-                [pks, locs]                 = findpeaks(temp_accl,temp_time,'SortStr','descend');
-                locs                        = locs(1);
-            
-                %Having found the Midswing and the maximum anterior–posterior acceleration, identify the minimum value of angular velocity 
-                temp_time                   = IMU_time(:, [single(locs*fs)-100:single(locs*fs)]); 
-                temp_gyr                    = Gyroscope([single(locs*fs)-100:single(locs*fs)],:);
-                [HS_pks, HS_locs]           = findpeaks(temp_gyr,temp_time, 'SortStr','descend');
-                if isempty(HS_locs) == 1;     HS_locs = locs; HS_pks = Gyroscope(single(HS_locs*fs),:); end     %Make sure the peak is the same unit as the gyroscope 
-                GaitParameter(i).HS_locs_2  = HS_locs(1); 
-                GaitParameter(i).GC_duration= GaitParameter(i).HS_locs_2 - GaitParameter(i).HS_locs_1;
-
-                %Compute relative timepoints for TO and MS
-                GaitParameter(i).TO_rel     = (GaitParameter(i).TO_locs - GaitParameter(i).HS_locs_1) / GaitParameter(i).GC_duration * 100;
-                GaitParameter(i).MS_rel     = (GaitParameter(i).MS_locs - GaitParameter(i).HS_locs_1) / GaitParameter(i).GC_duration * 100;
-                
-                clear temp_time temp_gyr temp_accl MS_pks MS_locs pks locs HS_pks HS_locs TO_pks TO_locs x2 
-             end
-             
-             %Store GaitParameters back into the Subject File
-             Subjects.(names{k}).(task{m}).(site{t}) = GaitParameter;
-         end
+            Subjects.(names{k}).(task{m}).(site{t,2}) = datafile;                                                   % revert data back to Subject file
+            clear datafile gaitevents index
+        end
     end
 end
 
-%Clean-UP
-clear Accelerometer datafile GaitParameter Gyroscope IMU_time IMU k m site t task Files i
 
-%***********************************************************************************************************************
-%Make Manual Adjustments after careful REVIEW of each GaitCycle
-%if isfield(Subjects.sub_01.Walk, 'Walking_Right_HS')
-%    Subjects.sub_01.Walk.Walking_Right_HS.HS_locs_1         = XX; 
-%end
-%***********************************************************************************************************************
 
 %PRE-PROCESS LFP DATA
 task        = {'Walk'; 'WalkWS'; 'WalkINT'; 'WalkINT_new'};
 site        = {'LFP_signal_L', 'Walking_Right_HS' , 'STN'; 'LFP_signal_R', 'Walking_Left_HS', 'STN'}; 
 foot        = {'Accelerometer_RF', 'Gyroscope_RF'; 'Accelerometer_LF', 'Gyroscope_LF'};
+fs          = 1000; 
 Coherence   = struct; 
 
 for k = 1:length(names)
@@ -227,7 +161,6 @@ for k = 1:length(names)
             end
             Coherence.(names{k}).(task{m}).(site{t,2})                      = ft_appenddata([], LFP, EMG);
             Coherence.(names{k}).(task{m}).(site{t,2}).events               = LFP.events;
-            Coherence.(names{k}).(task{m}).(site{t,2}).Accelerometer        = Subjects.(names{k}).(task{m}).(foot{t,1})(:,3); %Anterior Posterior Plane Accelerometer
             Coherence.(names{k}).(task{m}).(site{t,2}).Gyroscope            = rad2deg(Subjects.(names{k}).(task{m}).(foot{t,2})(:,2)); %Saggital PLane Gyroscope
             clear LFP EMG
         end
@@ -270,7 +203,6 @@ for k = 1:length(names)
             TA_env  = filter(b,a,TA_raw);
             GA_env  = filter(b,a,GA_raw); 
 
-
             %Create RMS TA/GA Files =====
             TA_rms_raw = sqrt(movmean(TA_raw .^2, 10));    
             GA_rms_raw = sqrt(movmean(GA_raw .^2, 10));    
@@ -279,11 +211,11 @@ for k = 1:length(names)
            %Extract TF-information based on timepoints
            dataset = []; 
            for i = 1:length(datafile.events)
-               dataset(i).start             = datafile.events(i).HS_locs_1; 
-               dataset(i).stop              = datafile.events(i).HS_locs_2; 
-               dataset(i).diff              = datafile.events(i).GC_duration;
-               dataset(i).TO_rel            = datafile.events(i).TO_rel; 
-               dataset(i).MS_rel            = datafile.events(i).MS_rel; 
+               dataset(i).start             = datafile.events(i).start; 
+               dataset(i).stop              = datafile.events(i).end; 
+               dataset(i).diff              = datafile.events(i).diff;
+               dataset(i).TO_rel            = datafile.events(i).Toe_off; 
+               dataset(i).MS_rel            = datafile.events(i).Midswing; 
                dataset(i).name              = names(k); 
                dataset(i).STN_TA            = wavelet_coh(1).coh(:, [single(1000*dataset(i).start): single(1000*dataset(i).stop)]); 
                dataset(i).STN_GA            = wavelet_coh(2).coh(:, [single(1000*dataset(i).start): single(1000*dataset(i).stop)]); 
@@ -294,7 +226,6 @@ for k = 1:length(names)
                dataset(i).GA_rms_raw        = GA_rms_raw(:, [single(1000*dataset(i).start): single(1000*dataset(i).stop)]);                 %GA Raw RMS Signal
                dataset(i).TA_env            = TA_env(:, [single(1000*dataset(i).start): single(1000*dataset(i).stop)]);                     %TA Envelope
                dataset(i).GA_env            = GA_env(:, [single(1000*dataset(i).start): single(1000*dataset(i).stop)]);                     %GA Envelope
-               dataset(i).Accelerometer     = datafile.Accelerometer([single(1000*dataset(i).start): single(1000*dataset(i).stop)],:)';     %IMU signal  
                dataset(i).Gyroscope         = datafile.Gyroscope([single(1000*dataset(i).start): single(1000*dataset(i).stop)],:)';         %IMU signal  
            end
            Coherence.(names{k}).(task{m}).(site{t}).coh_files = dataset;
@@ -311,8 +242,9 @@ modes   = {'STN_TA', 'STN_TA_rs'; 'STN_GA', 'STN_GA_rs'; 'TA_GA', 'TA_GA_rs'; 'T
 fs      = 1000;  
 names   = fieldnames(Coherence); 
 
-COHERENCE.Walking_Right_HS = []; COHERENCE.Walking_Left_HS = [];
 
+%Concatenate files
+COHERENCE.Walking_Right_HS = []; COHERENCE.Walking_Left_HS = [];
 for k = 1:length(names)
     for m = 1:length(task)
         if isfield(Coherence.(names{k}), task(m)) == 0; continue; end
@@ -324,12 +256,6 @@ for k = 1:length(names)
     end
 end
 
-%Find STN-DOMINANCE
-bsl_names = fieldnames(Baseline_Stand);
-for i = 1:length(bsl_names)
-    stn_dominance(i).name = bsl_names(i);
-    stn_dominance(i).site = Baseline_Stand.(bsl_names{i}).STN_dominance;
-end
 
 %PLACE FILES INTO DOMINANT AND NON-DOMINANT CATEGORIES
 COHERENCE.DOMINANT_STN = []; COHERENCE.NON_DOMINANT_STN = [];
@@ -373,11 +299,8 @@ for t = 1:length(sites)
 end
          
 COHERENCE.DOMINANT_STN                  = rmfield(COHERENCE.DOMINANT_STN, {'STN_TA', 'STN_GA', 'TA_GA', 'GA_raw', 'TA_raw', 'TA_rms_raw', 'GA_rms_raw', 'TA_env', 'GA_env', 'Accelerometer', 'Gyroscope'});
-COHERENCE.NON_DOMINANT_STN              = rmfield(COHERENCE.NON_DOMINANT_STN, {'STN_TA', 'STN_GA', 'TA_GA', 'GA_raw', 'TA_raw','TA_rms_raw', 'GA_rms_raw','TA_env', 'GA_env', 'Accelerometer', 'Gyroscope'});
-STN_EMG_COHERENCE.Regular_Gait          = COHERENCE.DOMINANT_STN;
-STN_EMG_COHERENCE.f                     = f; 
-NON_DOMINANT_STN_COHERENCE.Regular_Gait = COHERENCE.NON_DOMINANT_STN;
-NON_DOMINANT_STN_COHERENCE.f            = f; 
+Walking_Files_Coherence.Walk            = COHERENCE.DOMINANT_STN;
+Walking_Files_Coherence.f               = f; 
 
 %Clean-UP
 clear bsl_names filepath fs i idx k l modes pp qq site sites stn_dominance t task wavelet_coh z f m 
@@ -385,6 +308,7 @@ clear GA_raw TA_raw foot name_idx Coherence
 
 
 %SAVE DATA
-%save([subjectdata.generalpath filesep 'STN_EMG_Coherence_Walking_Files.mat'], 'STN_EMG_COHERENCE', '-mat')
+save([subjectdata.generalpath filesep 'Coherence-Data' filesep 'Walking_Files_Coherence.mat'], 'Walking_Files_Coherence', '-mat','-v7.3')
+
 
 % *********************** END OF SCRIPT ************************************************************************************************************************
