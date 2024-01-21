@@ -57,15 +57,9 @@ Explain here what is to be expected to be done, interations of code and expected
 
 
 ## TEMPORARY NEED FIXING
-- for future, need to take off right and left LFP from data analyiss, also IMU cutoff...
 - check if decelleration and acceleration, as well as gait cycles before and after turn are excluded?
-- On Mendely, PD18 Walk JSON needs to be updated
 - Provide detailed explanation of the code and the associated output
 - Update the titles of the repository on GitHub and Mendely Data
-- For PD05, only use WalkWS and leave out all other files from PD05 (auf USB rausgenommen)
-- REMOVE Data from Subj 14 Walk as not usable (auf USB rausgenommen)
-- PD18 WALKWS Rausnehmen, da Kameraversatz (auf USB rausgenommen)
-- PD19 WALKINT Datenversatz, rausnehmen? (auf USB rausgenommen)
 - in Subjectfiles am Anfang die rausgenommenen Subfiles streichen (auf GitHub bereits gemacht, aktuellen subjectfiles nun komplett auf GitHub)
 - Auf USB file/Mendeley DR sollten die subjectfiles rausgenomemn werden ..
 - Sitting LFP Files für Subject 11 und 17 müssen noch ins DataRepository aufgenommen werden, da diese fehlen in den Rohdaten, in GitHub sollte hierzu eine erklärung folgen!
