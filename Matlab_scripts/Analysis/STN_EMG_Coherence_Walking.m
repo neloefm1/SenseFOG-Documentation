@@ -216,7 +216,7 @@ for k = 1:length(names)
                dataset(i).diff              = datafile.events(i).diff;
                dataset(i).TO_rel            = datafile.events(i).Toe_off; 
                dataset(i).MS_rel            = datafile.events(i).Midswing; 
-               dataset(i).name              = names(k); 
+               dataset(i).name              = names{k}; 
                dataset(i).STN_TA            = wavelet_coh(1).coh(:, [single(1000*dataset(i).start): single(1000*dataset(i).stop)]); 
                dataset(i).STN_GA            = wavelet_coh(2).coh(:, [single(1000*dataset(i).start): single(1000*dataset(i).stop)]); 
                dataset(i).TA_GA             = wavelet_coh(3).coh(:, [single(1000*dataset(i).start): single(1000*dataset(i).stop)]);    
@@ -260,7 +260,7 @@ end
 %PLACE FILES INTO DOMINANT AND NON-DOMINANT CATEGORIES
 COHERENCE.DOMINANT_STN = []; COHERENCE.NON_DOMINANT_STN = [];
 for i = 1:length(COHERENCE.Walking_Left_HS)
-    name_idx        = COHERENCE.Walking_Left_HS(i).name;
+    name_idx        = {COHERENCE.Walking_Left_HS(i).name};
     stn_dominance   = Subjects.(name_idx{1}).Baseline_Coherence.STN_dominance;  
     if stn_dominance == "Left"
         COHERENCE.NON_DOMINANT_STN = [COHERENCE.NON_DOMINANT_STN, COHERENCE.Walking_Left_HS(i)];
@@ -270,7 +270,7 @@ for i = 1:length(COHERENCE.Walking_Left_HS)
 end
 
 for i = 1:length(COHERENCE.Walking_Right_HS)
-   name_idx        = COHERENCE.Walking_Right_HS(i).name;
+   name_idx        = {COHERENCE.Walking_Right_HS(i).name};
    stn_dominance   = Subjects.(name_idx{1}).Baseline_Coherence.STN_dominance;  
     if stn_dominance == "Right"
         COHERENCE.NON_DOMINANT_STN = [COHERENCE.NON_DOMINANT_STN, COHERENCE.Walking_Right_HS(i)];
