@@ -1,6 +1,6 @@
 # SenseFOG README
 
-This GitHub File (titled "SenseFOG-Documentation") contains the source code for data deposited on a Mendeley Data Repository (>insert DOI here) for the manuscript titled "Supraspinal circuits contribute to the failure of antagonistic inhibition and freezing of gait in Parkinson’s disease”.
+This GitHub File (titled "SenseFOG-Documentation") contains the source code to access and process data deposited on a Mendeley Data Repository (>insert DOI here) for the manuscript titled "Supraspinal circuits contribute to the failure of antagonistic inhibition and freezing of gait in Parkinson’s disease”.
 
 ## Details related to access to the data
 - [ ] Data user agreement
