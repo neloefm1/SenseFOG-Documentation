@@ -17,13 +17,14 @@ The following toolboxes were also acquired and will be needed to run the preproc
 - [ ] Matlab Signal Processing Toolbox (version 9.0)
 
 
+## 1.0 Preprocessing
+Explain here what is to be expected to be done, interations of code and expected output of the codes.
 
 The following outline represents the order used for preprocessing the data:
 >> Each matlab script requires the specification of the matlab search path so that the script can draw from raw or preprocessed data.
->> As such, a pop-up window will appear at the beginning of most scripts where users can define the search path: Example: /Downloads/SenseFog-main/sub-01/ses-walk
+>> As such, a pop-up window will appear at the beginning of most scripts where users can define the search path: 
+Example: /Downloads/SenseFog-main/sub-01/ses-walk
 
-## 1.0 Preprocessing
-Explain here what is to be expected to be done, interations of code and expected output of the codes.
 - [ ]  1.1 "sub-XX-datafile"                   --  Run the Subject-Files > sub-XX-datafile.m for each subjects
 - [ ]  1.2 "Import_BVA.m"                      --  Import raw EEG/EMG files
 - [ ]  1.3 "Import_JSON.m"                     --  Import JSON (LFP) files
