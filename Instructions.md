@@ -4,9 +4,8 @@
 To access and download data, click on the following link that will guide you to the Mendeley Data Repository. 
 The file is called "SenseFOG-main".
 
-Klocke, Philipp; Loeffler, Moritz; Weiss, Daniel (2023), 
-“Pathological subthalamic activation and synchronization reflect antagonistic muscle activation failure and freezing of gait in Parkinson’s disease”, 
-Mendeley Data, V1, doi: 10.17632/c9ckcvjxc7.1
+Klocke, Philipp; Loeffler, Moritz; Weiss, Daniel (2024), 
+“Pathological subthalamic activation and synchronization reflect antagonistic muscle activation failure and freezing of gait in Parkinson’s disease”, Mendeley Data, V1, doi: 10.17632/c9ckcvjxc7.1
 
 - [ ] https://data.mendeley.com/datasets/c9ckcvjxc7/1      
 
@@ -19,7 +18,9 @@ The following toolboxes were also acquired and will be needed to run the preproc
 
 
 
-The following table represents the order used for preprocessing the data:
+The following outline represents the order used for preprocessing the data:
+>> Each matlab script requires the specification of the matlab search path so that the script can draw from raw or preprocessed data.
+>> As such, a pop-up window will appear at the beginning of most scripts where users can define the search path: Example: /Downloads/SenseFog-main/sub-01/ses-walk
 
 ## 1.0 Preprocessing
 Explain here what is to be expected to be done, interations of code and expected output of the codes.
