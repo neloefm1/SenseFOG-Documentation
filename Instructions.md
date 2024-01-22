@@ -89,4 +89,4 @@ Example: /Downloads/SenseFog-main/sub-01/ses-walk
 | 3.4   | "Figure_4.m" | Creates the figure as depicted in the manuscript. |
 | 3.5   | "Figure_5.m" | Creates the figure as depicted in the manuscript. |
 | 3.6   | "Table_1.m"  | Creates the table as depicted in the manuscript.|
-
+|_______|________________________________|__________________________________________________________________________________________|
