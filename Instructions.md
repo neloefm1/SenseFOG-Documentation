@@ -19,11 +19,15 @@ The following toolboxes were also acquired and will be needed to run the preproc
 The following outline represents the order used for preprocessing the data:
 
 ## 1.0 Preprocessing
->> Each matlab script requires the specification of the matlab search path so that the script can draw from raw or preprocessed data.
->> As such, a pop-up window will appear at the beginning of most scripts where users can define the search path: 
+- [ ] Each matlab script requires the specification of the matlab search path so that the script can draw from raw or preprocessed data. As such, a pop-up window will appear at the beginning of most scripts where users can define the search path: 
 Example: /Downloads/SenseFog-main/sub-01/ses-walk
 
->> Due to ECG-artefacts and their subsequenty removal, all LFP files of subject 10 (ses-sitting, ses-standing, ses-walk, ses-walkws and ses-walkint) have been pre-processed already and are stored under SenseFog-main/sub-10/ses-XX/ieeg. JSON (LFP) files of PD10 therefore should not be imported and (re-)processed to avoid files being overwritten. The original JSON files can still be accessed. 
+>> Due to ECG-artefacts and their subsequenty removal, all LFP files of subject 10 (ses-sitting, ses-standing, ses-walk, ses-walkws and ses-walkint) have been pre-processed already and are stored under SenseFog-main/sub-10/ses-XX/ieeg. JSON (LFP) files of PD10 therefore should not be imported and (re-)processed to avoid files being overwritten. The original JSON files can still be accessed.
+
+>> Owing to technical reasons, LFP files for sub-11/ses-sitting (sub-11-ses-sitting_lfpalg.mat) have already been created and do not need to imported/preprocessed.
+
+>> Owing to technical reasons, LFP files for sub-17/ses-sitting (sub-17-ses-sitting_lfpalg.mat) have already been created and do not need to imported/preprocessed.
+
 
 
 | Step | Preprocessing          |Comment                                                                                             |
