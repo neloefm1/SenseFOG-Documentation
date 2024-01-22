@@ -8,7 +8,7 @@
 %pre-specified time points for heelstrikes of the left and right leg during
 %walking and use these information to segment the time-frequency matrix
 %(CWT) after continuous wavelet transformation. Make sure that the
-%toolboxes as outlined in the README file on github have been installed
+%toolboxes as outlined in the README file on Github have been installed
 %prior to running this script. 
 %===================================================================%
 
