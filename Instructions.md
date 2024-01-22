@@ -58,7 +58,8 @@ Example: /Downloads/SenseFog-main/sub-01/ses-walk
 | 2.2.2   | "Select_Stop_power.m"       | Based on kinematic/pre-specified timepoints, select epochs for Stopping using continous morlet-wavelet transformation. | 
 | 2.2.3   | "Select_Freeze_power.m"     | Based on kinematic/pre-specified timepoints, select epochs for freezing using continous morlet-wavelet transformation.| 
 | 2.2.4   | "Select_Pre_Stop_power.m"   | Select up to three gait cycles before onset of a Stop and compute time-frequency analysis on this epoch. | 
-| 2.2.5   | "Select_Pre_Freeze_power.m" | Select up to three gait cycles before onset of Freezing and compute time-frequency analysis on this epoch. |   
+| 2.2.5   | "Select_Pre_Freeze_power.m" | Select up to three gait cycles before onset of Freezing and compute time-frequency analysis on this epoch. |
+
 
 
 ### 2.3 Coherence Analyses
