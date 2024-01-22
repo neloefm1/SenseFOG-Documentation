@@ -42,7 +42,16 @@ Example: /Downloads/SenseFog-main/sub-01/ses-walk
 
 
 ## 2.0 Data Analysis
-Explain here what is to be expected to be done, interations of code and expected output of the codes.
+| Step | Data Analysis              |Comment                                                                                         |
+|-----:| ---------------------------|------------------------------------------------------------------------------------------------|
+| 2.1.1   | "Baseline_Power.m"      | Computes the average LFP power (Continous morlet wavelet analysis) based on the standing dataset for each subject. The average power will later be used for baseline correction. This script requires that matlab script 1.6 "Sub_GrandActivity_Log.m" has been run in the steps prior to this one producing a sub-XX-dataevents.mat file for each subject. |
+| 2.1.2   | "Select_Sitting_power.m"  | Computes the average power (Continous morlet wavelet analysis) based on the sitting dataset for each subject. This script requires that matlab script 1.6 "Sub_GrandActivity_Log.m" has been run in the steps prior to this one producing a sub-XX-dataevents.mat file for each subject..|
+| 2.1.3   | "Baseline_Coherence.m"  | Computes the average magnitude squared coherence based on the standing LFP and EMG dataset for each subject. The average magnitude squared coherence will later be used for baseline correction when computing the coherence files. This script requires that matlab script 1.6 "Sub_GrandActivity_Log.m" has been run in the steps prior to this one producing a sub-XX-dataevents.mat file for each subject.. |
+| _____   | _______________________ | |
+
+
+
+
 - [ ]  2.1.2 "Baseline_Power.m"                  -- Compute baseline power from standing
 - [ ]  2.1.2 "Select_Sitting_power.m"            -- Computes the average power for sitting
 - [ ]  2.2   "Baseline_Coherence.m"              -- Compute baseline coherence from standing
