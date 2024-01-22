@@ -46,9 +46,6 @@ Installtime of MatLab as well as specified toolboxes should only take a few minu
 Running the entire analysis pipeline will consume up to 20 GB of storage data, provided that all steps of data preprocessing and anaylsis are retained on the storing device.
 
 
-### Instructions on how to run the scripts
-For detailed instructions on how to proceed with preprocessing the raw data and analysing the preprocessed data, please see the "Instructions.md" page listed in SenseFOG-Documentation/Instructions.md. 
-
 ## Demo
 ### Instructions to run on data
 A demo for the first 60 seconds of regular walking in subject 10 has been created. The Matlab script is stored under the subfolder "Demo" and uses pre-specified time points of heel strike events in subject 10.
@@ -62,13 +59,14 @@ Based on the time points for heel strikes of the left leg, the script will first
 Run time after loading in the data should not exeed 60 seconds. 
 
 ## Instructions for use
-### How to run the software on your data
-### Reproduction instructions
+### How to run the software on your data and reproduction instructions
+For detailed instructions on how to proceed with preprocessing of the raw data and analysing the preprocessed data, please see the "Instructions.md" page listed in SenseFOG-Documentation/Instructions.md. 
 
 
-## Additional Information
+## Additional information on study subjects and data aquisition
 ### Subjects
 12 patients with idiopathic Parkinson's disease who had previously undergone bilateral STN-DBS surgery and were implanted with the Medtronic Percept impulse generator were studied.
+Please find detailed information on included subjects by searching for the published manuscript on PubMed or contact the authors.
 
 Inclusion Criteria:
 - [ ] Patients aged 18-85 years
@@ -84,19 +82,17 @@ Exclusion Criteria:
 - [ ] Patients with current psychotic symptoms and/or suicidality
 
 ### Apparatus
-To record local field potentials (LFP), sensing abilities of the Medtronic Percept were used. Data was recorded and saved in a .json file.
-Additionally, we recorded EEG/EMG data (Brain products, MES Electronics, Gilching, Germany), data being saved in a .bva file. 
-Lastly, gait kinematics were recorded using three lightweight inertial kinematic sensors (Opal, APDM Inc., Portland, OR USA) attached to both left and right ankles and lumbar spine (L5). All kinematic data were exported in hierarchical data format (HDF) and saved in a .h5 file. 
-All experimental sessions were videotapeed for later offline-analysis. 
+To record local field potentials (LFP), sensing abilities of the Medtronic Percept were used. Data were recorded and saved in a .json file. Additionally, we recorded EEG/EMG data (Brain products, MES Electronics, Gilching, Germany), data being saved in a .bva file. 
+Lastly, gait kinematics were recorded using three lightweight inertial kinematic sensors (Opal, APDM Inc., Portland, OR USA) attached to both left and right ankles and lumbar spine (L5). All kinematic data were exported in hierarchical data format (HDF) and saved in a .h5 file. All experimental sessions were videotaped for later offline-analysis. 
 
 ### Task organization
 Patient first underwent baseline clinical assessment after overnight withdrawal of all dopaminergic medication (>12 hours). 
 Recording sessions were the following: 
-- [ ] Sitting (eyes open): 120 seconds
-- [ ] Standing (eyes open): 120 seconds
-- [ ] Walking through a naroow corridor as mono task (approx. 240 seconds duration)
-- [ ] Walking being unterrupted by internally generated voluntary stops (approx. 240 seconds duration)
-- [ ] Walking under dual task conditions (serial subtraction task) (approx. 240 seconds duration)
+- [ ] Sitting (eyes open): 120 seconds (ses-sitting)
+- [ ] Standing (eyes open): 120 seconds (ses-standing)
+- [ ] Walking through a naroow corridor as mono task (approx. 240 seconds duration) (ses-walk)
+- [ ] Walking being unterrupted by internally generated voluntary stops (approx. 240 seconds duration) (ses-walkws)
+- [ ] Walking under dual task conditions (serial subtraction task) (approx. 240 seconds duration) (ses-walkint)
 All recordings took place in Med OFF and Stim OFF. 
 
 
@@ -109,16 +105,13 @@ Based on the provided videofiles and kinematic data, we have created start and e
 
 
 For walking, we included time series both while walking straight ahead as mono task and walking with interference (dual-task).
-We rejected all time segments including turning, FoG, or stops. Further, we excluded a three-second time segment from the transition periods 
-(Pre-FoG or Pre-Stop) and the first step before and after a turn to exclude acceleration and deceleration of walking. 
+We rejected all time segments including turning, FoG, or stops. Further, we excluded a three-second time segment from the transition periods (Pre-FoG or Pre-Stop) and the first step before and after a turn to exclude acceleration and deceleration of walking. 
 
 In the current work, we restricted analyes to FoG occuring during walking, thereby excluding FoG during turning or at gait initiation. 
-We segmented FoG-events beginning with the last regular heelstrike contralateral to the leg displaying freezing and ending with the first heel strike
-after a FoG-event when regular walking was resumed. Only FoG episodes lasting ≥1000 ms were selected.
+We segmented FoG-events beginning with the last regular heelstrike contralateral to the leg displaying freezing and ending with the first heel strike after a FoG-event when regular walking was resumed. Only FoG episodes lasting ≥1000 ms were selected.
 
 Self-Selected Stops were identified in the video recordings and segmented based on the kinematic time series. 
-Their start was defined as the time point of the heel strike of the leg initiating stance phase before full termination of walking activity. 
-Toe-off of the left resuming walking-activity was used to define the offset of a voluntary stop. Only stops lasting ≥1000 ms were included. 
+Their start was defined as the time point of the heel strike of the leg initiating stance phase before full termination of walking activity. Toe-off of the leg resuming walking-activity was used to define the offset of a voluntary stop. Only stops lasting ≥1000 ms were included. 
 
 To study the transition phases from walking to FoG (termed Pre-FoG) or voluntary stops (termed Pre-Stop), we chose the last three gait cycles before each event. In case of slow walking, gait cycles occurring more than 3000 ms before FoG/Stop onset were excluded. 
 
@@ -130,7 +123,7 @@ We obtained further clinical characteristics by recording motor symptoms (MDS-UP
 
 ### Experimental location
 Recordings took place on the premises of the University Hospital Medical Center Tübingen, Department of Neurology.
-The walking took place in a 15 x 2.5 m hallway. Two chairs narrowing the corridor were positioned (1 m width) to help provoke FoG events under laboratory conditions.
+Gait tasks took place in a 15 x 2.5 m hallway. Two chairs narrowing the corridor were positioned (1 m width) to help provoke FoG events under laboratory conditions.
 
 ### Ethics
 The study was approved by the Ethics Committee of Tübingen University (166/2020BO1), and all patients provided written informed consent.
