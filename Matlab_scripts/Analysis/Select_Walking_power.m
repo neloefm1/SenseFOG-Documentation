@@ -86,6 +86,31 @@ for k = 1:length(names)
 end
 clear MFF R_cwtstruct L_cwtstruct k m task
 
+%Remove GaitCycles that are close to FOG ===================================================================================
+task    = {'Walk'; 'WalkWS'; 'WalkINT'; 'WalkINT_new'};
+site    = {'Walking_Right_HS'; 'Walking_Left_HS'};
+
+for k = 1:length(names)
+    for m = 1:length(task)
+        if isfield(Subjects.(names{k}), task(m)) == 0; continue; end
+        if isfield(Subjects.(names{k}).(task{m}),'Walking_Right_HS') == 0; continue; end
+         for t = 1:length(site)
+             datafile = Subjects.(names{k}).(task{m});
+             if isfield(datafile, "Walking_Freeze")
+                 freeze_idx = [datafile.Walking_Freeze.start];
+                 for i = 1:length(freeze_idx)
+                     new_idx = find([datafile.(site{t}).start] >= (freeze_idx(i)-3) &  [datafile.(site{t}).start] <= freeze_idx(i)); %Find timepoints up to 3 seconds before FOG
+                     if ~isempty(new_idx)
+                         datafile.(site{t})(new_idx) = [];
+                     end
+                 end
+             else %do nothing
+             end
+             Subjects.(names{k}).(task{m}) = datafile;
+             clear datafile
+         end
+    end
+end
 
 %Segmenting Time-Frequency Matrix using pre-specified timepoints
 %Next, extract all Heelstrike Events from the datasets and perform time- and frequency specific analyses ===============
