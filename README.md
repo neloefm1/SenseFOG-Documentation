@@ -21,7 +21,7 @@ For additional queries, contact:
 
 ### Where to access the raw data
 To access, download and analyze data, please visit the public data repository on Mendeley Data where the data has been stored:
-“Pathological subthalamic activation and synchronization reflect antagonistic muscle activation failure and freezing of gait in Parkinson’s disease”, Mendeley Data, V1, doi: 10.17632/c9ckcvjxc7.1
+“Supraspinal circuits contribute to the failure of antagonistic inhibition and freezing of gait in Parkinson’s disease”, Mendeley Data, V1, doi: 10.17632/c9ckcvjxc7.1
 
 - [ ] https://data.mendeley.com/datasets/c9ckcvjxc7/1                     
 
@@ -31,6 +31,7 @@ The SenseFOG-Documentation alongside the provided data requires a standard-compu
 
 ### Software Requirements
 Computer code and running the analysis pipeline has been written and tested using MacOS Moneterey but is also compatible with Microsoft Windows. For analysis, MatLab version 2022a was used (MathWorks, Nattick, MA, USA, https://de.mathworks.com/products/matlab.html). 
+
 
 ## Installation Guide
 
@@ -42,9 +43,11 @@ Before running the analyses scripts, users should make sure to install the follo
 - [ ] MatLab Signal Processing Toolbox (version 9.0)
 
 Installtime of MatLab as well as specified toolboxes should only take a few minutes.
+Running the entire analysis pipeline will consume up to 20 GB of storage data, provided that all steps of data preprocessing and anaylsis are retained on the storing device.
+
 
 ### Instructions on how to run the scripts
-For detailed instructions on how to proceed with preprocessing the raw data and analysing the data, please see the "Instructions.md" page listed in SenseFOG-Documentation/instructions.md. 
+For detailed instructions on how to proceed with preprocessing the raw data and analysing the preprocessed data, please see the "Instructions.md" page listed in SenseFOG-Documentation/Instructions.md. 
 
 ## Demo
 ### Instructions to run on data
