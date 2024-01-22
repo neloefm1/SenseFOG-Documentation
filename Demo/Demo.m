@@ -5,10 +5,10 @@
 
 %This script will create time-frequency information based on the first 
 %60 seconds of regular walking in subject 10. The script will make use of
-%pre-specified time points for heelstrikes of the left and right leg furing
+%pre-specified time points for heelstrikes of the left and right leg during
 %walking and use these information to segment the time-frequency matrix
 %(CWT) after continuous wavelet transformation. Make sure that the
-%toolboxed as outlined in the README file on github have been installed
+%toolboxes as outlined in the README file on github have been installed
 %prior to running this script. 
 %===================================================================%
 
