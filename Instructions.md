@@ -51,11 +51,6 @@ Example: /Downloads/SenseFog-main/sub-01/ses-walk
 
 
 
-
-- [ ]  2.1.2 "Baseline_Power.m"                  -- Compute baseline power from standing
-- [ ]  2.1.2 "Select_Sitting_power.m"            -- Computes the average power for sitting
-- [ ]  2.2   "Baseline_Coherence.m"              -- Compute baseline coherence from standing
-
 ### 2.3 Power Analyses
 Explain here what is to be expected to be done, interations of code and expected output of the codes.
 - [ ]  2.3.1 "Select_Walking_power.m"          -- Compute power spectra for each gait cycle (Walking)
