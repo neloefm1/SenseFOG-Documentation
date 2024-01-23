@@ -15,12 +15,13 @@
 %===================================================================%
 
 %Load EEG and LFP data and IMU data by specifying subject and SESSION of interest
-subjectdata.generalpath         = uigetdir;                                                         % Example: SenseFOG-main/sub-XX/ses-standing
+subjectdata.generalpath         = uigetdir;                                                        % Example: SenseFOG-main/sub-XX/ses-standing
 cd(subjectdata.generalpath)
 filename                        = extractAfter(subjectdata.generalpath, "-main");                  % Create the specified filename
-filename                        = extractBefore(filename(2:end),"/ses-");                                  % Create the specified taskname
+filename                        = extractBefore(filename(2:end), "ses-");                          % Create the specified taskname
+filename                        = filename(1:end-1); 
 taskname                        = extractAfter(subjectdata.generalpath,"ses-");                    % Create the specified taskname
-taskname                        = append("ses-", taskname);                                         % Create the specified taskname
+taskname                        = append("ses-", taskname);                                        % Create the specified taskname
 filepath                        = extractBefore(subjectdata.generalpath, "ses");                   % Create the specified filepath
 filepath                        = filepath(1:end-1); 
 fullname                        = append(subjectdata.generalpath, filesep, "ieeg", filesep,filename, "-", taskname, "_raw.mat"); 
